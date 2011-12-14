@@ -41,9 +41,18 @@ EditWindow::EditWindow(QWidget *parent) :
     this->statusBar()->addWidget(mouseInfoLabel);
     imageLabel->setLabelMouse(mouseInfoLabel);
 
+    /* list module/frame  */
     modulesList = new ModulesList(500);
+    modulesList->setFixedWidth(510);
+    modulesList->setFixedHeight(800);
     modulesList->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    modulesList->setParent(ui->dockWidget);
+    modulesList->setParent(ui->dockWidgetContents);
+
+    modulesList->setViewMode(QListView::ListMode);
+    modulesList->setFlow(QListView::TopToBottom);
+    modulesList->setSpacing(8);
+    modulesList->setLayoutMode(QListView::Batched);
+
 }
 
 EditWindow::~EditWindow()
@@ -77,3 +86,7 @@ void EditWindow::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
+void EditWindow::dockWidgetResized()
+{
+    modulesList->resize(ui->dockWidget->width(),ui->dockWidget->height());
+}

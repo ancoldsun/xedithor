@@ -56,6 +56,9 @@ public:
      QLabel *mouseInfoLabel;
      double scaleFactor;
      ModulesList* modulesList;
+
+public slots:
+     void dockWidgetResized();
 };
 
 #endif // EDITWINDOW_H
