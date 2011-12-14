@@ -1,0 +1,7 @@
+----------------------------- Dec, 14 2011
+Xedithor
+2D game sprite editor
+
+use: Qt Creator 2.3.0
+     Qt 4.7.4 (32 bit)
+
