@@ -42,7 +42,8 @@ void MainWindow::CreateActions()
     openAct = new QAction(QIcon(":/images/open.png"),tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+    // not for open image
+    //connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
 
     saveAct = new QAction(QIcon(":/images/save.png"),tr("&Save"), this);
     saveAct->setShortcuts(QKeySequence::Save);
@@ -58,6 +59,9 @@ void MainWindow::CreateActions()
     exitAct->setShortcuts(QKeySequence::Quit);
     exitAct->setStatusTip(tr("Exit the application"));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+
+    // open image button
+    connect(ui->openImageButton, SIGNAL(clicked()), this, SLOT(open()));
 }
 
 void MainWindow::CreateMainMenus()
@@ -167,13 +171,13 @@ void MainWindow::SetupConnectWidgets()
      connect(ui->mt_navTable1_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
      connect(ui->mt_navTable1_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
      // table 2
-     connect(ui->mt_navTable2_button1, SIGNAL(clicked()), this, SLOT(Add_Clicked()));
-     connect(ui->mt_navTable2_button2, SIGNAL(clicked()), this, SLOT(Clone_Clicked()));
-     connect(ui->mt_navTable2_button3, SIGNAL(clicked()), this, SLOT(Del_Clicked()));
-     connect(ui->mt_navTable2_button4, SIGNAL(clicked()), this, SLOT(Up_Clicked()));
-     connect(ui->mt_navTable2_button5, SIGNAL(clicked()), this, SLOT(Down_Clicked()));
-     connect(ui->mt_navTable2_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
-     connect(ui->mt_navTable2_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
+     //connect(ui->mt_navTable2_button1, SIGNAL(clicked()), this, SLOT(Add_Clicked()));
+     //connect(ui->mt_navTable2_button2, SIGNAL(clicked()), this, SLOT(Clone_Clicked()));
+     //connect(ui->mt_navTable2_button3, SIGNAL(clicked()), this, SLOT(Del_Clicked()));
+     //connect(ui->mt_navTable2_button4, SIGNAL(clicked()), this, SLOT(Up_Clicked()));
+     //connect(ui->mt_navTable2_button5, SIGNAL(clicked()), this, SLOT(Down_Clicked()));
+     //connect(ui->mt_navTable2_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
+     // connect(ui->mt_navTable2_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
    // Tab Frame
      // table 1
      connect(ui->ft_navTable1_button1, SIGNAL(clicked()), this, SLOT(Add_Clicked()));
@@ -208,6 +212,10 @@ void MainWindow::SetupConnectWidgets()
      connect(ui->at_navTable2_button5, SIGNAL(clicked()), this, SLOT(Down_Clicked()));
      connect(ui->at_navTable2_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
      connect(ui->at_navTable2_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
+
+     //tab widget connect
+     connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(PageTabChanged(int)));
+
 }
 
 void MainWindow::newFile()
@@ -230,6 +238,8 @@ void MainWindow::open()
         editWindow->imageLabel->setImageGraphicsItem(&pixmapOpened);
         editWindow->scaleFactor = 1.0;
         printAct->setEnabled(true);
+        //update info path image
+        ui->imagePathInfo->setText(fileName);
     }
 }
 
@@ -582,3 +592,44 @@ void MainWindow::TableEditCompleted(QString str)
     py_=py_-rect_.y()+(HeightRectView/2);
     editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
 }
+
+
+ void MainWindow::PageTabChanged(int indexPage)
+ {
+     std::cout<<"page: "<<indexPage<<std::endl;
+
+     if(indexPage== Page::MODULE)
+     {
+        editWindow->getModuleList()->clear();
+     }
+     else if(indexPage == Page::FRAME)
+     {
+
+         ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
+
+         std::cout<<"Page::FRAME: "<<m->rowCount()<<std::endl;
+         editWindow->getModuleList()->clear();
+         for(int i=0;i<m->rowCount();i++)
+         {
+             RowData* rd = m->getDatainRow(i);
+
+             QString id_ ="mID-"+rd->getData(1);
+             qreal px_   =rd->getData(2).toDouble();
+             qreal py_   =rd->getData(3).toDouble();
+             qreal w_    =rd->getData(4).toDouble();
+             qreal h_    =rd->getData(5).toDouble();
+
+             /* slice image */
+             QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
+
+             editWindow->getModuleList()->addPiece(pieceImage,QPoint(i,0),id_);
+             /* end slice image */
+         }
+
+     }
+     else if(indexPage == Page::ANIM)
+     {
+
+     }
+
+ }

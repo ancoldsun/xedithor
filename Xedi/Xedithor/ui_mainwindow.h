@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun Dec 11 17:01:01 2011
+** Created: Thu Dec 15 01:08:48 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -18,6 +18,7 @@
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
 #include <QtGui/QScrollArea>
@@ -58,19 +59,9 @@ public:
     QToolButton *mt_navTable1_button6;
     QToolButton *mt_navTable1_button7;
     QTableView *mt_tableView1;
-    QDockWidget *dockWidget_mt;
-    QWidget *dockWidgetContents_4;
-    QVBoxLayout *verticalLayout_5;
-    QGroupBox *mt_groupBox2;
-    QHBoxLayout *horizontalLayout_4;
-    QToolButton *mt_navTable2_button1;
-    QToolButton *mt_navTable2_button2;
-    QToolButton *mt_navTable2_button3;
-    QToolButton *mt_navTable2_button4;
-    QToolButton *mt_navTable2_button5;
-    QToolButton *mt_navTable2_button6;
-    QToolButton *mt_navTable2_button7;
-    QTableView *tableView;
+    QGroupBox *groupBox;
+    QToolButton *openImageButton;
+    QLabel *imagePathInfo;
     QWidget *FrameTab;
     QVBoxLayout *verticalLayout_4;
     QGroupBox *ft_groupBox1;
@@ -177,7 +168,7 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         mt_groupBox1 = new QGroupBox(ImageModuleTab);
         mt_groupBox1->setObjectName(QString::fromUtf8("mt_groupBox1"));
-        mt_groupBox1->setStyleSheet(QString::fromUtf8("background-color: rgb(139, 180, 232);"));
+        mt_groupBox1->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 255);"));
         horizontalLayout_3 = new QHBoxLayout(mt_groupBox1);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -271,111 +262,21 @@ public:
 
         verticalLayout->addWidget(mt_tableView1);
 
-        dockWidget_mt = new QDockWidget(ImageModuleTab);
-        dockWidget_mt->setObjectName(QString::fromUtf8("dockWidget_mt"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(dockWidget_mt->sizePolicy().hasHeightForWidth());
-        dockWidget_mt->setSizePolicy(sizePolicy1);
-        dockWidget_mt->setMinimumSize(QSize(350, 138));
-        dockWidget_mt->setLayoutDirection(Qt::LeftToRight);
-        dockWidget_mt->setFeatures(QDockWidget::NoDockWidgetFeatures);
-        dockWidgetContents_4 = new QWidget();
-        dockWidgetContents_4->setObjectName(QString::fromUtf8("dockWidgetContents_4"));
-        dockWidgetContents_4->setEnabled(true);
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(dockWidgetContents_4->sizePolicy().hasHeightForWidth());
-        dockWidgetContents_4->setSizePolicy(sizePolicy2);
-        dockWidgetContents_4->setLayoutDirection(Qt::LeftToRight);
-        dockWidgetContents_4->setStyleSheet(QString::fromUtf8(""));
-        verticalLayout_5 = new QVBoxLayout(dockWidgetContents_4);
-        verticalLayout_5->setSpacing(0);
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        mt_groupBox2 = new QGroupBox(dockWidgetContents_4);
-        mt_groupBox2->setObjectName(QString::fromUtf8("mt_groupBox2"));
-        horizontalLayout_4 = new QHBoxLayout(mt_groupBox2);
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        mt_navTable2_button1 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button1->setObjectName(QString::fromUtf8("mt_navTable2_button1"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button1->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button1->setSizePolicy(sizePolicy);
-        mt_navTable2_button1->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button1->setStyleSheet(QString::fromUtf8(""));
-        mt_navTable2_button1->setIcon(icon);
+        groupBox = new QGroupBox(ImageModuleTab);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setMinimumSize(QSize(0, 100));
+        openImageButton = new QToolButton(groupBox);
+        openImageButton->setObjectName(QString::fromUtf8("openImageButton"));
+        openImageButton->setGeometry(QRect(10, 20, 41, 31));
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/images/Create.png"), QSize(), QIcon::Normal, QIcon::Off);
+        openImageButton->setIcon(icon7);
+        imagePathInfo = new QLabel(groupBox);
+        imagePathInfo->setObjectName(QString::fromUtf8("imagePathInfo"));
+        imagePathInfo->setGeometry(QRect(60, 20, 281, 31));
+        imagePathInfo->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 255);"));
 
-        horizontalLayout_4->addWidget(mt_navTable2_button1);
-
-        mt_navTable2_button2 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button2->setObjectName(QString::fromUtf8("mt_navTable2_button2"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button2->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button2->setSizePolicy(sizePolicy);
-        mt_navTable2_button2->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button2->setIcon(icon1);
-
-        horizontalLayout_4->addWidget(mt_navTable2_button2);
-
-        mt_navTable2_button3 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button3->setObjectName(QString::fromUtf8("mt_navTable2_button3"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button3->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button3->setSizePolicy(sizePolicy);
-        mt_navTable2_button3->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button3->setIcon(icon2);
-
-        horizontalLayout_4->addWidget(mt_navTable2_button3);
-
-        mt_navTable2_button4 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button4->setObjectName(QString::fromUtf8("mt_navTable2_button4"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button4->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button4->setSizePolicy(sizePolicy);
-        mt_navTable2_button4->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button4->setIcon(icon3);
-
-        horizontalLayout_4->addWidget(mt_navTable2_button4);
-
-        mt_navTable2_button5 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button5->setObjectName(QString::fromUtf8("mt_navTable2_button5"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button5->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button5->setSizePolicy(sizePolicy);
-        mt_navTable2_button5->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button5->setIcon(icon4);
-
-        horizontalLayout_4->addWidget(mt_navTable2_button5);
-
-        mt_navTable2_button6 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button6->setObjectName(QString::fromUtf8("mt_navTable2_button6"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button6->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button6->setSizePolicy(sizePolicy);
-        mt_navTable2_button6->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button6->setIcon(icon5);
-
-        horizontalLayout_4->addWidget(mt_navTable2_button6);
-
-        mt_navTable2_button7 = new QToolButton(mt_groupBox2);
-        mt_navTable2_button7->setObjectName(QString::fromUtf8("mt_navTable2_button7"));
-        sizePolicy.setHeightForWidth(mt_navTable2_button7->sizePolicy().hasHeightForWidth());
-        mt_navTable2_button7->setSizePolicy(sizePolicy);
-        mt_navTable2_button7->setMinimumSize(QSize(2, 0));
-        mt_navTable2_button7->setIcon(icon6);
-
-        horizontalLayout_4->addWidget(mt_navTable2_button7);
-
-
-        verticalLayout_5->addWidget(mt_groupBox2);
-
-        tableView = new QTableView(dockWidgetContents_4);
-        tableView->setObjectName(QString::fromUtf8("tableView"));
-
-        verticalLayout_5->addWidget(tableView);
-
-        dockWidget_mt->setWidget(dockWidgetContents_4);
-
-        verticalLayout->addWidget(dockWidget_mt);
+        verticalLayout->addWidget(groupBox);
 
         tabWidget->addTab(ImageModuleTab, QString());
         FrameTab = new QWidget();
@@ -470,6 +371,9 @@ public:
 
         dockWidget_ft = new QDockWidget(FrameTab);
         dockWidget_ft->setObjectName(QString::fromUtf8("dockWidget_ft"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(dockWidget_ft->sizePolicy().hasHeightForWidth());
         dockWidget_ft->setSizePolicy(sizePolicy1);
         dockWidget_ft->setMinimumSize(QSize(350, 138));
@@ -478,6 +382,9 @@ public:
         dockWidgetContents_5 = new QWidget();
         dockWidgetContents_5->setObjectName(QString::fromUtf8("dockWidgetContents_5"));
         dockWidgetContents_5->setEnabled(true);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(dockWidgetContents_5->sizePolicy().hasHeightForWidth());
         dockWidgetContents_5->setSizePolicy(sizePolicy2);
         dockWidgetContents_5->setLayoutDirection(Qt::LeftToRight);
@@ -797,20 +704,9 @@ public:
         mt_navTable1_button5->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_ACCESSIBILITY
-        dockWidgetContents_4->setAccessibleName(QString());
-#endif // QT_NO_ACCESSIBILITY
-#ifndef QT_NO_ACCESSIBILITY
-        dockWidgetContents_4->setAccessibleDescription(QString());
-#endif // QT_NO_ACCESSIBILITY
-        mt_groupBox2->setTitle(QApplication::translate("MainWindow", "Navigation Table", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button1->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button2->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button3->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button4->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button5->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        mt_navTable2_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Image Source", 0, QApplication::UnicodeUTF8));
+        openImageButton->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        imagePathInfo->setText(QApplication::translate("MainWindow", "Image : None", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(ImageModuleTab), QApplication::translate("MainWindow", "Image Modules", 0, QApplication::UnicodeUTF8));
         ft_groupBox1->setTitle(QApplication::translate("MainWindow", "Navigation Table", 0, QApplication::UnicodeUTF8));
         ft_navTable1_button1->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));

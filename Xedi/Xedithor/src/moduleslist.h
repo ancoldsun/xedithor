@@ -13,7 +13,7 @@ class ModulesList : public QListWidget
 
 public:
     ModulesList(int pieceSize, QWidget *parent = 0);
-    void addPiece(QPixmap pixmap, QPoint location);
+    void addPiece(QPixmap pixmap, QPoint location,QString str="");
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

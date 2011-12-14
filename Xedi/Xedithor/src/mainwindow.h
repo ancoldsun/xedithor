@@ -103,6 +103,9 @@ public slots:
     void UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB);
     void TableEditCompleted(QString str);
 
+    //tab widget
+    void PageTabChanged(int indexPage);
+
 
 };
 

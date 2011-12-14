@@ -35,6 +35,12 @@ namespace XD
     const int NUM_TABLE = 2;
 }
 
+namespace Page
+{
+    const int MODULE  = 0;
+    const int FRAME   = 1;
+    const int ANIM    = 2;
+}
 const int WidthRectView  = 4000;
 const int HeightRectView = 4000;
 

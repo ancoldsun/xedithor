@@ -39,6 +39,10 @@ public:
         return modulesList;
     }
 
+    void setModuleList_Module();
+    void setModuleList_Frame();
+    void setModuleList_Anim();
+
 private slots:
     void ZoomOut();
     void ZoomIn();
