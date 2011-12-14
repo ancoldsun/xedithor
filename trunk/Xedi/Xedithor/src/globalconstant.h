@@ -1,3 +1,7 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
 #ifndef GLOBALCONSTANT_H
 #define GLOBALCONSTANT_H
 
@@ -30,4 +34,8 @@ namespace XD
     const int TABLE2    = 1;
     const int NUM_TABLE = 2;
 }
+
+const int WidthRectView  = 4000;
+const int HeightRectView = 4000;
+
 #endif // GLOBALCONSTANT_H

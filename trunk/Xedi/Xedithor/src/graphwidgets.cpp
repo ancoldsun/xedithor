@@ -1,11 +1,9 @@
-
-
-
 #include <QtGui>
 #include <QPainter>
 #include <math.h>
 #include <QGraphicsPixmapItem>
 
+#include "globalconstant.h"
 #include "graphwidgets.h"
 #include "rectselectionitem.h"
 
@@ -67,7 +65,7 @@ GraphWidget::GraphWidget(QWidget *parent)
 
     //rect selection
     rectSelect = new RectSelectionItem;
-    rectSelect->setRect(1000.0,1000.0,400.0,400.0);
+    rectSelect->setRect(WidthRectView / 2,HeightRectView / 2,400.0,400.0);
 
     QPen pen;
     pen.setBrush(QBrush(Qt::NoBrush));
@@ -77,14 +75,6 @@ GraphWidget::GraphWidget(QWidget *parent)
     rectSelect->setPen(pen);
     rectSelect->setZValue(0.9);
     m_scene->addItem(rectSelect);
-
-    //lineH = new HLineGraphicsItem;//(QPointF(100+WidthRectView / 2, 100+HeightRectView / 2),QPointF(200+WidthRectView / 2, 10+HeightRectView / 2));
-    //lineH->setSourcePoint(QPointF(10+WidthRectView / 2, 10+HeightRectView / 2));
-    //lineH->setDestPoint(QPointF(20+WidthRectView / 2, 10+HeightRectView / 2));
-
-    //lineH->setFlag(QGraphicsItem::ItemIsMovable, true);
-    //lineH->setFlag(QGraphicsItem::ItemIsSelectable, true);
-    //m_scene->addItem(lineH);
 
     modeView = ModeView::DRAG_MODE;
 
@@ -128,10 +118,10 @@ void GraphWidget::SetCenter(const QPointF& centerPoint) {
     //Get the scene area
     QRectF sceneBounds = sceneRect();
 
-    double boundX = visibleArea.width() / 2.0;
-    double boundY = visibleArea.height() / 2.0;
-    double boundWidth = sceneBounds.width() - 2.0 * boundX;
-    double boundHeight = sceneBounds.height() - 2.0 * boundY;
+    double boundX = visibleArea.width() ;
+    double boundY = visibleArea.height();
+    double boundWidth = sceneBounds.width();
+    double boundHeight = sceneBounds.height();
 
     //The max boundary that the centerPoint can be to
     QRectF bounds(boundX, boundY, boundWidth, boundHeight);
@@ -249,10 +239,8 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
         RowData* rd = m->getDatainRow(rowSelected_);
         QString sh = QString::number(rectSelect->rect().width());
         QString sw = QString::number(rectSelect->rect().height());
-        QString sx = QString::number(rectSelect->pos().x()+rectSelect->rect().x()-1000);
-        QString sy = QString::number(rectSelect->pos().y()+rectSelect->rect().y()-1000);
-
-
+        QString sx = QString::number(rectSelect->pos().x()+rectSelect->rect().x()-(WidthRectView / 2));
+        QString sy = QString::number(rectSelect->pos().y()+rectSelect->rect().y()-(HeightRectView / 2));
 
         rd->setData(2,sx);
         rd->setData(3,sy);

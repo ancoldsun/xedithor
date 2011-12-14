@@ -1,3 +1,7 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
 #ifndef MODULETABLEMODEL_H
 #define MODULETABLEMODEL_H
 
@@ -9,10 +13,6 @@
 #include <QTimer>
 
 #include "rowdata.h"
-
-const int COLS= 3;
-const int ROWS= 2;
-
 
 class ModuleTableModel : public QAbstractTableModel
 {
@@ -32,11 +32,11 @@ public:
     RowData* getDatainRow(int iRow);
     void refresh();
 private:
-    QString m_gridData[ROWS][COLS];  //holds text entered into QTableView
+    //QString m_gridData[ROWS][COLS];  //holds text entered into QTableView
     QList<RowData*>  m_gridData2;
     int numberRow,numberCol;
     QStringList m_Headers;
-    QTimer *timer;
+    //QTimer *timer;
 
 
 signals:

@@ -20,10 +20,12 @@ ModuleTableModel::ModuleTableModel(QObject *parent)
     m_Headers.push_back("Width");
     m_Headers.push_back("Height");
 
+    /*
     timer = new QTimer(this);
     timer->setInterval(500);
     connect(timer, SIGNAL(timeout()) , this, SLOT(timerHit()));
     timer->start();
+    */
 }
 
 int ModuleTableModel::rowCount(const QModelIndex & /*parent*/) const
@@ -38,25 +40,17 @@ int ModuleTableModel::columnCount(const QModelIndex & /*parent*/) const
 
 QVariant ModuleTableModel::data(const QModelIndex &index, int role) const
 {
-
-    //std::cout<<"row: "<<index.row()<<std::endl;
     if (role == Qt::DisplayRole)
     {
         RowData* dat =m_gridData2.at(index.row());
         int col = index.column();
         return dat->getData(col);
-        //return m_gridData[index.row()][index.column()];
-
-        //return m_gridData2;//QTime::currentTime().toString();
-
     }
     else if(role == Qt::EditRole)
     {
         RowData* dat =m_gridData2.at(index.row());
         int col = index.column();
         return dat->getData(col);
-
-
     }
 
     return QVariant();
@@ -170,12 +164,7 @@ RowData* ModuleTableModel::getDatainRow(int iRow)
 void ModuleTableModel::timerHit()
 {
 /*
-    //we identify the top left cell
-    QModelIndex topLeft = createIndex(0,0);
-    QModelIndex botright = createIndex(m_gridData2.count(),5);
-    //emit a signal to make the view reread identified data
-    emit dataChanged(topLeft, botright);
-    */
+*/
 }
 
 void ModuleTableModel::refresh()

@@ -1,3 +1,8 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
+
 #ifndef XSCENE_H
 #define XSCENE_H
 

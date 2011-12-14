@@ -521,7 +521,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
     if(sender == ui->mt_tableView1 ){   // table 1
 
         int rowSelected_ = ui->mt_tableView1->currentIndex().row();
-        std::cout<<"selected: mm "<<rowSelected_<<std::endl;
+        std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
 
         ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
         RowData* rd = m->getDatainRow(rowSelected_);
@@ -543,33 +543,20 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0));
         /* end slice image */
 
-        /*
-        editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
-
-        QRectF rect_ = editWindow->imageLabel->getRectSelectItem()->rect();
-        rect_.setHeight(h_);
-        rect_.setWidth(w_);
-        editWindow->imageLabel->getRectSelectItem()->setRect(rect_);
-        */
-
         QRectF rect_ = editWindow->imageLabel->getRectSelectItem()->rect();
         rect_.setHeight(h_);
         rect_.setWidth(w_);
         editWindow->imageLabel->getRectSelectItem()->setRect(rect_);
 
-
-       // QPoint delta = editWindow->imageLabel->mapToScene(rect_.x()+1000,rect_.y()+1000);
-        px_=px_-rect_.x()+1000;
-        py_=py_-rect_.y()+1000;
+        px_=px_-rect_.x()+(WidthRectView/2);
+        py_=py_-rect_.y()+(HeightRectView/2);
         editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
-
-
     }
 }
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)
 {
-     //ui->tableView->model()->setData(ui->tableView->model()->index(fila ,col + 1),2.0*valor1);
+    //ui->tableView->model()->setData(ui->tableView->model()->index(fila ,col + 1),2.0*valor1);
     //std::cout<<"data changed...........: "<<std::endl;
 }
 
@@ -586,14 +573,12 @@ void MainWindow::TableEditCompleted(QString str)
     qreal w_  =rd->getData(4).toDouble();
     qreal h_  =rd->getData(5).toDouble();
 
-
     QRectF rect_ = editWindow->imageLabel->getRectSelectItem()->rect();
     rect_.setHeight(h_);
     rect_.setWidth(w_);
     editWindow->imageLabel->getRectSelectItem()->setRect(rect_);
 
-   // QPoint delta = editWindow->imageLabel->mapToScene(rect_.x()+1000,rect_.y()+1000);
-    px_=px_-rect_.x()+1000;
-    py_=py_-rect_.y()+1000;
+    px_=px_-rect_.x()+(WidthRectView/2);
+    py_=py_-rect_.y()+(HeightRectView/2);
     editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
 }
