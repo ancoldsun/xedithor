@@ -43,8 +43,8 @@ EditWindow::EditWindow(QWidget *parent) :
 
     /* list module/frame  */
     modulesList = new ModulesList(500);
-    modulesList->setFixedWidth(510);
-    modulesList->setFixedHeight(800);
+    modulesList->setFixedWidth(300);
+    modulesList->setFixedHeight(600);
     modulesList->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     modulesList->setParent(ui->dockWidgetContents);
 
@@ -52,6 +52,8 @@ EditWindow::EditWindow(QWidget *parent) :
     modulesList->setFlow(QListView::TopToBottom);
     modulesList->setSpacing(8);
     modulesList->setLayoutMode(QListView::Batched);
+
+    modulesList->setAutoScroll(true);
 
 }
 
@@ -86,3 +88,29 @@ void EditWindow::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
+void EditWindow::setModuleList_Module()
+{
+    modulesList = new ModulesList(500);
+    modulesList->setFixedWidth(510);
+    modulesList->setFixedHeight(800);
+    modulesList->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    modulesList->setParent(ui->dockWidgetContents);
+
+    modulesList->setViewMode(QListView::ListMode);
+    modulesList->setFlow(QListView::TopToBottom);
+    modulesList->setSpacing(8);
+    modulesList->setLayoutMode(QListView::Batched);
+}
+
+void EditWindow::setModuleList_Frame()
+{
+    modulesList->setViewMode(QListView::ListMode);
+    modulesList->setFlow(QListView::TopToBottom);
+    modulesList->setSpacing(12);
+    modulesList->setLayoutMode(QListView::Batched);
+}
+
+void EditWindow::setModuleList_Anim()
+{
+
+}

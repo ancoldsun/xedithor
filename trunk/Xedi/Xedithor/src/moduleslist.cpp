@@ -87,9 +87,10 @@ void ModulesList::dropEvent(QDropEvent *event)
         event->ignore();
 }
 
-void ModulesList::addPiece(QPixmap pixmap, QPoint location)
+void ModulesList::addPiece(QPixmap pixmap, QPoint location,QString str)
 {
     QListWidgetItem *pieceItem = new QListWidgetItem(this);
+    pieceItem->setText(str);
     pieceItem->setIcon(QIcon(pixmap));
     pieceItem->setData(Qt::UserRole, QVariant(pixmap));
     pieceItem->setData(Qt::UserRole+1, location);
