@@ -86,7 +86,3 @@ void EditWindow::adjustScrollBar(QScrollBar *scrollBar, double factor)
                             + ((factor - 1) * scrollBar->pageStep()/2)));
 }
 
-void EditWindow::dockWidgetResized()
-{
-    modulesList->resize(ui->dockWidget->width(),ui->dockWidget->height());
-}

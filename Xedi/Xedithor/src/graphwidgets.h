@@ -1,3 +1,7 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
 #ifndef GRAPHWIDGETS_H
 #define GRAPHWIDGETS_H
 
@@ -21,8 +25,7 @@ namespace ModeView
 };
 
 
-const int WidthRectView  = 2000;
-const int HeightRectView = 2000;
+
 
 class GraphWidget : public QGraphicsView
 {

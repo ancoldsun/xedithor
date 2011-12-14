@@ -1,3 +1,7 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
 #ifndef RECTSELECTIONITEM_H
 #define RECTSELECTIONITEM_H
 

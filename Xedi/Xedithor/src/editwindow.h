@@ -1,5 +1,11 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
+
 #ifndef EDITWINDOW_H
 #define EDITWINDOW_H
+
 
 #include <QMainWindow>
 #include "graphwidgets.h"
@@ -57,8 +63,7 @@ public:
      double scaleFactor;
      ModulesList* modulesList;
 
-public slots:
-     void dockWidgetResized();
+
 };
 
 #endif // EDITWINDOW_H
