@@ -41,6 +41,12 @@
      <height>121</height>
     </size>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>500</width>
+     <height>524287</height>
+    </size>
+   </property>
    <property name="styleSheet">
     <string notr="true"/>
    </property>

@@ -533,11 +533,14 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
 
         /* slice image */
         QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
+        int idx = editWindow->getModuleList()->count();
+        if(idx > 1)
+        {
+            QListWidgetItem *item = editWindow->getModuleList()->takeItem(0);
+            delete item;
+        }
         editWindow->getModuleList()->clear();
-
-        QListWidgetItem* item = new QListWidgetItem("ID-"+rd->getData(1));
-        item->setIcon(QIcon(pieceImage));
-        editWindow->getModuleList()->insertItem(0,item);
+        editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0));
         /* end slice image */
 
         /*
