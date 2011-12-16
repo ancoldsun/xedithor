@@ -120,7 +120,8 @@ void MainWindow::SetupTables()
 
     */
 
-    m_moduleTableModel = new ModuleTableModel(this);
+    /* module */
+    m_moduleTableModel = new ModuleTableModel(this,1,6,new ModuleRowDataHandler());
     ui->mt_tableView1->setModel(m_moduleTableModel);
     ui->mt_tableView1->setSelectionBehavior(QTableView::SelectRows);
 
@@ -131,10 +132,39 @@ void MainWindow::SetupTables()
     }
     connect(ui->mt_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
     connect(ui->mt_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
-    //editCompleted
     connect(ui->mt_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
     editWindow->imageLabel->m_table = ui->mt_tableView1;
+
+    /*frame - top table */
+    m_frameTableModel = new ModuleTableModel(this,1,6,new FrameRowDataHandler());
+    ui->ft_tableView1->setModel(m_frameTableModel);
+    ui->ft_tableView1->setSelectionBehavior(QTableView::SelectRows);
+
+    width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
+    for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
+    {
+        ui->ft_tableView1->setColumnWidth(m, width_col);
+    }
+    connect(ui->ft_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
+    connect(ui->ft_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
+    connect(ui->ft_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
+
+    /*frame - bottom table*/
+    m_frameDescTableModel = new ModuleTableModel(this,1,6,new FrameDescRowDataHandler());
+    ui->ft_tableView2->setModel(m_frameDescTableModel);
+    ui->ft_tableView2->setSelectionBehavior(QTableView::SelectRows);
+
+    width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
+    for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
+    {
+        ui->ft_tableView2->setColumnWidth(m, width_col);
+    }
+    connect(ui->ft_tableView2, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
+    connect(ui->ft_tableView2->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
+    connect(ui->ft_tableView2->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
+
+
 }
 
 void MainWindow::SetupWidgetAlias()
@@ -465,10 +495,14 @@ void MainWindow::tableCloneRow(QTableView* table)
     std::cout<<"ROW: "<<table->currentIndex().row()<<std::endl;
 
     int rowToClone = table->currentIndex().row();
+    std::cout<<"ROW2: "<<table->currentIndex().row()<<std::endl;
     if(rowToClone !=-1)
     {
-       ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+       std::cout<<"ROW3: "<<table->currentIndex().row()<<std::endl;
+        ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+        std::cout<<"ROW4: "<<table->currentIndex().row()<<std::endl;
        m->cloneRow(rowToClone);
+       std::cout<<"ROW5: "<<table->currentIndex().row()<<std::endl;
     }
 
 }
@@ -601,6 +635,8 @@ void MainWindow::TableEditCompleted(QString str)
      if(indexPage== Page::MODULE)
      {
         editWindow->getModuleList()->clear();
+        // set to modules table
+        editWindow->imageLabel->m_table = ui->mt_tableView1;
      }
      else if(indexPage == Page::FRAME)
      {
@@ -625,6 +661,8 @@ void MainWindow::TableEditCompleted(QString str)
              editWindow->getModuleList()->addPiece(pieceImage,QPoint(i,0),id_);
              /* end slice image */
          }
+         // graph now handle frame table
+         editWindow->imageLabel->m_table = ui->ft_tableView2;
 
      }
      else if(indexPage == Page::ANIM)

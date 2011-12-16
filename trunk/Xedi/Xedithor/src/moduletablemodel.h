@@ -18,7 +18,8 @@ class ModuleTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    ModuleTableModel(QObject *parent);
+    ModuleTableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler);
+    void setupTable();
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -36,6 +37,7 @@ private:
     QList<RowData*>  m_gridData2;
     int numberRow,numberCol;
     QStringList m_Headers;
+    RowDataHandler* m_handler;
     //QTimer *timer;
 
 

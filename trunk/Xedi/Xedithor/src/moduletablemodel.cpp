@@ -3,29 +3,21 @@
 
 int RowData::mLast_ID_Module=0;
 
-ModuleTableModel::ModuleTableModel(QObject *parent)
+ModuleTableModel::ModuleTableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler)
     :QAbstractTableModel(parent)
 {
-    numberRow = 1;
-    numberCol = 6;
+    numberRow=row;
+    numberCol=col;
+    m_handler=rowHandler;
+
+    RowData::m_Handler = m_handler;
+
     for(int i=0;i<numberRow;i++)
     {
             RowData* dat = new RowData(numberCol);
             m_gridData2.insert(i, dat);
     }
-    m_Headers.push_back("Index ");
-    m_Headers.push_back("ID");
-    m_Headers.push_back("X");
-    m_Headers.push_back("Y");
-    m_Headers.push_back("Width");
-    m_Headers.push_back("Height");
-
-    /*
-    timer = new QTimer(this);
-    timer->setInterval(500);
-    connect(timer, SIGNAL(timeout()) , this, SLOT(timerHit()));
-    timer->start();
-    */
+    m_handler->createRowHeader(m_Headers);
 }
 
 int ModuleTableModel::rowCount(const QModelIndex & /*parent*/) const
@@ -95,6 +87,7 @@ Qt::ItemFlags ModuleTableModel::flags(const QModelIndex & /*index*/) const
 bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & parent )
 {
     beginInsertRows(parent, row, row+count-1);
+    RowData::m_Handler = m_handler;
     for (int n = 0; n < count; ++n) {
         RowData* dat = new RowData(numberCol);
         m_gridData2.insert(row, dat);
@@ -133,6 +126,8 @@ QVariant ModuleTableModel::headerData(int section, Qt::Orientation orientation, 
 
 bool ModuleTableModel::cloneRow(int row)
 {
+    RowData::m_Handler = m_handler;
+
     RowData* dat= m_gridData2.at(row);
     insertRow(row+1);
     RowData* newRowData =m_gridData2.at(row+1);
