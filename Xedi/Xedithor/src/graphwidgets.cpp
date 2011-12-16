@@ -237,10 +237,10 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
 
         std::cout<<"selected: "<<rowSelected_<<std::endl;
         RowData* rd = m->getDatainRow(rowSelected_);
-        QString sh = QString::number(rectSelect->rect().width());
-        QString sw = QString::number(rectSelect->rect().height());
-        QString sx = QString::number(rectSelect->pos().x()+rectSelect->rect().x()-(WidthRectView / 2));
-        QString sy = QString::number(rectSelect->pos().y()+rectSelect->rect().y()-(HeightRectView / 2));
+        QString sh = QString::number((int)(rectSelect->rect().width()));
+        QString sw = QString::number((int)(rectSelect->rect().height()));
+        QString sx = QString::number((int)(rectSelect->pos().x()+rectSelect->rect().x()-(WidthRectView / 2)));
+        QString sy = QString::number((int)(rectSelect->pos().y()+rectSelect->rect().y()-(HeightRectView / 2)));
 
         rd->setData(2,sx);
         rd->setData(3,sy);

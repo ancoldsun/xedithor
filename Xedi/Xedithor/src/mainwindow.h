@@ -82,6 +82,8 @@ private:
     QTableView* m_Atable[XD::NUM_TAB][XD::NUM_TABLE];
 
     ModuleTableModel* m_moduleTableModel;
+    ModuleTableModel* m_frameTableModel;
+    ModuleTableModel* m_frameDescTableModel;
 
     void CreateActions();
     void CreateMainMenus();
