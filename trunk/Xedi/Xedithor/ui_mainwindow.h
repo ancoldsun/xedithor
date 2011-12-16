@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Dec 15 01:08:48 2011
+** Created: Sat Dec 17 03:17:31 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -25,7 +25,6 @@
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTableView>
-#include <QtGui/QTableWidget>
 #include <QtGui/QToolBar>
 #include <QtGui/QToolButton>
 #include <QtGui/QVBoxLayout>
@@ -73,7 +72,7 @@ public:
     QToolButton *ft_navTable1_button5;
     QToolButton *ft_navTable1_button6;
     QToolButton *ft_navTable1_button7;
-    QTableWidget *ft_tableWidget1;
+    QTableView *ft_tableView1;
     QDockWidget *dockWidget_ft;
     QWidget *dockWidgetContents_5;
     QVBoxLayout *verticalLayout_6;
@@ -86,7 +85,7 @@ public:
     QToolButton *ft_navTable2_button5;
     QToolButton *ft_navTable2_button6;
     QToolButton *ft_navTable2_button7;
-    QTableWidget *ft_tableWidget2;
+    QTableView *ft_tableView2;
     QWidget *AnimTab;
     QVBoxLayout *verticalLayout_8;
     QGroupBox *at_groupBox1;
@@ -98,7 +97,7 @@ public:
     QToolButton *at_navTable1_button5;
     QToolButton *at_navTable1_button6;
     QToolButton *at_navTable1_button7;
-    QTableWidget *at_tableWidget1;
+    QTableView *at_tableView1;
     QDockWidget *dockWidget_at;
     QWidget *dockWidgetContents_7;
     QVBoxLayout *verticalLayout_7;
@@ -111,7 +110,7 @@ public:
     QToolButton *at_navTable2_button5;
     QToolButton *at_navTable2_button6;
     QToolButton *at_navTable2_button7;
-    QTableWidget *at_tableWidget2;
+    QTableView *at_tableView2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -358,16 +357,10 @@ public:
 
         verticalLayout_4->addWidget(ft_groupBox1);
 
-        ft_tableWidget1 = new QTableWidget(FrameTab);
-        if (ft_tableWidget1->columnCount() < 6)
-            ft_tableWidget1->setColumnCount(6);
-        if (ft_tableWidget1->rowCount() < 10)
-            ft_tableWidget1->setRowCount(10);
-        ft_tableWidget1->setObjectName(QString::fromUtf8("ft_tableWidget1"));
-        ft_tableWidget1->setRowCount(10);
-        ft_tableWidget1->setColumnCount(6);
+        ft_tableView1 = new QTableView(FrameTab);
+        ft_tableView1->setObjectName(QString::fromUtf8("ft_tableView1"));
 
-        verticalLayout_4->addWidget(ft_tableWidget1);
+        verticalLayout_4->addWidget(ft_tableView1);
 
         dockWidget_ft = new QDockWidget(FrameTab);
         dockWidget_ft->setObjectName(QString::fromUtf8("dockWidget_ft"));
@@ -376,7 +369,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(dockWidget_ft->sizePolicy().hasHeightForWidth());
         dockWidget_ft->setSizePolicy(sizePolicy1);
-        dockWidget_ft->setMinimumSize(QSize(350, 138));
+        dockWidget_ft->setMinimumSize(QSize(350, 199));
         dockWidget_ft->setLayoutDirection(Qt::LeftToRight);
         dockWidget_ft->setFeatures(QDockWidget::NoDockWidgetFeatures);
         dockWidgetContents_5 = new QWidget();
@@ -466,16 +459,10 @@ public:
 
         verticalLayout_6->addWidget(ft_groupBox2);
 
-        ft_tableWidget2 = new QTableWidget(dockWidgetContents_5);
-        if (ft_tableWidget2->columnCount() < 5)
-            ft_tableWidget2->setColumnCount(5);
-        if (ft_tableWidget2->rowCount() < 10)
-            ft_tableWidget2->setRowCount(10);
-        ft_tableWidget2->setObjectName(QString::fromUtf8("ft_tableWidget2"));
-        ft_tableWidget2->setRowCount(10);
-        ft_tableWidget2->setColumnCount(5);
+        ft_tableView2 = new QTableView(dockWidgetContents_5);
+        ft_tableView2->setObjectName(QString::fromUtf8("ft_tableView2"));
 
-        verticalLayout_6->addWidget(ft_tableWidget2);
+        verticalLayout_6->addWidget(ft_tableView2);
 
         dockWidget_ft->setWidget(dockWidgetContents_5);
 
@@ -561,22 +548,16 @@ public:
 
         verticalLayout_8->addWidget(at_groupBox1);
 
-        at_tableWidget1 = new QTableWidget(AnimTab);
-        if (at_tableWidget1->columnCount() < 6)
-            at_tableWidget1->setColumnCount(6);
-        if (at_tableWidget1->rowCount() < 10)
-            at_tableWidget1->setRowCount(10);
-        at_tableWidget1->setObjectName(QString::fromUtf8("at_tableWidget1"));
-        at_tableWidget1->setRowCount(10);
-        at_tableWidget1->setColumnCount(6);
+        at_tableView1 = new QTableView(AnimTab);
+        at_tableView1->setObjectName(QString::fromUtf8("at_tableView1"));
 
-        verticalLayout_8->addWidget(at_tableWidget1);
+        verticalLayout_8->addWidget(at_tableView1);
 
         dockWidget_at = new QDockWidget(AnimTab);
         dockWidget_at->setObjectName(QString::fromUtf8("dockWidget_at"));
         sizePolicy1.setHeightForWidth(dockWidget_at->sizePolicy().hasHeightForWidth());
         dockWidget_at->setSizePolicy(sizePolicy1);
-        dockWidget_at->setMinimumSize(QSize(350, 138));
+        dockWidget_at->setMinimumSize(QSize(350, 199));
         dockWidget_at->setLayoutDirection(Qt::LeftToRight);
         dockWidget_at->setFeatures(QDockWidget::NoDockWidgetFeatures);
         dockWidgetContents_7 = new QWidget();
@@ -663,16 +644,10 @@ public:
 
         verticalLayout_7->addWidget(at_groupBox2);
 
-        at_tableWidget2 = new QTableWidget(dockWidgetContents_7);
-        if (at_tableWidget2->columnCount() < 5)
-            at_tableWidget2->setColumnCount(5);
-        if (at_tableWidget2->rowCount() < 10)
-            at_tableWidget2->setRowCount(10);
-        at_tableWidget2->setObjectName(QString::fromUtf8("at_tableWidget2"));
-        at_tableWidget2->setRowCount(10);
-        at_tableWidget2->setColumnCount(5);
+        at_tableView2 = new QTableView(dockWidgetContents_7);
+        at_tableView2->setObjectName(QString::fromUtf8("at_tableView2"));
 
-        verticalLayout_7->addWidget(at_tableWidget2);
+        verticalLayout_7->addWidget(at_tableView2);
 
         dockWidget_at->setWidget(dockWidgetContents_7);
 
@@ -687,7 +662,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -695,7 +670,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Xedithor", 0, QApplication::UnicodeUTF8));
         mt_groupBox1->setTitle(QApplication::translate("MainWindow", "Navigation Table", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button1->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button2->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
