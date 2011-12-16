@@ -18,7 +18,9 @@ SOURCES += src\main.cpp\
     src/hlinegraphicsitem.cpp \
     src/graphwidgets.cpp \
     src/editwindow.cpp \
-    src/moduleslist.cpp
+    src/moduleslist.cpp \
+    src/rowdata.cpp \
+    src/rowdatahandler.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -30,7 +32,8 @@ HEADERS  += mainwindow.h \
     src/graphwidgets.h \
     src/globalconstant.h \
     src/editwindow.h \
-    src/moduleslist.h
+    src/moduleslist.h \
+    src/rowdatahandler.h
 
 
 FORMS    += mainwindow.ui \
@@ -41,6 +44,11 @@ RESOURCES += \
 
 OTHER_FILES += \
     temp.txt
+
+
+
+
+
 
 
 
