@@ -33,7 +33,7 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
     if(col==0)
         s=QString::number(1);
     else if(col==1)
-        s=QString::number(100+1);
+        s=QString::number(1000+1);
     else if(col==4)
         s=QString::number(32);
     else if(col==5)
@@ -58,7 +58,7 @@ void FrameDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col
     if(col==0)
         s=QString::number(1);
     else if(col==1)
-        s=QString::number(100+1);
+        s=QString::number(2000+1);
     else if(col==4)
         s=QString::number(32);
     else if(col==5)

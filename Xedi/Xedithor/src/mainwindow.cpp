@@ -148,7 +148,7 @@ void MainWindow::SetupTables()
     }
     connect(ui->ft_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
     connect(ui->ft_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
-    connect(ui->ft_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
+    //connect(ui->ft_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
     /*frame - bottom table*/
     m_frameDescTableModel = new ModuleTableModel(this,1,6,new FrameDescRowDataHandler());
@@ -162,7 +162,7 @@ void MainWindow::SetupTables()
     }
     connect(ui->ft_tableView2, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
     connect(ui->ft_tableView2->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
-    connect(ui->ft_tableView2->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
+    //connect(ui->ft_tableView2->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
 
 }
@@ -246,6 +246,8 @@ void MainWindow::SetupConnectWidgets()
      //tab widget connect
      connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(PageTabChanged(int)));
 
+     //doubleClicked ( const QModelIndex & index )
+
 }
 
 void MainWindow::newFile()
@@ -302,23 +304,19 @@ void MainWindow::Add_Clicked()
     if(sender == ui->mt_navTable1_button1 ){
         tableAddRow(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button1){
-        tableAddRow(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button1){
-        tableAddRow(ui->ft_tableWidget1);
+        tableAddRow(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button1){
-       tableAddRow(ui->ft_tableWidget2);
+       tableAddRow(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button1){
-        tableAddRow(ui->at_tableWidget1);
+        tableAddRow(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button1){
-        tableAddRow(ui->at_tableWidget2);
+        tableAddRow(ui->at_tableView2);
     }
-    */
+
 }
 
 void MainWindow::Clone_Clicked()
@@ -328,23 +326,18 @@ void MainWindow::Clone_Clicked()
     if(sender == ui->mt_navTable1_button2 ){
         tableCloneRow(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button2){
-        tableCloneRow(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button2){
-        tableCloneRow(ui->ft_tableWidget1);
+        tableCloneRow(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button2){
-       tableCloneRow(ui->ft_tableWidget2);
+       tableCloneRow(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button2){
-        tableCloneRow(ui->at_tableWidget1);
+        tableCloneRow(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button2){
-        tableCloneRow(ui->at_tableWidget2);
+        tableCloneRow(ui->at_tableView2);
     }
-    */
 }
 
 void MainWindow::Del_Clicked()
@@ -354,23 +347,18 @@ void MainWindow::Del_Clicked()
     if(sender == ui->mt_navTable1_button3 ){
         tableDelRow(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button3){
-        tableDelRow(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button3){
-        tableDelRow(ui->ft_tableWidget1);
+        tableDelRow(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button3){
-        tableDelRow(ui->ft_tableWidget2);
+        tableDelRow(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button3){
-        tableDelRow(ui->at_tableWidget1);
+        tableDelRow(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button3){
-        tableDelRow(ui->at_tableWidget2);
+        tableDelRow(ui->at_tableView2);
     }
-    */
 }
 
 void MainWindow::Up_Clicked()
@@ -380,23 +368,18 @@ void MainWindow::Up_Clicked()
     if(sender == ui->mt_navTable1_button4 ){
         tableUpSel(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button4){
-        tableUpSel(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button4){
-        tableUpSel(ui->ft_tableWidget1);
+        tableUpSel(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button4){
-       tableUpSel(ui->ft_tableWidget2);
+       tableUpSel(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button4){
-        tableUpSel(ui->at_tableWidget1);
+        tableUpSel(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button4){
-        tableUpSel(ui->at_tableWidget2);
+        tableUpSel(ui->at_tableView2);
     }
-    */
 }
 
 void MainWindow::Down_Clicked()
@@ -406,23 +389,18 @@ void MainWindow::Down_Clicked()
     if(sender == ui->mt_navTable1_button5 ){
         tableDownSel(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button5){
-        tableDownSel(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button5){
-        tableDownSel(ui->ft_tableWidget1);
+        tableDownSel(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button5){
-       tableDownSel(ui->ft_tableWidget2);
+       tableDownSel(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button5){
-        tableDownSel(ui->at_tableWidget1);
+        tableDownSel(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button5){
-        tableDownSel(ui->at_tableWidget2);
+        tableDownSel(ui->at_tableView2);
     }
-    */
 }
 
 void MainWindow::Top_Clicked()
@@ -432,23 +410,19 @@ void MainWindow::Top_Clicked()
     if(sender == ui->mt_navTable1_button6 ){
         tableTopSel(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button6){
-        tableTopSel(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button6){
-        tableTopSel(ui->ft_tableWidget1);
+        tableTopSel(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button6){
-       tableTopSel(ui->ft_tableWidget2);
+       tableTopSel(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button6){
-        tableTopSel(ui->at_tableWidget1);
+        tableTopSel(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button6){
-        tableTopSel(ui->at_tableWidget2);
+        tableTopSel(ui->at_tableView2);
     }
-    */
+
 }
 
 void MainWindow::Bottom_Clicked()
@@ -458,23 +432,18 @@ void MainWindow::Bottom_Clicked()
     if(sender == ui->mt_navTable1_button7 ){
         tableBotSel(ui->mt_tableView1);
     }
-    /*
-    else if(sender == ui->mt_navTable2_button7){
-        tableBotSel(ui->mt_tableWidget2);
-    }
     else if(sender == ui->ft_navTable1_button7){
-        tableBotSel(ui->ft_tableWidget1);
+        tableBotSel(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button7){
-       tableBotSel(ui->ft_tableWidget2);
+       tableBotSel(ui->ft_tableView2);
     }
     else if(sender == ui->at_navTable1_button7){
-        tableBotSel(ui->at_tableWidget1);
+        tableBotSel(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button7){
-        tableBotSel(ui->at_tableWidget2);
+        tableBotSel(ui->at_tableView2);
     }
-    */
 }
 
 
@@ -600,8 +569,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)
 {
-    //ui->tableView->model()->setData(ui->tableView->model()->index(fila ,col + 1),2.0*valor1);
-    //std::cout<<"data changed...........: "<<std::endl;
+    //todo:
 }
 
 void MainWindow::TableEditCompleted(QString str)
@@ -637,6 +605,7 @@ void MainWindow::TableEditCompleted(QString str)
         editWindow->getModuleList()->clear();
         // set to modules table
         editWindow->imageLabel->m_table = ui->mt_tableView1;
+        editWindow->imageLabel->setupGraphViewModule();
      }
      else if(indexPage == Page::FRAME)
      {
@@ -663,6 +632,7 @@ void MainWindow::TableEditCompleted(QString str)
          }
          // graph now handle frame table
          editWindow->imageLabel->m_table = ui->ft_tableView2;
+         editWindow->imageLabel->setupGraphViewFrame();
 
      }
      else if(indexPage == Page::ANIM)

@@ -49,29 +49,34 @@ ModulesList::ModulesList(int pieceSize, QWidget *parent)
     setViewMode(QListView::IconMode);
     setIconSize(QSize(m_PieceSize, m_PieceSize));
     setSpacing(10);
-    setAcceptDrops(true);
-    setDropIndicatorShown(true);
+    //setAcceptDrops(true);
+    //setDropIndicatorShown(true);
 }
 
 void ModulesList::dragEnterEvent(QDragEnterEvent *event)
 {
+    /*
     if (event->mimeData()->hasFormat("image/x-puzzle-piece"))
         event->accept();
     else
         event->ignore();
+    */
 }
 
 void ModulesList::dragMoveEvent(QDragMoveEvent *event)
 {
+    /*
     if (event->mimeData()->hasFormat("image/x-puzzle-piece")) {
         event->setDropAction(Qt::MoveAction);
         event->accept();
     } else
         event->ignore();
+    */
 }
 
 void ModulesList::dropEvent(QDropEvent *event)
 {
+    /*
     if (event->mimeData()->hasFormat("image/x-puzzle-piece")) {
         QByteArray pieceData = event->mimeData()->data("image/x-puzzle-piece");
         QDataStream dataStream(&pieceData, QIODevice::ReadOnly);
@@ -85,6 +90,7 @@ void ModulesList::dropEvent(QDropEvent *event)
         event->accept();
     } else
         event->ignore();
+    */
 }
 
 void ModulesList::addPiece(QPixmap pixmap, QPoint location,QString str)
@@ -100,6 +106,7 @@ void ModulesList::addPiece(QPixmap pixmap, QPoint location,QString str)
 
 void ModulesList::startDrag(Qt::DropActions /*supportedActions*/)
 {
+    /*
     QListWidgetItem *item = currentItem();
 
     QByteArray itemData;
@@ -119,4 +126,5 @@ void ModulesList::startDrag(Qt::DropActions /*supportedActions*/)
 
     if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
         delete takeItem(row(item));
+    */
 }

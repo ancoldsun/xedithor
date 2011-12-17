@@ -55,6 +55,9 @@ EditWindow::EditWindow(QWidget *parent) :
 
     modulesList->setAutoScroll(true);
 
+    //image list connect
+    connect(modulesList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(FrameDoubleClicked(QModelIndex)));
+
 }
 
 EditWindow::~EditWindow()
@@ -113,4 +116,15 @@ void EditWindow::setModuleList_Frame()
 void EditWindow::setModuleList_Anim()
 {
 
+}
+
+void EditWindow::FrameDoubleClicked(const QModelIndex& index)
+{
+    std::cout<<"image index: "<<index.row()<<std::endl;
+
+    int imgClicked_ = index.row();
+
+    QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
+    QPixmap copyPixmap = pixmap.copy();
+    this->imageLabel->AddPixmapItem(&copyPixmap);
 }
