@@ -334,6 +334,40 @@ void GraphWidget::dragMoveEvent(QDragMoveEvent* event)
     std::cout<<"Drag event "<<std::endl;
 }
 
+void GraphWidget::setupGraphViewModule()
+{
+    foreach (QGraphicsItem *item, m_scene->items()) {
+        if(item->type()== QGraphicsPixmapItem::Type){
+            m_scene->removeItem(item);
+        }
+    }
+
+    m_scene->addItem(rectSelect);
+    m_scene->addItem(pixmapGraphicsItem);
+}
+
+void GraphWidget::setupGraphViewFrame()
+{
+    m_scene->removeItem(rectSelect);
+    m_scene->removeItem(pixmapGraphicsItem);
+}
+
+void GraphWidget::setupGraphViewAnim()
+{
+
+}
+
+void GraphWidget::AddPixmapItem(QPixmap* pxmap)
+{
+    QGraphicsPixmapItem* itemPixMap= new QGraphicsPixmapItem(*pxmap);
+    itemPixMap->setPos(WidthRectView / 2 , HeightRectView / 2 );
+    itemPixMap->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    itemPixMap->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    itemPixMap->setAcceptHoverEvents ( true);
+    itemPixMap->setFlag( QGraphicsItem::ItemIsMovable, true );
+    this->scene()->addItem(itemPixMap);
+}
+
 
 
 

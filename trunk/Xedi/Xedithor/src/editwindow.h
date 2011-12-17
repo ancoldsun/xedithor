@@ -8,6 +8,8 @@
 
 
 #include <QMainWindow>
+#include <qabstractitemmodel.h>
+
 #include "graphwidgets.h"
 #include "moduleslist.h"
 
@@ -66,6 +68,8 @@ public:
      QLabel *mouseInfoLabel;
      double scaleFactor;
      ModulesList* modulesList;
+public slots:
+     void FrameDoubleClicked(const QModelIndex& index);
 
 
 };

@@ -44,6 +44,10 @@ public:
     {
         return rectSelect;
     }
+    void setupGraphViewModule();
+    void setupGraphViewFrame();
+    void setupGraphViewAnim();
+    void AddPixmapItem(QPixmap* pxmap);
 
 public slots:
     void setLabelMouse(QLabel* labelmouseinv);
