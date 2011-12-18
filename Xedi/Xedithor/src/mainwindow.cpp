@@ -25,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect signal-slot
     SetupConnectWidgets();
 
+    m_ImgfileName="none";
+    m_SprfileName="none";
+
 }
 
 MainWindow::~MainWindow()
@@ -257,12 +260,12 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
-    if (!fileName.isEmpty()) {
-        QImage image(fileName);
+    m_ImgfileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
+    if (!m_ImgfileName.isEmpty()) {
+        QImage image(m_ImgfileName);
         if (image.isNull()) {
             QMessageBox::information(this, tr("Xedithor"),
-                                     tr("Cannot load %1.").arg(fileName));
+                                     tr("Cannot load %1.").arg(m_ImgfileName));
             return;
         }
 
@@ -271,12 +274,13 @@ void MainWindow::open()
         editWindow->scaleFactor = 1.0;
         printAct->setEnabled(true);
         //update info path image
-        ui->imagePathInfo->setText(fileName);
+        ui->imagePathInfo->setText(m_ImgfileName);
     }
 }
 
 bool MainWindow::save()
 {
+    saveDataSprite();
     return true;
 }
 
@@ -565,6 +569,8 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         py_=py_-rect_.y()+(HeightRectView/2);
         editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
     }
+    else if(sender == ui->ft_tableView1){   // table frame 1
+    }
 }
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)
@@ -640,4 +646,48 @@ void MainWindow::TableEditCompleted(QString str)
 
      }
 
+ }
+ void MainWindow::saveDataSprite()
+ {
+    if(!m_SprfileName.compare("none"))
+    {
+        QString fileFilter="*.xml;;*.xdr";
+        m_SprfileName = QFileDialog::getSaveFileName(this,tr("Open File"), QDir::currentPath(),fileFilter);
+    }
+    QFile output(m_SprfileName);
+    if (!output.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QXmlStreamWriter stream(&output);
+    stream.setAutoFormatting(true);
+    stream.writeStartDocument();
+    stream.writeComment("xedithor's sprite file");
+    stream.writeComment("last saved: 18/12/2011 17:34");
+    /* save img path */
+    stream.writeStartElement("image");
+    stream.writeTextElement("path", m_ImgfileName);
+    stream.writeEndElement(); // image
+    /* save modules */
+    stream.writeStartElement("modules");
+    int numberRow = m_moduleTableModel->rowCount();
+    QString numberRowStr = QString::number(numberRow);
+    stream.writeAttribute("nModules", numberRowStr);
+    for(int ix=0;ix<numberRow;ix++)
+    {
+        QString nRow=QString::number(ix);
+        QString dataRow="";
+        RowData* rd = m_moduleTableModel->getDatainRow(ix);
+        for(int iy=0;iy<m_moduleTableModel->columnCount();iy++)
+        {
+            dataRow=dataRow+rd->getData(iy)+" ";
+        }
+        stream.writeTextElement(nRow, dataRow);
+    }
+    stream.writeEndElement(); // modules
+
+    /* save frame */
+    //todo:
+    /* save anim */
+    //todo:
+    stream.writeEndDocument();
  }
