@@ -20,7 +20,8 @@ SOURCES += src\main.cpp\
     src/editwindow.cpp \
     src/moduleslist.cpp \
     src/rowdata.cpp \
-    src/rowdatahandler.cpp
+    src/rowdatahandler.cpp \
+    src/xdframe.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     src/globalconstant.h \
     src/editwindow.h \
     src/moduleslist.h \
-    src/rowdatahandler.h
+    src/rowdatahandler.h \
+    src/xdframe.h
 
 
 FORMS    += mainwindow.ui \
@@ -44,6 +46,10 @@ RESOURCES += \
 
 OTHER_FILES += \
     temp.txt
+
+
+
+
 
 
 

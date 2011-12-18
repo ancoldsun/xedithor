@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <qtableview.h>
+#include <QXmlStreamWriter>
 
 #include "editwindow.h"
 #include "globalconstant.h"
@@ -85,6 +86,9 @@ private:
     ModuleTableModel* m_frameTableModel;
     ModuleTableModel* m_frameDescTableModel;
 
+    QString m_ImgfileName;
+    QString m_SprfileName;
+
     void CreateActions();
     void CreateMainMenus();
     void CreateToolBar();
@@ -99,6 +103,8 @@ private:
     void tableDownSel(QTableView* table);
     void tableTopSel(QTableView* table);
     void tableBotSel(QTableView* table);
+
+    void saveDataSprite();
 
 public slots:
     void tableRowSelected(const QModelIndex& index);
