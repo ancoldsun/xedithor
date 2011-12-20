@@ -104,6 +104,7 @@ bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & pare
     if(row <= m_gridData2.count()-1)
     {
         for (int n = 0; n < count; ++n) {
+                std::cout<<"removeRows: "<<row<<std::endl;
                 delete m_gridData2.at(row);
                 m_gridData2.removeAt(row);
             }
@@ -129,7 +130,7 @@ bool ModuleTableModel::cloneRow(int row)
     RowData::m_Handler = m_handler;
 
     RowData* dat= m_gridData2.at(row);
-    insertRow(row+1);
+    insertRows(row+1,1);
     RowData* newRowData =m_gridData2.at(row+1);
     delete newRowData;
     newRowData = new RowData(numberCol);
@@ -140,7 +141,6 @@ bool ModuleTableModel::cloneRow(int row)
             newRowData->setData(i,dat->getData(i));
         }
     }
-
     return true;
 }
 
@@ -168,4 +168,15 @@ void ModuleTableModel::refresh()
      QModelIndex botright = createIndex(m_gridData2.count(),numberCol-1);
 
      emit dataChanged(topLeft, botright);
+}
+
+void ModuleTableModel::clearData()
+{
+    std::cout<<"row count: "<<m_gridData2.count()<<std::endl;
+    int rCount = m_gridData2.count();
+    for(int i= rCount; i >=0 ; --i)
+    {
+        std::cout<<"delete: "<<i<<std::endl;
+        removeRows(i,1);
+    }
 }

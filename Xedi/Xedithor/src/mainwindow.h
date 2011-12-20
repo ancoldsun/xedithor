@@ -44,6 +44,7 @@ public:
 private slots:
     void newFile();
     void open();
+    void openDataSprite();
     bool save();
     bool saveAs();
     void about();
@@ -105,6 +106,9 @@ private:
     void tableBotSel(QTableView* table);
 
     void saveDataSprite();
+    void resetDataTable();
+    void parseDataRow(QString strDataRow);
+
 
 public slots:
     void tableRowSelected(const QModelIndex& index);
