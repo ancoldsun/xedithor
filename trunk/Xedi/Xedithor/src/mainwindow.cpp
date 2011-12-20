@@ -45,8 +45,8 @@ void MainWindow::CreateActions()
     openAct = new QAction(QIcon(":/images/open.png"),tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
     openAct->setStatusTip(tr("Open an existing file"));
-    // not for open image
-    //connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+    // for open sprite def file
+    connect(openAct, SIGNAL(triggered()), this, SLOT(openDataSprite()));
 
     saveAct = new QAction(QIcon(":/images/save.png"),tr("&Save"), this);
     saveAct->setShortcuts(QKeySequence::Save);
@@ -649,7 +649,7 @@ void MainWindow::TableEditCompleted(QString str)
  }
  void MainWindow::saveDataSprite()
  {
-    if(!m_SprfileName.compare("none"))
+    if(!m_SprfileName.compare("none") || !m_SprfileName.compare(""))
     {
         QString fileFilter="*.xml;;*.xdr";
         m_SprfileName = QFileDialog::getSaveFileName(this,tr("Open File"), QDir::currentPath(),fileFilter);
@@ -662,7 +662,8 @@ void MainWindow::TableEditCompleted(QString str)
     stream.setAutoFormatting(true);
     stream.writeStartDocument();
     stream.writeComment("xedithor's sprite file");
-    stream.writeComment("last saved: 18/12/2011 17:34");
+    stream.writeComment("last saved: 18/12/2011 17:34");// todo : replace w/ actual value
+    stream.writeStartElement("sprites");
     /* save img path */
     stream.writeStartElement("image");
     stream.writeTextElement("path", m_ImgfileName);
@@ -681,7 +682,7 @@ void MainWindow::TableEditCompleted(QString str)
         {
             dataRow=dataRow+rd->getData(iy)+" ";
         }
-        stream.writeTextElement(nRow, dataRow);
+        stream.writeTextElement("nRow", dataRow);
     }
     stream.writeEndElement(); // modules
 
@@ -689,5 +690,144 @@ void MainWindow::TableEditCompleted(QString str)
     //todo:
     /* save anim */
     //todo:
+    stream.writeEndElement(); // sprites
     stream.writeEndDocument();
+ }
+
+ void MainWindow::openDataSprite()
+ {
+     m_SprfileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
+     if (!m_SprfileName.isEmpty())
+     {
+        /* clear all data */
+        resetDataTable();
+
+        QFile* file = new QFile(m_SprfileName);
+
+        if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QMessageBox::critical(this,
+                               "QXSRExample::parseXML",
+                               "Couldn't open "+m_SprfileName,
+                               QMessageBox::Ok);
+            std::cout<<"error open"<<std::endl;
+            return;
+        }
+        QXmlStreamReader xml(file);
+        while(!xml.atEnd() && !xml.hasError())
+        {
+            QXmlStreamReader::TokenType token = xml.readNext();
+            if(token == QXmlStreamReader::StartDocument)
+            {
+                continue;
+            }
+            if(token == QXmlStreamReader::StartElement)
+            {
+                if(xml.name() == "sprites")
+                {
+                    continue;
+                }
+                if(xml.name() == "image")
+                {
+                    //std::cout<<"image available"<<std::endl;
+                    xml.readNext();
+                    xml.readNext();
+                    //std::cout<<"image available"<<xml.name().toString().toStdString().c_str()<<std::endl;
+                    if(xml.tokenType() == QXmlStreamReader::StartElement)
+                    {
+                        //std::cout<<"--- 3 ---"<<std::endl;
+                        if(xml.name() == "path")
+                        {
+                           xml.readNext();
+                           //std::cout<<xml.text().toString().toStdString().c_str()<<std::endl;
+                           /* open image */
+                           m_ImgfileName = xml.text().toString();
+                           QImage image(m_ImgfileName);
+                           if (image.isNull()) {
+                               QMessageBox::information(this, tr("Xedithor"),
+                                                        tr("Cannot load %1.").arg(m_ImgfileName));
+                           }
+
+                           pixmapOpened =QPixmap::fromImage(image);
+                           editWindow->imageLabel->setImageGraphicsItem(&pixmapOpened);
+                           editWindow->scaleFactor = 1.0;
+                           printAct->setEnabled(true);
+                           //update info path image
+                           ui->imagePathInfo->setText(m_ImgfileName);
+                           /*end open image */
+                        }
+                    }
+                }
+                if(xml.name() == "modules")
+                {
+                    //std::cout<<"--- modules ---"<<std::endl;
+                    //std::cout<<"nModules: "<<xml.attributes().data()->value().toString().toStdString().c_str()<<std::endl;
+                    xml.readNext();
+                    while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                                            xml.name() == "modules"))
+                    {
+                        if(xml.tokenType() == QXmlStreamReader::StartElement)
+                        {
+                            if(xml.name() == "nRow")
+                            {
+                                //std::cout<<"--- nRow ---"<<std::endl;
+                                xml.readNext();
+                                parseDataRow(xml.text().toString());
+                            }
+                        }
+                        xml.readNext();
+                    }
+                }
+            }
+        }
+        if(xml.hasError())
+        {
+            QMessageBox::critical(this,
+                                  "QXSRExample::parseXML",
+                                  xml.errorString(),
+                                  QMessageBox::Ok);
+        }
+        xml.clear();
+     }
+ }
+
+ void MainWindow::resetDataTable()
+ {
+     /* reset module table */
+     m_moduleTableModel->clearData();
+     /* reset frame table */
+     //todo:
+     /* reset anim table */
+     //todo:
+ }
+
+ void MainWindow::parseDataRow(QString strDataRow)
+ {
+    //std::cout<<" data row: "<<strDataRow.toStdString().c_str()<<std::endl;
+    /* create row */
+    m_moduleTableModel->insertRow(m_moduleTableModel->rowCount());
+    /* parse data row */
+    QList<QString> datRow;
+    QString buff="";
+    QChar chSpace = QChar::fromAscii(' ');
+    for(int i=0;i<strDataRow.count();i++)
+    {
+        QChar ch = strDataRow.at(i);
+        if(ch!=chSpace)
+        {
+            buff+=ch;
+        }
+        else
+        {
+            datRow.insert(i,buff);
+            buff="";
+        }
+    }
+    /* set data row */
+    RowData* rd = m_moduleTableModel->getDatainRow(m_moduleTableModel->rowCount()-1);
+    for(int i= 0; i < datRow.count(); i++)
+    {
+        rd->setData(i,datRow.at(i));
+    }
+    //std::cout<<" data row re "<<buff.toStdString().c_str()<<std::endl;
  }

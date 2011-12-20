@@ -31,6 +31,7 @@ public:
     bool cloneRow(int row);
     bool swapRow(int row1,int row2);
     RowData* getDatainRow(int iRow);
+    void clearData();
     void refresh();
 private:
     //QString m_gridData[ROWS][COLS];  //holds text entered into QTableView
