@@ -1,3 +1,7 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
 #ifndef ROWDATAHANDLER_H
 #define ROWDATAHANDLER_H
 
@@ -6,6 +10,10 @@
 
 #include <string>
 #include <vector>
+
+
+
+
 
 /* abstract class
 *  for customizable data
@@ -29,7 +37,7 @@ public:
 class FrameRowDataHandler :public RowDataHandler
 {
 public:
-    void createDefaultRow(std::vector<QString>& vec,int col);
+    void createDefaultRow(std::vector<QString>& vec,int col);///,std::vector<ModuleFrame*>&Table);
     void createRowHeader(QStringList& strList);
 };
 

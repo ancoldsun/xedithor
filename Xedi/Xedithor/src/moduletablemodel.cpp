@@ -18,6 +18,9 @@ ModuleTableModel::ModuleTableModel(QObject *parent,int row,int col,RowDataHandle
             m_gridData2.insert(i, dat);
     }
     m_handler->createRowHeader(m_Headers);
+    // model in model
+    m_hasModel    = false;
+
 }
 
 int ModuleTableModel::rowCount(const QModelIndex & /*parent*/) const
@@ -91,6 +94,13 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
     for (int n = 0; n < count; ++n) {
         RowData* dat = new RowData(numberCol);
         m_gridData2.insert(row, dat);
+
+        if(m_hasModel){
+            // danger : no code will delete : new FrameDescRowDataHandler
+            // todo   : make singleton for row handler
+            m_listModel.insert(row,new ModuleTableModel(this,0,6,new FrameDescRowDataHandler()));
+        }
+
     }
     endInsertRows();
 
@@ -107,6 +117,10 @@ bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & pare
                 std::cout<<"removeRows: "<<row<<std::endl;
                 delete m_gridData2.at(row);
                 m_gridData2.removeAt(row);
+                if(m_hasModel){
+                    delete m_listModel.at(row);
+                    m_listModel.removeAt(row);
+                }
             }
     }
     endRemoveRows ();
@@ -179,4 +193,9 @@ void ModuleTableModel::clearData()
         std::cout<<"delete: "<<i<<std::endl;
         removeRows(i,1);
     }
+}
+
+ModuleTableModel* ModuleTableModel::getModel(int rowN)
+{
+    return m_listModel.at(rowN);
 }

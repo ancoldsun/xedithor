@@ -31,6 +31,12 @@ public:
     bool cloneRow(int row);
     bool swapRow(int row1,int row2);
     RowData* getDatainRow(int iRow);
+    inline void setHasModel(bool isHasModel){
+        m_hasModel=isHasModel;
+    }
+
+    ModuleTableModel* getModel(int rowN);
+
     void clearData();
     void refresh();
 private:
@@ -39,6 +45,8 @@ private:
     int numberRow,numberCol;
     QStringList m_Headers;
     RowDataHandler* m_handler;
+    QList<ModuleTableModel*> m_listModel;
+    bool m_hasModel;
     //QTimer *timer;
 
 
