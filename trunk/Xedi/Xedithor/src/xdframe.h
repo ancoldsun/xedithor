@@ -1,3 +1,7 @@
+/* Xedithor : 2D sprite editor
+*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+*  License  :
+*/
 #ifndef XDFRAME_H
 #define XDFRAME_H
 
@@ -5,6 +9,9 @@
 #include <QList>
 #include "rowdata.h"
 
+
+
+/* frame */
 class xdFrame
 {
 public:
@@ -30,7 +37,7 @@ private:
     QString m_fid;
     int m_nModules;
     QString m_name;
-    QList<RowData*> m_listModules;
+   // QList<ModuleFrame*> m_listModules;
 };
 
 #endif // XDFRAME_H

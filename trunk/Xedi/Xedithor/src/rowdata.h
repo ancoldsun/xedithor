@@ -11,6 +11,25 @@
 
 #include "rowdatahandler.h"
 
+/* module in frame */
+/*
+class ModuleFrame
+{
+public:
+  QString getData(const int nCol){
+      return m_ColData.at(nCol);
+  }
+
+  void setData(const int nCol, const QString data){
+      m_ColData[nCol] = data;
+  }
+
+private:
+  std::vector<QString> m_ColData;
+  int m_IDModule;
+};
+*/
+
 class RowData
 {
   public:
@@ -22,8 +41,14 @@ class RowData
     QString getData(const int nCol);
     void setData(const int nCol, const QString data);
 
+    /*std::vector<ModuleFrame*> getTable(){
+        return m_listRow;
+    }
+    */
+
   private:
     std::vector<QString> m_ColData;
+   //std::vector<ModuleFrame*> m_listRow; // row in row :D, use for row that have list of row
 
     int m_IDModule;
   public:

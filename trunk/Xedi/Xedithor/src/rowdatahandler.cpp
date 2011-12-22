@@ -27,7 +27,7 @@ void ModuleRowDataHandler::createRowHeader(QStringList& strList)
 
 
 /* frame */
-void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
+void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,std::vector<ModuleFrame*>&Table)
 {
     QString s="0";
     if(col==0)
@@ -39,6 +39,9 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
     else if(col==5)
         s=QString::number(32);
     vec.push_back(s);
+
+    //moduleFrame_ = new ModuleFrame();
+    //Table.push_back(moduleFrame_);
 }
 
 void FrameRowDataHandler::createRowHeader(QStringList& strList)

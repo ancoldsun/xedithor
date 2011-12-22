@@ -140,7 +140,8 @@ void MainWindow::SetupTables()
     editWindow->imageLabel->m_table = ui->mt_tableView1;
 
     /*frame - top table */
-    m_frameTableModel = new ModuleTableModel(this,1,6,new FrameRowDataHandler());
+    m_frameTableModel = new ModuleTableModel(this,0,6,new FrameRowDataHandler());
+    m_frameTableModel->setHasModel(true);
     ui->ft_tableView1->setModel(m_frameTableModel);
     ui->ft_tableView1->setSelectionBehavior(QTableView::SelectRows);
 
@@ -154,7 +155,7 @@ void MainWindow::SetupTables()
     //connect(ui->ft_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
     /*frame - bottom table*/
-    m_frameDescTableModel = new ModuleTableModel(this,1,6,new FrameDescRowDataHandler());
+    m_frameDescTableModel = new ModuleTableModel(this,0,6,new FrameDescRowDataHandler());
     ui->ft_tableView2->setModel(m_frameDescTableModel);
     ui->ft_tableView2->setSelectionBehavior(QTableView::SelectRows);
 
@@ -570,6 +571,12 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
     }
     else if(sender == ui->ft_tableView1){   // table frame 1
+        int rowSelected_ = ui->ft_tableView1->currentIndex().row();
+        std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
+
+        ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
+        ModuleTableModel* mf_bottom = mf->getModel(rowSelected_);
+        ui->ft_tableView2->setModel(mf_bottom);
     }
 }
 
