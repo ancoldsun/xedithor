@@ -7,6 +7,7 @@ UID::UID()
     m_uid[UIDType::MODULE] =0;
     m_uid[UIDType::FRAME]  =0;
     m_uid[UIDType::ANIM]   =0;
+    m_isAutoInc =true;
 }
 UID& UID::Instance()
 {
@@ -42,6 +43,8 @@ void UID::setLastUID(int lastUid,int typeUID)
 int UID::getLastUID(int typeUID)
 {
     int ret =  m_uid[typeUID];
-    m_uid[typeUID]++;
+    if(m_isAutoInc){
+        m_uid[typeUID]++;
+    }
     return ret;
 }
