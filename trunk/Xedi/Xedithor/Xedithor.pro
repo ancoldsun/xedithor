@@ -21,7 +21,8 @@ SOURCES += src\main.cpp\
     src/moduleslist.cpp \
     src/rowdata.cpp \
     src/rowdatahandler.cpp \
-    src/xdframe.cpp
+    src/xdframe.cpp \
+    src/uidmanager.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     src/editwindow.h \
     src/moduleslist.h \
     src/rowdatahandler.h \
-    src/xdframe.h
+    src/xdframe.h \
+    src/uidmanager.h
 
 
 FORMS    += mainwindow.ui \
@@ -46,6 +48,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     temp.txt
+
+
 
 
 

@@ -1,14 +1,16 @@
 #include "rowdatahandler.h"
 #include "uidmanager.h"
 
+#define MODULE_START_ID 1000
+
 /* module */
 void ModuleRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
 {
     QString s="0";
     if(col==0)
-        s=QString::number(1);//m_IDModule
+        s=QString::number(0);//m_IDModule
     else if(col==1)
-        s=QString::number(100+(UID::Instance().getLastUID(UIDType::MODULE)));
+        s=QString::number(MODULE_START_ID+(UID::Instance().getLastUID(UIDType::MODULE)));
     else if(col==4)
         s=QString::number(32);
     else if(col==5)

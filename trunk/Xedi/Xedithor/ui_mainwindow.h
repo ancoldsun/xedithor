@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Dec 17 12:23:30 2011
+** Created: Sat Dec 24 14:13:45 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -117,6 +117,23 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(768, 556);
+        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
+        QPalette palette;
+        QBrush brush(QColor(179, 179, 134, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Button, brush);
+        QBrush brush1(QColor(212, 208, 200, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Inactive, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Button, brush1);
+        MainWindow->setPalette(palette);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/Color.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -174,81 +191,81 @@ public:
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         mt_navTable1_button1 = new QToolButton(mt_groupBox1);
         mt_navTable1_button1->setObjectName(QString::fromUtf8("mt_navTable1_button1"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(mt_navTable1_button1->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button1->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button1->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button1->setSizePolicy(sizePolicy1);
         mt_navTable1_button1->setMinimumSize(QSize(2, 0));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/zoomIn.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button1->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/images/zoomIn.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button1->setIcon(icon1);
 
         horizontalLayout_3->addWidget(mt_navTable1_button1);
 
         mt_navTable1_button2 = new QToolButton(mt_groupBox1);
         mt_navTable1_button2->setObjectName(QString::fromUtf8("mt_navTable1_button2"));
-        sizePolicy.setHeightForWidth(mt_navTable1_button2->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button2->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button2->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button2->setSizePolicy(sizePolicy1);
         mt_navTable1_button2->setMinimumSize(QSize(2, 0));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/images/editRect.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button2->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/images/editRect.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button2->setIcon(icon2);
 
         horizontalLayout_3->addWidget(mt_navTable1_button2);
 
         mt_navTable1_button3 = new QToolButton(mt_groupBox1);
         mt_navTable1_button3->setObjectName(QString::fromUtf8("mt_navTable1_button3"));
-        sizePolicy.setHeightForWidth(mt_navTable1_button3->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button3->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button3->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button3->setSizePolicy(sizePolicy1);
         mt_navTable1_button3->setMinimumSize(QSize(2, 0));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/images/Del.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button3->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/images/Del.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button3->setIcon(icon3);
 
         horizontalLayout_3->addWidget(mt_navTable1_button3);
 
         mt_navTable1_button4 = new QToolButton(mt_groupBox1);
         mt_navTable1_button4->setObjectName(QString::fromUtf8("mt_navTable1_button4"));
-        sizePolicy.setHeightForWidth(mt_navTable1_button4->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button4->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button4->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button4->setSizePolicy(sizePolicy1);
         mt_navTable1_button4->setMinimumSize(QSize(2, 0));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/images/Up.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button4->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/images/Up.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button4->setIcon(icon4);
 
         horizontalLayout_3->addWidget(mt_navTable1_button4);
 
         mt_navTable1_button5 = new QToolButton(mt_groupBox1);
         mt_navTable1_button5->setObjectName(QString::fromUtf8("mt_navTable1_button5"));
-        sizePolicy.setHeightForWidth(mt_navTable1_button5->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button5->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button5->setSizePolicy(sizePolicy1);
         mt_navTable1_button5->setMinimumSize(QSize(2, 0));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/images/Down.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button5->setIcon(icon4);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/images/Down.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button5->setIcon(icon5);
 
         horizontalLayout_3->addWidget(mt_navTable1_button5);
 
         mt_navTable1_button6 = new QToolButton(mt_groupBox1);
         mt_navTable1_button6->setObjectName(QString::fromUtf8("mt_navTable1_button6"));
-        sizePolicy.setHeightForWidth(mt_navTable1_button6->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button6->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button6->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button6->setSizePolicy(sizePolicy1);
         mt_navTable1_button6->setMinimumSize(QSize(2, 0));
-        QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/images/Top.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button6->setIcon(icon5);
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/images/Top.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button6->setIcon(icon6);
 
         horizontalLayout_3->addWidget(mt_navTable1_button6);
 
         mt_navTable1_button7 = new QToolButton(mt_groupBox1);
         mt_navTable1_button7->setObjectName(QString::fromUtf8("mt_navTable1_button7"));
-        sizePolicy.setHeightForWidth(mt_navTable1_button7->sizePolicy().hasHeightForWidth());
-        mt_navTable1_button7->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(mt_navTable1_button7->sizePolicy().hasHeightForWidth());
+        mt_navTable1_button7->setSizePolicy(sizePolicy1);
         mt_navTable1_button7->setMinimumSize(QSize(2, 0));
-        QIcon icon6;
-        icon6.addFile(QString::fromUtf8(":/images/Bottom.png"), QSize(), QIcon::Normal, QIcon::Off);
-        mt_navTable1_button7->setIcon(icon6);
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/images/Bottom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        mt_navTable1_button7->setIcon(icon7);
 
         horizontalLayout_3->addWidget(mt_navTable1_button7);
 
@@ -267,9 +284,9 @@ public:
         openImageButton = new QToolButton(groupBox);
         openImageButton->setObjectName(QString::fromUtf8("openImageButton"));
         openImageButton->setGeometry(QRect(10, 20, 41, 31));
-        QIcon icon7;
-        icon7.addFile(QString::fromUtf8(":/images/Create.png"), QSize(), QIcon::Normal, QIcon::Off);
-        openImageButton->setIcon(icon7);
+        QIcon icon8;
+        icon8.addFile(QString::fromUtf8(":/images/Create.png"), QSize(), QIcon::Normal, QIcon::Off);
+        openImageButton->setIcon(icon8);
         imagePathInfo = new QLabel(groupBox);
         imagePathInfo->setObjectName(QString::fromUtf8("imagePathInfo"));
         imagePathInfo->setGeometry(QRect(60, 20, 281, 31));
@@ -293,64 +310,64 @@ public:
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         ft_navTable1_button1 = new QToolButton(ft_groupBox1);
         ft_navTable1_button1->setObjectName(QString::fromUtf8("ft_navTable1_button1"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button1->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button1->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button1->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button1->setSizePolicy(sizePolicy1);
         ft_navTable1_button1->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button1->setIcon(icon);
+        ft_navTable1_button1->setIcon(icon1);
 
         horizontalLayout_6->addWidget(ft_navTable1_button1);
 
         ft_navTable1_button2 = new QToolButton(ft_groupBox1);
         ft_navTable1_button2->setObjectName(QString::fromUtf8("ft_navTable1_button2"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button2->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button2->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button2->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button2->setSizePolicy(sizePolicy1);
         ft_navTable1_button2->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button2->setIcon(icon1);
+        ft_navTable1_button2->setIcon(icon2);
 
         horizontalLayout_6->addWidget(ft_navTable1_button2);
 
         ft_navTable1_button3 = new QToolButton(ft_groupBox1);
         ft_navTable1_button3->setObjectName(QString::fromUtf8("ft_navTable1_button3"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button3->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button3->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button3->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button3->setSizePolicy(sizePolicy1);
         ft_navTable1_button3->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button3->setIcon(icon2);
+        ft_navTable1_button3->setIcon(icon3);
 
         horizontalLayout_6->addWidget(ft_navTable1_button3);
 
         ft_navTable1_button4 = new QToolButton(ft_groupBox1);
         ft_navTable1_button4->setObjectName(QString::fromUtf8("ft_navTable1_button4"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button4->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button4->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button4->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button4->setSizePolicy(sizePolicy1);
         ft_navTable1_button4->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button4->setIcon(icon3);
+        ft_navTable1_button4->setIcon(icon4);
 
         horizontalLayout_6->addWidget(ft_navTable1_button4);
 
         ft_navTable1_button5 = new QToolButton(ft_groupBox1);
         ft_navTable1_button5->setObjectName(QString::fromUtf8("ft_navTable1_button5"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button5->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button5->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button5->setSizePolicy(sizePolicy1);
         ft_navTable1_button5->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button5->setIcon(icon4);
+        ft_navTable1_button5->setIcon(icon5);
 
         horizontalLayout_6->addWidget(ft_navTable1_button5);
 
         ft_navTable1_button6 = new QToolButton(ft_groupBox1);
         ft_navTable1_button6->setObjectName(QString::fromUtf8("ft_navTable1_button6"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button6->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button6->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button6->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button6->setSizePolicy(sizePolicy1);
         ft_navTable1_button6->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button6->setIcon(icon5);
+        ft_navTable1_button6->setIcon(icon6);
 
         horizontalLayout_6->addWidget(ft_navTable1_button6);
 
         ft_navTable1_button7 = new QToolButton(ft_groupBox1);
         ft_navTable1_button7->setObjectName(QString::fromUtf8("ft_navTable1_button7"));
-        sizePolicy.setHeightForWidth(ft_navTable1_button7->sizePolicy().hasHeightForWidth());
-        ft_navTable1_button7->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable1_button7->sizePolicy().hasHeightForWidth());
+        ft_navTable1_button7->setSizePolicy(sizePolicy1);
         ft_navTable1_button7->setMinimumSize(QSize(2, 0));
-        ft_navTable1_button7->setIcon(icon6);
+        ft_navTable1_button7->setIcon(icon7);
 
         horizontalLayout_6->addWidget(ft_navTable1_button7);
 
@@ -364,22 +381,22 @@ public:
 
         dockWidget_ft = new QDockWidget(FrameTab);
         dockWidget_ft->setObjectName(QString::fromUtf8("dockWidget_ft"));
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(dockWidget_ft->sizePolicy().hasHeightForWidth());
-        dockWidget_ft->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(dockWidget_ft->sizePolicy().hasHeightForWidth());
+        dockWidget_ft->setSizePolicy(sizePolicy2);
         dockWidget_ft->setMinimumSize(QSize(350, 199));
         dockWidget_ft->setLayoutDirection(Qt::LeftToRight);
         dockWidget_ft->setFeatures(QDockWidget::NoDockWidgetFeatures);
         dockWidgetContents_5 = new QWidget();
         dockWidgetContents_5->setObjectName(QString::fromUtf8("dockWidgetContents_5"));
         dockWidgetContents_5->setEnabled(true);
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(dockWidgetContents_5->sizePolicy().hasHeightForWidth());
-        dockWidgetContents_5->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(dockWidgetContents_5->sizePolicy().hasHeightForWidth());
+        dockWidgetContents_5->setSizePolicy(sizePolicy3);
         dockWidgetContents_5->setLayoutDirection(Qt::LeftToRight);
         dockWidgetContents_5->setStyleSheet(QString::fromUtf8(""));
         verticalLayout_6 = new QVBoxLayout(dockWidgetContents_5);
@@ -394,65 +411,65 @@ public:
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         ft_navTable2_button1 = new QToolButton(ft_groupBox2);
         ft_navTable2_button1->setObjectName(QString::fromUtf8("ft_navTable2_button1"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button1->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button1->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button1->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button1->setSizePolicy(sizePolicy1);
         ft_navTable2_button1->setMinimumSize(QSize(2, 0));
         ft_navTable2_button1->setStyleSheet(QString::fromUtf8(""));
-        ft_navTable2_button1->setIcon(icon);
+        ft_navTable2_button1->setIcon(icon1);
 
         horizontalLayout_7->addWidget(ft_navTable2_button1);
 
         ft_navTable2_button2 = new QToolButton(ft_groupBox2);
         ft_navTable2_button2->setObjectName(QString::fromUtf8("ft_navTable2_button2"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button2->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button2->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button2->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button2->setSizePolicy(sizePolicy1);
         ft_navTable2_button2->setMinimumSize(QSize(2, 0));
-        ft_navTable2_button2->setIcon(icon1);
+        ft_navTable2_button2->setIcon(icon2);
 
         horizontalLayout_7->addWidget(ft_navTable2_button2);
 
         ft_navTable2_button3 = new QToolButton(ft_groupBox2);
         ft_navTable2_button3->setObjectName(QString::fromUtf8("ft_navTable2_button3"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button3->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button3->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button3->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button3->setSizePolicy(sizePolicy1);
         ft_navTable2_button3->setMinimumSize(QSize(2, 0));
-        ft_navTable2_button3->setIcon(icon2);
+        ft_navTable2_button3->setIcon(icon3);
 
         horizontalLayout_7->addWidget(ft_navTable2_button3);
 
         ft_navTable2_button4 = new QToolButton(ft_groupBox2);
         ft_navTable2_button4->setObjectName(QString::fromUtf8("ft_navTable2_button4"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button4->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button4->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button4->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button4->setSizePolicy(sizePolicy1);
         ft_navTable2_button4->setMinimumSize(QSize(2, 0));
-        ft_navTable2_button4->setIcon(icon3);
+        ft_navTable2_button4->setIcon(icon4);
 
         horizontalLayout_7->addWidget(ft_navTable2_button4);
 
         ft_navTable2_button5 = new QToolButton(ft_groupBox2);
         ft_navTable2_button5->setObjectName(QString::fromUtf8("ft_navTable2_button5"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button5->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button5->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button5->setSizePolicy(sizePolicy1);
         ft_navTable2_button5->setMinimumSize(QSize(2, 0));
-        ft_navTable2_button5->setIcon(icon4);
+        ft_navTable2_button5->setIcon(icon5);
 
         horizontalLayout_7->addWidget(ft_navTable2_button5);
 
         ft_navTable2_button6 = new QToolButton(ft_groupBox2);
         ft_navTable2_button6->setObjectName(QString::fromUtf8("ft_navTable2_button6"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button6->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button6->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button6->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button6->setSizePolicy(sizePolicy1);
         ft_navTable2_button6->setMinimumSize(QSize(2, 0));
-        ft_navTable2_button6->setIcon(icon5);
+        ft_navTable2_button6->setIcon(icon6);
 
         horizontalLayout_7->addWidget(ft_navTable2_button6);
 
         ft_navTable2_button7 = new QToolButton(ft_groupBox2);
         ft_navTable2_button7->setObjectName(QString::fromUtf8("ft_navTable2_button7"));
-        sizePolicy.setHeightForWidth(ft_navTable2_button7->sizePolicy().hasHeightForWidth());
-        ft_navTable2_button7->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(ft_navTable2_button7->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button7->setSizePolicy(sizePolicy1);
         ft_navTable2_button7->setMinimumSize(QSize(2, 0));
-        ft_navTable2_button7->setIcon(icon6);
+        ft_navTable2_button7->setIcon(icon7);
 
         horizontalLayout_7->addWidget(ft_navTable2_button7);
 
@@ -484,64 +501,64 @@ public:
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
         at_navTable1_button1 = new QToolButton(at_groupBox1);
         at_navTable1_button1->setObjectName(QString::fromUtf8("at_navTable1_button1"));
-        sizePolicy.setHeightForWidth(at_navTable1_button1->sizePolicy().hasHeightForWidth());
-        at_navTable1_button1->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button1->sizePolicy().hasHeightForWidth());
+        at_navTable1_button1->setSizePolicy(sizePolicy1);
         at_navTable1_button1->setMinimumSize(QSize(2, 0));
-        at_navTable1_button1->setIcon(icon);
+        at_navTable1_button1->setIcon(icon1);
 
         horizontalLayout_8->addWidget(at_navTable1_button1);
 
         at_navTable1_button2 = new QToolButton(at_groupBox1);
         at_navTable1_button2->setObjectName(QString::fromUtf8("at_navTable1_button2"));
-        sizePolicy.setHeightForWidth(at_navTable1_button2->sizePolicy().hasHeightForWidth());
-        at_navTable1_button2->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button2->sizePolicy().hasHeightForWidth());
+        at_navTable1_button2->setSizePolicy(sizePolicy1);
         at_navTable1_button2->setMinimumSize(QSize(2, 0));
-        at_navTable1_button2->setIcon(icon1);
+        at_navTable1_button2->setIcon(icon2);
 
         horizontalLayout_8->addWidget(at_navTable1_button2);
 
         at_navTable1_button3 = new QToolButton(at_groupBox1);
         at_navTable1_button3->setObjectName(QString::fromUtf8("at_navTable1_button3"));
-        sizePolicy.setHeightForWidth(at_navTable1_button3->sizePolicy().hasHeightForWidth());
-        at_navTable1_button3->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button3->sizePolicy().hasHeightForWidth());
+        at_navTable1_button3->setSizePolicy(sizePolicy1);
         at_navTable1_button3->setMinimumSize(QSize(2, 0));
-        at_navTable1_button3->setIcon(icon2);
+        at_navTable1_button3->setIcon(icon3);
 
         horizontalLayout_8->addWidget(at_navTable1_button3);
 
         at_navTable1_button4 = new QToolButton(at_groupBox1);
         at_navTable1_button4->setObjectName(QString::fromUtf8("at_navTable1_button4"));
-        sizePolicy.setHeightForWidth(at_navTable1_button4->sizePolicy().hasHeightForWidth());
-        at_navTable1_button4->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button4->sizePolicy().hasHeightForWidth());
+        at_navTable1_button4->setSizePolicy(sizePolicy1);
         at_navTable1_button4->setMinimumSize(QSize(2, 0));
-        at_navTable1_button4->setIcon(icon3);
+        at_navTable1_button4->setIcon(icon4);
 
         horizontalLayout_8->addWidget(at_navTable1_button4);
 
         at_navTable1_button5 = new QToolButton(at_groupBox1);
         at_navTable1_button5->setObjectName(QString::fromUtf8("at_navTable1_button5"));
-        sizePolicy.setHeightForWidth(at_navTable1_button5->sizePolicy().hasHeightForWidth());
-        at_navTable1_button5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button5->sizePolicy().hasHeightForWidth());
+        at_navTable1_button5->setSizePolicy(sizePolicy1);
         at_navTable1_button5->setMinimumSize(QSize(2, 0));
-        at_navTable1_button5->setIcon(icon4);
+        at_navTable1_button5->setIcon(icon5);
 
         horizontalLayout_8->addWidget(at_navTable1_button5);
 
         at_navTable1_button6 = new QToolButton(at_groupBox1);
         at_navTable1_button6->setObjectName(QString::fromUtf8("at_navTable1_button6"));
-        sizePolicy.setHeightForWidth(at_navTable1_button6->sizePolicy().hasHeightForWidth());
-        at_navTable1_button6->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button6->sizePolicy().hasHeightForWidth());
+        at_navTable1_button6->setSizePolicy(sizePolicy1);
         at_navTable1_button6->setMinimumSize(QSize(2, 0));
-        at_navTable1_button6->setIcon(icon5);
+        at_navTable1_button6->setIcon(icon6);
 
         horizontalLayout_8->addWidget(at_navTable1_button6);
 
         at_navTable1_button7 = new QToolButton(at_groupBox1);
         at_navTable1_button7->setObjectName(QString::fromUtf8("at_navTable1_button7"));
-        sizePolicy.setHeightForWidth(at_navTable1_button7->sizePolicy().hasHeightForWidth());
-        at_navTable1_button7->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable1_button7->sizePolicy().hasHeightForWidth());
+        at_navTable1_button7->setSizePolicy(sizePolicy1);
         at_navTable1_button7->setMinimumSize(QSize(2, 0));
-        at_navTable1_button7->setIcon(icon6);
+        at_navTable1_button7->setIcon(icon7);
 
         horizontalLayout_8->addWidget(at_navTable1_button7);
 
@@ -555,16 +572,16 @@ public:
 
         dockWidget_at = new QDockWidget(AnimTab);
         dockWidget_at->setObjectName(QString::fromUtf8("dockWidget_at"));
-        sizePolicy1.setHeightForWidth(dockWidget_at->sizePolicy().hasHeightForWidth());
-        dockWidget_at->setSizePolicy(sizePolicy1);
+        sizePolicy2.setHeightForWidth(dockWidget_at->sizePolicy().hasHeightForWidth());
+        dockWidget_at->setSizePolicy(sizePolicy2);
         dockWidget_at->setMinimumSize(QSize(350, 199));
         dockWidget_at->setLayoutDirection(Qt::LeftToRight);
         dockWidget_at->setFeatures(QDockWidget::NoDockWidgetFeatures);
         dockWidgetContents_7 = new QWidget();
         dockWidgetContents_7->setObjectName(QString::fromUtf8("dockWidgetContents_7"));
         dockWidgetContents_7->setEnabled(true);
-        sizePolicy2.setHeightForWidth(dockWidgetContents_7->sizePolicy().hasHeightForWidth());
-        dockWidgetContents_7->setSizePolicy(sizePolicy2);
+        sizePolicy3.setHeightForWidth(dockWidgetContents_7->sizePolicy().hasHeightForWidth());
+        dockWidgetContents_7->setSizePolicy(sizePolicy3);
         dockWidgetContents_7->setLayoutDirection(Qt::LeftToRight);
         dockWidgetContents_7->setStyleSheet(QString::fromUtf8(""));
         verticalLayout_7 = new QVBoxLayout(dockWidgetContents_7);
@@ -579,65 +596,65 @@ public:
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         at_navTable2_button1 = new QToolButton(at_groupBox2);
         at_navTable2_button1->setObjectName(QString::fromUtf8("at_navTable2_button1"));
-        sizePolicy.setHeightForWidth(at_navTable2_button1->sizePolicy().hasHeightForWidth());
-        at_navTable2_button1->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button1->sizePolicy().hasHeightForWidth());
+        at_navTable2_button1->setSizePolicy(sizePolicy1);
         at_navTable2_button1->setMinimumSize(QSize(2, 0));
         at_navTable2_button1->setStyleSheet(QString::fromUtf8(""));
-        at_navTable2_button1->setIcon(icon);
+        at_navTable2_button1->setIcon(icon1);
 
         horizontalLayout_9->addWidget(at_navTable2_button1);
 
         at_navTable2_button2 = new QToolButton(at_groupBox2);
         at_navTable2_button2->setObjectName(QString::fromUtf8("at_navTable2_button2"));
-        sizePolicy.setHeightForWidth(at_navTable2_button2->sizePolicy().hasHeightForWidth());
-        at_navTable2_button2->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button2->sizePolicy().hasHeightForWidth());
+        at_navTable2_button2->setSizePolicy(sizePolicy1);
         at_navTable2_button2->setMinimumSize(QSize(2, 0));
-        at_navTable2_button2->setIcon(icon1);
+        at_navTable2_button2->setIcon(icon2);
 
         horizontalLayout_9->addWidget(at_navTable2_button2);
 
         at_navTable2_button3 = new QToolButton(at_groupBox2);
         at_navTable2_button3->setObjectName(QString::fromUtf8("at_navTable2_button3"));
-        sizePolicy.setHeightForWidth(at_navTable2_button3->sizePolicy().hasHeightForWidth());
-        at_navTable2_button3->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button3->sizePolicy().hasHeightForWidth());
+        at_navTable2_button3->setSizePolicy(sizePolicy1);
         at_navTable2_button3->setMinimumSize(QSize(2, 0));
-        at_navTable2_button3->setIcon(icon2);
+        at_navTable2_button3->setIcon(icon3);
 
         horizontalLayout_9->addWidget(at_navTable2_button3);
 
         at_navTable2_button4 = new QToolButton(at_groupBox2);
         at_navTable2_button4->setObjectName(QString::fromUtf8("at_navTable2_button4"));
-        sizePolicy.setHeightForWidth(at_navTable2_button4->sizePolicy().hasHeightForWidth());
-        at_navTable2_button4->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button4->sizePolicy().hasHeightForWidth());
+        at_navTable2_button4->setSizePolicy(sizePolicy1);
         at_navTable2_button4->setMinimumSize(QSize(2, 0));
-        at_navTable2_button4->setIcon(icon3);
+        at_navTable2_button4->setIcon(icon4);
 
         horizontalLayout_9->addWidget(at_navTable2_button4);
 
         at_navTable2_button5 = new QToolButton(at_groupBox2);
         at_navTable2_button5->setObjectName(QString::fromUtf8("at_navTable2_button5"));
-        sizePolicy.setHeightForWidth(at_navTable2_button5->sizePolicy().hasHeightForWidth());
-        at_navTable2_button5->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button5->sizePolicy().hasHeightForWidth());
+        at_navTable2_button5->setSizePolicy(sizePolicy1);
         at_navTable2_button5->setMinimumSize(QSize(2, 0));
-        at_navTable2_button5->setIcon(icon4);
+        at_navTable2_button5->setIcon(icon5);
 
         horizontalLayout_9->addWidget(at_navTable2_button5);
 
         at_navTable2_button6 = new QToolButton(at_groupBox2);
         at_navTable2_button6->setObjectName(QString::fromUtf8("at_navTable2_button6"));
-        sizePolicy.setHeightForWidth(at_navTable2_button6->sizePolicy().hasHeightForWidth());
-        at_navTable2_button6->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button6->sizePolicy().hasHeightForWidth());
+        at_navTable2_button6->setSizePolicy(sizePolicy1);
         at_navTable2_button6->setMinimumSize(QSize(2, 0));
-        at_navTable2_button6->setIcon(icon5);
+        at_navTable2_button6->setIcon(icon6);
 
         horizontalLayout_9->addWidget(at_navTable2_button6);
 
         at_navTable2_button7 = new QToolButton(at_groupBox2);
         at_navTable2_button7->setObjectName(QString::fromUtf8("at_navTable2_button7"));
-        sizePolicy.setHeightForWidth(at_navTable2_button7->sizePolicy().hasHeightForWidth());
-        at_navTable2_button7->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(at_navTable2_button7->sizePolicy().hasHeightForWidth());
+        at_navTable2_button7->setSizePolicy(sizePolicy1);
         at_navTable2_button7->setMinimumSize(QSize(2, 0));
-        at_navTable2_button7->setIcon(icon6);
+        at_navTable2_button7->setIcon(icon7);
 
         horizontalLayout_9->addWidget(at_navTable2_button7);
 

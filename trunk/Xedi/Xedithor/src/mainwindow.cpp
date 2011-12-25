@@ -3,6 +3,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "uidmanager.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -631,7 +632,7 @@ void MainWindow::TableEditCompleted(QString str)
          {
              RowData* rd = m->getDatainRow(i);
 
-             QString id_ ="mID-"+rd->getData(1);
+             QString id_ =rd->getData(1);
              qreal px_   =rd->getData(2).toDouble();
              qreal py_   =rd->getData(3).toDouble();
              qreal w_    =rd->getData(4).toDouble();
@@ -810,8 +811,8 @@ void MainWindow::TableEditCompleted(QString str)
 
  void MainWindow::parseDataRow(QString strDataRow)
  {
-    //std::cout<<" data row: "<<strDataRow.toStdString().c_str()<<std::endl;
-    /* create row */
+    UID::Instance().setAutoInc(false);
+     /* create row */
     m_moduleTableModel->insertRow(m_moduleTableModel->rowCount());
     /* parse data row */
     QList<QString> datRow;
@@ -832,9 +833,16 @@ void MainWindow::TableEditCompleted(QString str)
     }
     /* set data row */
     RowData* rd = m_moduleTableModel->getDatainRow(m_moduleTableModel->rowCount()-1);
+
     for(int i= 0; i < datRow.count(); i++)
     {
         rd->setData(i,datRow.at(i));
     }
-    //std::cout<<" data row re "<<buff.toStdString().c_str()<<std::endl;
+    /* set last ID */
+    int lastID_= UID::Instance().getLastUID(UIDType::MODULE);
+    int newrowID_  = (int)(rd->getData(1).toDouble());
+    if( lastID_ < newrowID_){ // 1 = uid module
+        UID::Instance().setLastUID(newrowID_+1,UIDType::MODULE);
+    }
+    UID::Instance().setAutoInc(true);
  }
