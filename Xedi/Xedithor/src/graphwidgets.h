@@ -34,6 +34,7 @@ class GraphWidget : public QGraphicsView
 public:
     RowData* rowDataSelected;
     QTableView* m_table;
+    QTableView* m_table_bottom;
     int posMouseX;
     int posMouseY;
     void setImageGraphicsItem(QPixmap* pxmap);
@@ -47,7 +48,7 @@ public:
     void setupGraphViewModule();
     void setupGraphViewFrame();
     void setupGraphViewAnim();
-    void AddPixmapItem(QPixmap* pxmap);
+    int AddPixmapItem(QPixmap* pxmap);
 
 public slots:
     void setLabelMouse(QLabel* labelmouseinv);

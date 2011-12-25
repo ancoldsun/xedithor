@@ -2,6 +2,8 @@
 #include "uidmanager.h"
 
 #define MODULE_START_ID 1000
+#define FRAME_START_ID 3000
+#define ANIM_START_ID 5000
 
 /* module */
 void ModuleRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
@@ -36,7 +38,7 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,
     if(col==0)
         s=QString::number(1);
     else if(col==1)
-        s=QString::number(1000+(UID::Instance().getLastUID(UIDType::FRAME)));
+        s=QString::number(FRAME_START_ID+(UID::Instance().getLastUID(UIDType::FRAME)));
     else if(col==4)
         s=QString::number(32);
     else if(col==5)
@@ -74,7 +76,7 @@ void FrameDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col
 
 void FrameDescRowDataHandler::createRowHeader(QStringList& strList)
 {
-    strList.push_back("Index ");
+    strList.push_back(" UID ");
     strList.push_back("Mod ID");
     strList.push_back("offset X");
     strList.push_back("offset Y");

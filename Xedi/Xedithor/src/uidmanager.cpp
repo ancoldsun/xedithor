@@ -7,7 +7,8 @@ UID::UID()
     m_uid[UIDType::MODULE] =0;
     m_uid[UIDType::FRAME]  =0;
     m_uid[UIDType::ANIM]   =0;
-    m_isAutoInc =true;
+    m_uid[UIDType::FRAME_DESC]  =0;
+    m_isAutoInc            =true;
 }
 UID& UID::Instance()
 {
@@ -20,6 +21,7 @@ UID& UID::Instance()
 
 void UID::setLastUID(int lastUid,int typeUID)
 {
+    /*
     switch(typeUID)
     {
         case UIDType::MODULE:
@@ -38,6 +40,8 @@ void UID::setLastUID(int lastUid,int typeUID)
             }
             break;
     }
+    */
+    m_uid[typeUID]=lastUid;
 }
 
 int UID::getLastUID(int typeUID)

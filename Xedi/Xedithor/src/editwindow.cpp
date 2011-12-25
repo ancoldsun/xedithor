@@ -4,6 +4,7 @@
 #include "editwindow.h"
 #include "ui_editwindow.h"
 
+
 EditWindow::EditWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::EditWindow)
@@ -125,6 +126,48 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
     int imgClicked_ = index.row();
 
     QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
+    QString moduleIDStr = modulesList->item(imgClicked_)->text();
     QPixmap copyPixmap = pixmap.copy();
-    this->imageLabel->AddPixmapItem(&copyPixmap);
+    int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
+    //QString genIdStr = QString::number(genId_)
+    ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
+    if(m->rowCount()<1){
+        m->insertRow(0);
+        m->refresh();
+
+        ModuleTableModel* sub_model = m->getModel(0);
+        sub_model->insertRow(0);
+        /* set data */
+        RowData* rd = sub_model->getDatainRow(0);
+        rd->setData(0,QString::number(genId_));
+        rd->setData(1,moduleIDStr);
+        /* end set data */
+        sub_model->refresh();
+        this->imageLabel->m_table_bottom->setModel(sub_model);
+    } else
+    {
+        int frameRowSelected = imageLabel->m_table->currentIndex().row();
+        if(frameRowSelected == -1){
+            frameRowSelected = 0;
+        }
+
+        ModuleTableModel* sub_model = m->getModel(frameRowSelected);
+        if(sub_model->rowCount()<1){
+            sub_model->insertRow(0);
+            sub_model->refresh();
+        }
+
+        int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
+        if(frameModuleRowSelected == -1){
+            frameModuleRowSelected = 0;
+        }
+        sub_model->insertRow(frameModuleRowSelected);
+        /* set data */
+        RowData* rd = sub_model->getDatainRow(frameModuleRowSelected);
+        rd->setData(0,QString::number(genId_));
+        rd->setData(1,moduleIDStr);
+        /* end set data */
+        sub_model->refresh();
+
+    }
 }

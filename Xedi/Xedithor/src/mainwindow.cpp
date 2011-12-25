@@ -619,6 +619,7 @@ void MainWindow::TableEditCompleted(QString str)
         editWindow->getModuleList()->clear();
         // set to modules table
         editWindow->imageLabel->m_table = ui->mt_tableView1;
+        editWindow->imageLabel->m_table_bottom=NULL;
         editWindow->imageLabel->setupGraphViewModule();
      }
      else if(indexPage == Page::FRAME)
@@ -645,7 +646,8 @@ void MainWindow::TableEditCompleted(QString str)
              /* end slice image */
          }
          // graph now handle frame table
-         editWindow->imageLabel->m_table = ui->ft_tableView2;
+         editWindow->imageLabel->m_table = ui->ft_tableView1;
+         editWindow->imageLabel->m_table_bottom = ui->ft_tableView2;
          editWindow->imageLabel->setupGraphViewFrame();
 
      }
