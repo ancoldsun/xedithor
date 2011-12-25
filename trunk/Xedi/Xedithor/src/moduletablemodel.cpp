@@ -114,7 +114,6 @@ bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & pare
     if(row <= m_gridData2.count()-1)
     {
         for (int n = 0; n < count; ++n) {
-                std::cout<<"removeRows: "<<row<<std::endl;
                 delete m_gridData2.at(row);
                 m_gridData2.removeAt(row);
                 if(m_hasModel){

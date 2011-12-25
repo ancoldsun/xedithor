@@ -6,6 +6,7 @@
 #include "globalconstant.h"
 #include "graphwidgets.h"
 #include "rectselectionitem.h"
+#include "uidmanager.h"
 
 
 #include <iostream>
@@ -79,6 +80,8 @@ GraphWidget::GraphWidget(QWidget *parent)
     modeView = ModeView::DRAG_MODE;
 
     rowDataSelected = NULL;
+
+    m_table_bottom=NULL;
 
 }
 
@@ -195,6 +198,42 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
 
     LastRectPoint= event->pos();
 
+    if(m_scene->selectedItems().count()>0) {
+        ModuleTableModel* m2;
+        foreach (QGraphicsItem *item, m_scene->selectedItems()) {
+            if(item->type()== QGraphicsPixmapItem::Type){
+
+                int itemPosX = (item->pos().x()-(WidthRectView / 2));
+                int itemPosY = (item->pos().y()-(HeightRectView / 2));
+
+                std::cout<<"sel XX "<<itemPosX<<std::endl;
+                std::cout<<"sel YY "<<itemPosY<<std::endl;
+
+                int idItem = item->data(0).toInt();
+
+                std::cout<<"id: "<<idItem<<std::endl;
+
+                m2 =static_cast<ModuleTableModel*>(m_table_bottom->model());
+
+                std::cout<<" r count: "<<m2->rowCount()<<std::endl;
+                for(int i=0;i<m2->rowCount();i++){
+                    RowData* rd = m2->getDatainRow(i);
+
+                    std::cout<<" id row : "<<rd->getData(0).toInt()<<std::endl;
+
+                    if(rd!=NULL && rd->getData(0).toInt()==idItem){
+                        QString sx = QString::number(itemPosX);
+                        QString sy = QString::number(itemPosY);
+                        rd->setData(2,sx);
+                        rd->setData(3,sy);
+                    }
+                }
+
+            }
+        }
+        m2->refresh();
+    }
+
     QGraphicsView::mouseReleaseEvent(event);
 }
 
@@ -248,10 +287,11 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
         rd->setData(5,sw);
 
 
-        std::cout<<"XX "<<rectSelect->pos().x()<<std::endl;
-        std::cout<<"YY "<<rectSelect->pos().y()<<std::endl;
+        //std::cout<<"XX "<<rectSelect->pos().x()<<std::endl;
+        //std::cout<<"YY "<<rectSelect->pos().y()<<std::endl;
         m->refresh();
    }
+
 
     QGraphicsView::mouseMoveEvent(event);
 }
@@ -357,7 +397,7 @@ void GraphWidget::setupGraphViewAnim()
 
 }
 
-void GraphWidget::AddPixmapItem(QPixmap* pxmap)
+int GraphWidget::AddPixmapItem(QPixmap* pxmap)
 {
     QGraphicsPixmapItem* itemPixMap= new QGraphicsPixmapItem(*pxmap);
     itemPixMap->setPos(WidthRectView / 2 , HeightRectView / 2 );
@@ -365,7 +405,15 @@ void GraphWidget::AddPixmapItem(QPixmap* pxmap)
     itemPixMap->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
     itemPixMap->setAcceptHoverEvents ( true);
     itemPixMap->setFlag( QGraphicsItem::ItemIsMovable, true );
+
+    QVariant varI;
+    int id_ = UID::Instance().getLastUID(UIDType::FRAME_DESC);
+    varI.setValue(id_);
+    itemPixMap->setData(0,varI);
     this->scene()->addItem(itemPixMap);
+
+    return id_;
+
 }
 
 
