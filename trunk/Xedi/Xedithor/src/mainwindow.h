@@ -111,6 +111,7 @@ private:
     void saveDataSprite();
     void resetDataTable();
     void parseDataRow(QString strDataRow);
+    void parseDataRowFrame(QList<QString>&header,QList<QString>&body);
 
 
 public slots:

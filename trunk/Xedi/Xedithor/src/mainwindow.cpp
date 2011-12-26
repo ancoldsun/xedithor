@@ -791,10 +791,10 @@ void MainWindow::TableEditCompleted(QString str)
         for(int iy=0;iy<nModuleInFrame;iy++)
         {
             QString dataRow="";
-            RowData* rd2 = m_moduleTableModel->getDatainRow(iy);
+            RowData* rd2 = m->getDatainRow(iy);
             dataRow=dataRow+rd2->getData(1)+" ";
             dataRow=dataRow+rd2->getData(2)+" ";
-            dataRow=dataRow+rd2->getData(3);
+            dataRow=dataRow+rd2->getData(3)+" ";
 
             stream.writeTextElement("RowModFrm", dataRow);
         }
@@ -907,6 +907,49 @@ void MainWindow::TableEditCompleted(QString str)
                         xml.readNext();
                     }
                 }
+                if(xml.name() == "frames")
+                {
+                    xml.readNext();
+                    while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                                            xml.name() == "frames"))
+                    {
+                        if(xml.tokenType() == QXmlStreamReader::StartElement)
+                        {
+                            if(xml.name() == "itemFrame")
+                            {
+                                QList<QString> header;
+                                QList<QString> body;
+
+                                header.push_back(xml.attributes().at(0).value().toString());
+                                header.push_back(xml.attributes().at(1).value().toString());
+                                header.push_back(xml.attributes().at(2).value().toString());
+
+                                //std::cout<<"--- itemFrame ---"<<std::endl;
+                                //std::cout<<"id : "<<xml.attributes().at(0).value().toString().toStdString().c_str()<<std::endl;
+                                //std::cout<<"N : "<<xml.attributes().at(1).value().toString().toStdString().c_str()<<std::endl;
+                                //std::cout<<"name: "<<xml.attributes().at(2).value().toString().toStdString().c_str()<<std::endl;
+
+                                while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                                                        xml.name() == "itemFrame"))
+                                {
+                                    if(xml.tokenType() == QXmlStreamReader::StartElement)
+                                    {
+                                        if(xml.name() == "RowModFrm")
+                                        {
+                                            //std::cout<<"--- DDD --"<<std::endl;
+                                            xml.readNext();
+                                            body.push_back(xml.text().toString());
+                                            //std::cout<<"--- data --"<<xml.text().toString().toStdString().c_str()<<std::endl;
+                                        }
+                                    }
+                                    xml.readNext();
+                                }
+                                parseDataRowFrame(header,body);
+                            }
+                        }
+                        xml.readNext();
+                    }
+                }
             }
         }
         if(xml.hasError())
@@ -961,10 +1004,82 @@ void MainWindow::TableEditCompleted(QString str)
     }
     /* set last ID */
     int lastID_= UID::Instance().getLastUID(UIDType::MODULE);
-    int newrowID_  = (int)(rd->getData(1).toDouble());
+    int newrowID_  = rd->getData(1).toInt() - 1000;
     if( lastID_ < newrowID_){ // 1 = uid module
         UID::Instance().setLastUID(newrowID_+1,UIDType::MODULE);
     }
+    UID::Instance().setAutoInc(true);
+ }
+
+ void MainWindow::parseDataRowFrame(QList<QString>&header,QList<QString>&body)
+ {
+    UID::Instance().setAutoInc(false);
+    std::cout<<"------------------------"<<std::endl;
+    std::cout<<"ID     :"<<header.at(0).toStdString().c_str()<<std::endl;
+    std::cout<<"N      :"<<header.at(1).toStdString().c_str()<<std::endl;
+    std::cout<<"Name   :"<<header.at(2).toStdString().c_str()<<std::endl;
+
+    m_frameTableModel->insertRow(m_frameTableModel->rowCount());
+    /* set data row */
+    int rowNow = m_frameTableModel->rowCount()-1;
+    RowData* rd = m_frameTableModel->getDatainRow(rowNow);
+    rd->setData(1,header.at(0));
+    rd->setData(2,header.at(1));
+    rd->setData(3,header.at(2));
+
+    /* set sub Model */
+    ModuleTableModel* m = m_frameTableModel->getModel(rowNow);
+
+    int idC =0;
+    QList<QString> datRow;
+    foreach(QString str,body){
+        std::cout<<"---body: "<<str.toStdString().c_str()<<std::endl;
+        QString strDataRow = str;
+        QString buff="";
+        QChar chSpace = QChar::fromAscii(' ');
+        for(int i=0;i<strDataRow.count();i++)
+        {
+            QChar ch = strDataRow.at(i);
+            if(ch!=chSpace)
+            {
+                buff+=ch;
+            }
+            else
+            {
+                datRow.insert(i,buff);
+                buff="";
+            }
+        }
+
+        m->insertRow(m->rowCount());
+        int r = m->rowCount();
+
+        RowData* rd2 = m->getDatainRow(r-1);
+
+        rd2->setData(0,QString::number(idC));
+        rd2->setData(1,datRow.at(0));
+        rd2->setData(2,datRow.at(1));
+        rd2->setData(3,datRow.at(2));
+
+        datRow.clear();
+
+        /* set last ID */
+        int lastID_= UID::Instance().getLastUID(UIDType::FRAME_DESC);
+        if( lastID_ < idC){ // 1 = uid module
+            UID::Instance().setLastUID(idC+1,UIDType::FRAME_DESC);
+        }
+
+        idC++;
+    }
+
+    /* set last ID */
+    int lastID_= UID::Instance().getLastUID(UIDType::FRAME);
+    int newrowID_  = rd->getData(1).toInt() - 3000;
+    if( lastID_ < newrowID_){ // 1 = uid module
+        UID::Instance().setLastUID(newrowID_+1,UIDType::FRAME);
+    }
+    m->refresh();
+
     UID::Instance().setAutoInc(true);
  }
 
