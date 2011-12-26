@@ -40,9 +40,9 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,
     else if(col==1)
         s=QString::number(FRAME_START_ID+(UID::Instance().getLastUID(UIDType::FRAME)));
     else if(col==4)
-        s=QString::number(32);
+        s="N/A";//QString::number(32);
     else if(col==5)
-        s=QString::number(32);
+        s="N/A";//QString::number(32);
     vec.push_back(s);
 
     //moduleFrame_ = new ModuleFrame();
@@ -68,9 +68,9 @@ void FrameDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col
     else if(col==1)
         s=QString::number(2000+1);
     else if(col==4)
-        s=QString::number(32);
+        s="N/A";//QString::number(32);
     else if(col==5)
-        s=QString::number(32);
+        s="N/A";//QString::number(32);
     vec.push_back(s);
 }
 

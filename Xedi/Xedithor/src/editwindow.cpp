@@ -154,20 +154,29 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
         ModuleTableModel* sub_model = m->getModel(frameRowSelected);
         if(sub_model->rowCount()<1){
             sub_model->insertRow(0);
+
+            /* set data */
+            RowData* rd = sub_model->getDatainRow(0);
+            rd->setData(0,QString::number(genId_));
+            rd->setData(1,moduleIDStr);
+            /* end set data */
+            sub_model->refresh();
+
+
+        }
+        else {
+            int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
+            if(frameModuleRowSelected == -1){
+                frameModuleRowSelected = 0;
+            }
+            sub_model->insertRow(frameModuleRowSelected);
+            /* set data */
+            RowData* rd = sub_model->getDatainRow(0);
+            rd->setData(0,QString::number(genId_));
+            rd->setData(1,moduleIDStr);
+            /* end set data */
+            sub_model->refresh();
             sub_model->refresh();
         }
-
-        int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
-        if(frameModuleRowSelected == -1){
-            frameModuleRowSelected = 0;
-        }
-        sub_model->insertRow(frameModuleRowSelected);
-        /* set data */
-        RowData* rd = sub_model->getDatainRow(frameModuleRowSelected);
-        rd->setData(0,QString::number(genId_));
-        rd->setData(1,moduleIDStr);
-        /* end set data */
-        sub_model->refresh();
-
     }
 }

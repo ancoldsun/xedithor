@@ -49,6 +49,11 @@ public:
     void setupGraphViewFrame();
     void setupGraphViewAnim();
     int AddPixmapItem(QPixmap* pxmap);
+    int AddPixmapItem(QPixmap* pxmap,bool isGenerateID,int idFrameModule,int posx_,int posy_);
+    void clearGraphPixmapItem();
+    void setSelectedPixmapItem(int idSelected);
+    void DeletePixmapItem(int idDeleted);
+
 
 public slots:
     void setLabelMouse(QLabel* labelmouseinv);
