@@ -36,9 +36,11 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,
 {
     QString s="0";
     if(col==0)
-        s=QString::number(1);
+        s="N/A";//QString::number(1);
     else if(col==1)
         s=QString::number(FRAME_START_ID+(UID::Instance().getLastUID(UIDType::FRAME)));
+    else if(col==3)
+        s="frame_";//QString::number(32);
     else if(col==4)
         s="N/A";//QString::number(32);
     else if(col==5)

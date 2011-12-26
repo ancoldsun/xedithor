@@ -19,6 +19,7 @@ class ModuleTableModel : public QAbstractTableModel
     Q_OBJECT
 public:
     ModuleTableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler);
+    ~ModuleTableModel();
     void setupTable();
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -39,6 +40,10 @@ public:
 
     void clearData();
     void refresh();
+    inline void AddEditableColumn(int colEditable){
+        m_editableColumn.push_back(colEditable);
+    }
+
 private:
     //QString m_gridData[ROWS][COLS];  //holds text entered into QTableView
     QList<RowData*>  m_gridData2;
@@ -46,6 +51,7 @@ private:
     QStringList m_Headers;
     RowDataHandler* m_handler;
     QList<ModuleTableModel*> m_listModel;
+    QList<int> m_editableColumn;
     bool m_hasModel;
     //QTimer *timer;
 

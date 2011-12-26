@@ -78,6 +78,7 @@ GraphWidget::GraphWidget(QWidget *parent)
     m_scene->addItem(rectSelect);
 
     modeView = ModeView::DRAG_MODE;
+    m_tabView = TabView::MODULE;
 
     rowDataSelected = NULL;
 

@@ -58,6 +58,7 @@ private slots:
     void Top_Clicked();
     void Bottom_Clicked();
 
+
 private:
     Ui::MainWindow *ui;
     QMenu *fileMenu;
@@ -116,6 +117,8 @@ public slots:
     void tableRowSelected(const QModelIndex& index);
     void UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB);
     void TableEditCompleted(QString str);
+
+    void TableDoubleClicked(const QModelIndex& index);
 
     //tab widget
     void PageTabChanged(int indexPage);
