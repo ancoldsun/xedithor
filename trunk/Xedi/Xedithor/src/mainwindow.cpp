@@ -765,10 +765,61 @@ void MainWindow::TableEditCompleted(QString str)
     stream.writeEndElement(); // modules
 
     /* save frame */
-    //todo:
+    stream.writeStartElement("frames");
+    numberRow = m_frameTableModel->rowCount();
+    numberRowStr = QString::number(numberRow);
+    stream.writeAttribute("nFrames", numberRowStr);
+
+    for(int ix=0;ix<numberRow;ix++)
+    {
+        stream.writeStartElement("itemFrame");
+
+        RowData* rd = m_frameTableModel->getDatainRow(ix);
+        QString IdFrame = rd->getData(1);
+        QString nModFrame = rd->getData(2);
+        QString nameFrame = rd->getData(3);
+
+        stream.writeAttribute("ID", IdFrame);
+        stream.writeAttribute("nModFrame", nModFrame);
+        stream.writeAttribute("name", nameFrame);
+
+        ModuleTableModel* m  = m_frameTableModel->getModel(ix);
+
+        int nModuleInFrame = m->rowCount();
+
+
+        for(int iy=0;iy<nModuleInFrame;iy++)
+        {
+            QString dataRow="";
+            RowData* rd2 = m_moduleTableModel->getDatainRow(iy);
+            dataRow=dataRow+rd2->getData(1)+" ";
+            dataRow=dataRow+rd2->getData(2)+" ";
+            dataRow=dataRow+rd2->getData(3);
+
+            stream.writeTextElement("RowModFrm", dataRow);
+        }
+
+
+
+        /*
+        QString nRow=QString::number(ix);
+        QString dataRow="";
+        RowData* rd = m_moduleTableModel->getDatainRow(ix);
+        for(int iy=0;iy<m_moduleTableModel->columnCount();iy++)
+        {
+            dataRow=dataRow+rd->getData(iy)+" ";
+        }
+        */
+
+        //stream.writeTextElement("nRow", dataRow);
+
+        stream.writeEndElement();
+    }
+    stream.writeEndElement(); // frames
+
     /* save anim */
     //todo:
-    stream.writeEndElement(); // sprites
+    //stream.writeEndElement(); // sprites
     stream.writeEndDocument();
  }
 

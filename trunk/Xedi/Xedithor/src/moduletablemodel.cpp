@@ -207,3 +207,12 @@ ModuleTableModel* ModuleTableModel::getModel(int rowN)
 {
     return m_listModel.at(rowN);
 }
+
+ModuleTableModel::~ModuleTableModel(){
+    int totalChild = m_listModel.count();
+
+    for (int n = 0; n < totalChild; ++n) {
+            delete m_listModel.at(n);
+            m_gridData2.removeAt(n);
+        }
+}
