@@ -133,7 +133,6 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
     ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
     if(m->rowCount()<1){
         m->insertRow(0);
-        m->refresh();
 
         ModuleTableModel* sub_model = m->getModel(0);
         sub_model->insertRow(0);
@@ -143,6 +142,10 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
         rd->setData(1,moduleIDStr);
         /* end set data */
         sub_model->refresh();
+        /* update module frame count */
+        int mf_count = m->getDatainRow(0)->getData(2).toInt();
+        m->getDatainRow(0)->setData(2,QString::number(mf_count+1));
+
         this->imageLabel->m_table_bottom->setModel(sub_model);
     } else
     {
@@ -162,6 +165,11 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             /* end set data */
             sub_model->refresh();
 
+            /* update module frame count */
+            int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
+            m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
+
+
 
         }
         else {
@@ -176,7 +184,13 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             rd->setData(1,moduleIDStr);
             /* end set data */
             sub_model->refresh();
-            sub_model->refresh();
+
+            /* update module frame count */
+            int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
+            m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
+
+
         }
     }
+    m->refresh();
 }

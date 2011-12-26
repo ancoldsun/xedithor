@@ -267,30 +267,29 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
     coordMouse = mapToScene(LastRectPoint.x(),LastRectPoint.y());
 
 
+    if(m_tabView == TabView::MODULE) {
+        ModuleTableModel* m =static_cast<ModuleTableModel*>(m_table->model());
+        int rowSelected_ = m_table->currentIndex().row();
 
-    ModuleTableModel* m =static_cast<ModuleTableModel*>(m_table->model());
-    int rowSelected_ = m_table->currentIndex().row();
+        if(rowSelected_!=-1)
+        {
 
-    if(rowSelected_!=-1)
-    {
+            std::cout<<"selected: "<<rowSelected_<<std::endl;
+            RowData* rd = m->getDatainRow(rowSelected_);
+            QString sh = QString::number((int)(rectSelect->rect().width()));
+            QString sw = QString::number((int)(rectSelect->rect().height()));
+            QString sx = QString::number((int)(rectSelect->pos().x()+rectSelect->rect().x()-(WidthRectView / 2)));
+            QString sy = QString::number((int)(rectSelect->pos().y()+rectSelect->rect().y()-(HeightRectView / 2)));
 
-        std::cout<<"selected: "<<rowSelected_<<std::endl;
-        RowData* rd = m->getDatainRow(rowSelected_);
-        QString sh = QString::number((int)(rectSelect->rect().width()));
-        QString sw = QString::number((int)(rectSelect->rect().height()));
-        QString sx = QString::number((int)(rectSelect->pos().x()+rectSelect->rect().x()-(WidthRectView / 2)));
-        QString sy = QString::number((int)(rectSelect->pos().y()+rectSelect->rect().y()-(HeightRectView / 2)));
+            rd->setData(2,sx);
+            rd->setData(3,sy);
+            rd->setData(4,sh);
+            rd->setData(5,sw);
 
-        rd->setData(2,sx);
-        rd->setData(3,sy);
-        rd->setData(4,sh);
-        rd->setData(5,sw);
+            m->refresh();
+       }
+    }
 
-
-        //std::cout<<"XX "<<rectSelect->pos().x()<<std::endl;
-        //std::cout<<"YY "<<rectSelect->pos().y()<<std::endl;
-        m->refresh();
-   }
 
 
     QGraphicsView::mouseMoveEvent(event);
@@ -380,12 +379,14 @@ void GraphWidget::setupGraphViewModule()
 
     m_scene->addItem(rectSelect);
     m_scene->addItem(pixmapGraphicsItem);
+    m_tabView = TabView::MODULE;
 }
 
 void GraphWidget::setupGraphViewFrame()
 {
     m_scene->removeItem(rectSelect);
     m_scene->removeItem(pixmapGraphicsItem);
+    m_tabView = TabView::FRAME;
 }
 
 void GraphWidget::setupGraphViewAnim()

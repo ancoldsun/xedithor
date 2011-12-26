@@ -362,17 +362,27 @@ void MainWindow::Del_Clicked()
 
         /* del item on graphics view */
         int row_ = ui->ft_tableView2->currentIndex().row();
-        ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
-        RowData* rd = m->getDatainRow(row_);
-        int id_ =rd->getData(0).toInt();
-        std::cout<<"id deleted..: "<<id_<<std::endl;
-        editWindow->imageLabel->DeletePixmapItem(id_);
-        /* end del */
+        if(row_ != -1){
+            ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
+            RowData* rd = m->getDatainRow(row_);
+            int id_ =rd->getData(0).toInt();
+            std::cout<<"id deleted..: "<<id_<<std::endl;
+            editWindow->imageLabel->DeletePixmapItem(id_);
+            /* end del */
 
-        tableDelRow(ui->ft_tableView2);
+            /* update module frame count */
+            row_ = ui->ft_tableView1->currentIndex().row();
+            std::cout<<"row_ deleted..: "<<row_<<std::endl;
+            if(row_ == -1){
+                row_ = 0;
+            }
+            m = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
+            int mf_count = m->getDatainRow(row_)->getData(2).toInt();
+            m->getDatainRow(row_)->setData(2,QString::number(mf_count-1));
+            m->refresh();
 
-
-
+            tableDelRow(ui->ft_tableView2);
+        }
     }
     else if(sender == ui->at_navTable1_button3){
         tableDelRow(ui->at_tableView1);

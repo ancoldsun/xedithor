@@ -24,6 +24,13 @@ namespace ModeView
     const int DRAG_MODE = 1;
 };
 
+namespace TabView
+{
+    const int MODULE = 0;
+    const int FRAME  = 1;
+    const int ANIM   = 2;
+};
+
 
 
 
@@ -84,6 +91,7 @@ protected:
 private:
     int timerId;
     int modeView;
+    int m_tabView;
     QPixmap* pixmap;
     QLabel* labelmouse;
     QRect* rectPointer;
