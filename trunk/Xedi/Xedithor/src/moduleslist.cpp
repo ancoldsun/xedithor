@@ -128,3 +128,14 @@ void ModulesList::startDrag(Qt::DropActions /*supportedActions*/)
         delete takeItem(row(item));
     */
 }
+
+QListWidgetItem* ModulesList::getItemByText(QString str)
+{
+    for(int i=0;i<this->count();i++){
+        QListWidgetItem* item_ = item(i);
+        if(!(item_->text().compare(str))){
+            return item_;
+        }
+    }
+}
+

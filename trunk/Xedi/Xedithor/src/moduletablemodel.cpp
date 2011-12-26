@@ -128,7 +128,7 @@ bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & pare
 
 QVariant ModuleTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    std::cout<<"removeRows: "<<QVariant(section).Double<<std::endl;
+    //std::cout<<"removeRows: "<<QVariant(section).Double<<std::endl;
 
     if (role != Qt::DisplayRole)
             return QVariant();

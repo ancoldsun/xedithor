@@ -7,6 +7,7 @@
 
 #include <QListWidget>
 
+
 class ModulesList : public QListWidget
 {
     Q_OBJECT
@@ -14,6 +15,7 @@ class ModulesList : public QListWidget
 public:
     ModulesList(int pieceSize, QWidget *parent = 0);
     void addPiece(QPixmap pixmap, QPoint location,QString str="");
+    QListWidgetItem* getItemByText(QString str);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

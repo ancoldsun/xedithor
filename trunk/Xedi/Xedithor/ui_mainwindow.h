@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Dec 24 14:13:45 2011
+** Created: Mon Dec 26 14:58:29 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -411,6 +411,7 @@ public:
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         ft_navTable2_button1 = new QToolButton(ft_groupBox2);
         ft_navTable2_button1->setObjectName(QString::fromUtf8("ft_navTable2_button1"));
+        ft_navTable2_button1->setEnabled(false);
         sizePolicy1.setHeightForWidth(ft_navTable2_button1->sizePolicy().hasHeightForWidth());
         ft_navTable2_button1->setSizePolicy(sizePolicy1);
         ft_navTable2_button1->setMinimumSize(QSize(2, 0));
@@ -421,6 +422,7 @@ public:
 
         ft_navTable2_button2 = new QToolButton(ft_groupBox2);
         ft_navTable2_button2->setObjectName(QString::fromUtf8("ft_navTable2_button2"));
+        ft_navTable2_button2->setEnabled(false);
         sizePolicy1.setHeightForWidth(ft_navTable2_button2->sizePolicy().hasHeightForWidth());
         ft_navTable2_button2->setSizePolicy(sizePolicy1);
         ft_navTable2_button2->setMinimumSize(QSize(2, 0));
@@ -430,6 +432,7 @@ public:
 
         ft_navTable2_button3 = new QToolButton(ft_groupBox2);
         ft_navTable2_button3->setObjectName(QString::fromUtf8("ft_navTable2_button3"));
+        ft_navTable2_button3->setEnabled(true);
         sizePolicy1.setHeightForWidth(ft_navTable2_button3->sizePolicy().hasHeightForWidth());
         ft_navTable2_button3->setSizePolicy(sizePolicy1);
         ft_navTable2_button3->setMinimumSize(QSize(2, 0));

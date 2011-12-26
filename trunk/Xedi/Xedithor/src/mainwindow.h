@@ -68,6 +68,8 @@ private:
    // QLabel *imageLabel;
     QPixmap pixmapOpened;
 
+    int m_lastRowSelectedFT;
+
     QToolBar *fileToolBar;
     QToolBar *editToolBar;
 

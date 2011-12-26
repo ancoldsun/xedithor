@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ImgfileName="none";
     m_SprfileName="none";
 
+    m_lastRowSelectedFT = 0;
+
 }
 
 MainWindow::~MainWindow()
@@ -357,7 +359,20 @@ void MainWindow::Del_Clicked()
         tableDelRow(ui->ft_tableView1);
     }
     else if(sender == ui->ft_navTable2_button3){
+
+        /* del item on graphics view */
+        int row_ = ui->ft_tableView2->currentIndex().row();
+        ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
+        RowData* rd = m->getDatainRow(row_);
+        int id_ =rd->getData(0).toInt();
+        std::cout<<"id deleted..: "<<id_<<std::endl;
+        editWindow->imageLabel->DeletePixmapItem(id_);
+        /* end del */
+
         tableDelRow(ui->ft_tableView2);
+
+
+
     }
     else if(sender == ui->at_navTable1_button3){
         tableDelRow(ui->at_tableView1);
@@ -459,9 +474,10 @@ void MainWindow::tableAddRow(QTableView* table)
    int newRow = table->currentIndex().row();
    if(newRow==-1)
        newRow=0;
-   table->model()->insertRow(newRow);
+
    std::cout<<"ROW: "<<table->currentIndex().row()<<std::endl;
    ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+   table->model()->insertRow(m->rowCount());
    m->refresh();
 }
 
@@ -537,7 +553,7 @@ void MainWindow::tableBotSel(QTableView* table)
 void MainWindow::tableRowSelected(const QModelIndex& index)
 {
     QWidget *sender = (QWidget *) QObject::sender();
-    if(sender == ui->mt_tableView1 ){   // table 1
+    if(sender == ui->mt_tableView1 ){   // table module
 
         int rowSelected_ = ui->mt_tableView1->currentIndex().row();
         std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
@@ -573,17 +589,51 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
     }
     else if(sender == ui->ft_tableView1){   // table frame 1
         int rowSelected_ = ui->ft_tableView1->currentIndex().row();
-        std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
 
-        ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
-        ModuleTableModel* mf_bottom = mf->getModel(rowSelected_);
-        ui->ft_tableView2->setModel(mf_bottom);
+        if(m_lastRowSelectedFT != rowSelected_)
+        {
+            m_lastRowSelectedFT = rowSelected_;
+            std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
+
+            ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
+            ModuleTableModel* mf_bottom = mf->getModel(rowSelected_);
+            ui->ft_tableView2->setModel(mf_bottom);
+            // clear prev row images item
+            editWindow->imageLabel->clearGraphPixmapItem();
+            // create
+            for(int i=0;i<mf_bottom->rowCount();i++)
+            {
+                std::cout<<"Row: "<<i<<" rc "<<mf_bottom->rowCount()<<std::endl;
+                RowData* rd = mf_bottom->getDatainRow(i);
+                std::cout<<"after Row: "<<i<<std::endl;
+
+                int id_           = rd->getData(0).toInt();
+                QString moduleID_ = rd->getData(1);
+                int px_           = rd->getData(2).toInt();
+                int py_           = rd->getData(3).toInt();
+                //qreal w_    =rd->getData(4).toDouble();
+                //qreal h_    =rd->getData(5).toDouble();
+
+                QPixmap pixmap = editWindow->modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
+                QPixmap copyPixmap = pixmap.copy();
+                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+
+            }
+        }
+    } else if(sender == ui->ft_tableView2){ // table module-frame
+        int rowSelected_ = ui->ft_tableView2->currentIndex().row();
+
+        ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
+        RowData* rd          = mf->getDatainRow(rowSelected_);
+        int id_              = rd->getData(0).toInt();
+        editWindow->imageLabel->setSelectedPixmapItem(id_);
     }
 }
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)
 {
     //todo:
+    //std::cout<<"UpdateDataCell..........: "<<std::endl;
 }
 
 void MainWindow::TableEditCompleted(QString str)

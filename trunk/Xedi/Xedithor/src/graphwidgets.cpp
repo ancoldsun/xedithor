@@ -376,11 +376,7 @@ void GraphWidget::dragMoveEvent(QDragMoveEvent* event)
 
 void GraphWidget::setupGraphViewModule()
 {
-    foreach (QGraphicsItem *item, m_scene->items()) {
-        if(item->type()== QGraphicsPixmapItem::Type){
-            m_scene->removeItem(item);
-        }
-    }
+    clearGraphPixmapItem();
 
     m_scene->addItem(rectSelect);
     m_scene->addItem(pixmapGraphicsItem);
@@ -399,25 +395,70 @@ void GraphWidget::setupGraphViewAnim()
 
 int GraphWidget::AddPixmapItem(QPixmap* pxmap)
 {
+    return AddPixmapItem(pxmap,true,0,0,0);
+}
+
+int GraphWidget::AddPixmapItem(QPixmap* pxmap,bool isGenerateID,int idFrameModule,int posx_,int posy_)
+{
     QGraphicsPixmapItem* itemPixMap= new QGraphicsPixmapItem(*pxmap);
-    itemPixMap->setPos(WidthRectView / 2 , HeightRectView / 2 );
+    itemPixMap->setPos(posx_ + WidthRectView / 2 ,posy_ +  HeightRectView / 2 );
     itemPixMap->setFlag(QGraphicsItem::ItemIsSelectable, true);
     itemPixMap->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
     itemPixMap->setAcceptHoverEvents ( true);
     itemPixMap->setFlag( QGraphicsItem::ItemIsMovable, true );
 
     QVariant varI;
-    int id_ = UID::Instance().getLastUID(UIDType::FRAME_DESC);
+    int id_ =0;
+    if(isGenerateID){
+        id_ = UID::Instance().getLastUID(UIDType::FRAME_DESC);
+    } else {
+        id_ = idFrameModule;
+    }
     varI.setValue(id_);
     itemPixMap->setData(0,varI);
     this->scene()->addItem(itemPixMap);
 
     return id_;
+}
 
+void GraphWidget::clearGraphPixmapItem()
+{
+    foreach (QGraphicsItem *item, m_scene->items()) {
+        if(item->type()== QGraphicsPixmapItem::Type){
+            m_scene->removeItem(item);
+        }
+    }
 }
 
 
+void GraphWidget::setSelectedPixmapItem(int idSelected)
+{
+    foreach (QGraphicsItem *item, m_scene->items()) {
+        if(item->type()== QGraphicsPixmapItem::Type){
+            QVariant dat = item->data(0);
+            int intDat = dat.toInt();
+            if(intDat == idSelected) {
+                item->setSelected(true);
+            } else {
+                item->setSelected(false);
+            }
+        }
+    }
+}
 
+void GraphWidget::DeletePixmapItem(int idDeleted)
+{
+    foreach (QGraphicsItem *item, m_scene->items()) {
+        if(item->type()== QGraphicsPixmapItem::Type){
+            QVariant dat = item->data(0);
+            int intDat = dat.toInt();
+            if(intDat == idDeleted) {
+                m_scene->removeItem(item);
+                break;
+            }
+        }
+    }
+}
 
 
 
