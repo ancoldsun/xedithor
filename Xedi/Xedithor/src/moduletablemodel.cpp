@@ -81,9 +81,14 @@ bool ModuleTableModel::setData(const QModelIndex & index, const QVariant & value
     return true;
 }
 
-Qt::ItemFlags ModuleTableModel::flags(const QModelIndex & /*index*/) const
+Qt::ItemFlags ModuleTableModel::flags(const QModelIndex & index) const
 {
-    return Qt::ItemIsSelectable |  Qt::ItemIsEditable | Qt::ItemIsEnabled ;
+    for(int i=0;i<m_editableColumn.count();i++){
+        if(m_editableColumn[i]==index.column()){
+            return Qt::ItemIsSelectable |  Qt::ItemIsEditable | Qt::ItemIsEnabled ;
+        }
+    }
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled ;
 }
 
 
@@ -98,9 +103,11 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
         if(m_hasModel){
             // danger : no code will delete : new FrameDescRowDataHandler
             // todo   : make singleton for row handler
-            m_listModel.insert(row,new ModuleTableModel(this,0,6,new FrameDescRowDataHandler()));
+            ModuleTableModel* childModel = new ModuleTableModel(this,0,6,new FrameDescRowDataHandler());
+            childModel->AddEditableColumn(2);
+            childModel->AddEditableColumn(3);
+            m_listModel.insert(row,childModel);
         }
-
     }
     endInsertRows();
 
@@ -177,7 +184,7 @@ void ModuleTableModel::timerHit()
 */
 }
 
-void ModuleTableModel::refresh()
+void ModuleTableModel::refresh() // <-- need optimize this, for speed. now refresh all.
 {
      QModelIndex topLeft  = createIndex(0,0);
      QModelIndex botright = createIndex(m_gridData2.count(),numberCol-1);

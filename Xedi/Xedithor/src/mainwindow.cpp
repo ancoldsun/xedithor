@@ -128,6 +128,10 @@ void MainWindow::SetupTables()
 
     /* module */
     m_moduleTableModel = new ModuleTableModel(this,1,6,new ModuleRowDataHandler());
+    m_moduleTableModel->AddEditableColumn(2);
+    m_moduleTableModel->AddEditableColumn(3);
+    m_moduleTableModel->AddEditableColumn(4);
+    m_moduleTableModel->AddEditableColumn(5);
     ui->mt_tableView1->setModel(m_moduleTableModel);
     ui->mt_tableView1->setSelectionBehavior(QTableView::SelectRows);
 
@@ -139,6 +143,7 @@ void MainWindow::SetupTables()
     connect(ui->mt_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
     connect(ui->mt_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
     connect(ui->mt_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
+    connect(ui->mt_tableView1,SIGNAL(doubleClicked(const QModelIndex&)),this,SLOT(TableDoubleClicked(QModelIndex)));
 
     editWindow->imageLabel->m_table = ui->mt_tableView1;
 
@@ -147,6 +152,7 @@ void MainWindow::SetupTables()
     m_frameTableModel->setHasModel(true);
     ui->ft_tableView1->setModel(m_frameTableModel);
     ui->ft_tableView1->setSelectionBehavior(QTableView::SelectRows);
+    m_frameTableModel->AddEditableColumn(3);
 
     width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
     for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
@@ -155,7 +161,8 @@ void MainWindow::SetupTables()
     }
     connect(ui->ft_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
     connect(ui->ft_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
-    //connect(ui->ft_tableView1->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
+
+
 
     /*frame - bottom table*/
     m_frameDescTableModel = new ModuleTableModel(this,0,6,new FrameDescRowDataHandler());
@@ -360,9 +367,10 @@ void MainWindow::Del_Clicked()
     }
     else if(sender == ui->ft_navTable2_button3){
 
-        /* del item on graphics view */
+
         int row_ = ui->ft_tableView2->currentIndex().row();
         if(row_ != -1){
+            /* del item on graphics view */
             ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
             RowData* rd = m->getDatainRow(row_);
             int id_ =rd->getData(0).toInt();
@@ -907,4 +915,10 @@ void MainWindow::TableEditCompleted(QString str)
         UID::Instance().setLastUID(newrowID_+1,UIDType::MODULE);
     }
     UID::Instance().setAutoInc(true);
+ }
+
+ void MainWindow::TableDoubleClicked(const QModelIndex &index)
+ {
+     std::cout<<"TableDoubleClicked Row: "<<index.row()<<std::endl;
+     std::cout<<"TableDoubleClicked Col: "<<index.column()<<std::endl;
  }
