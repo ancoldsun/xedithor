@@ -24,14 +24,6 @@ namespace ModeView
     const int DRAG_MODE = 1;
 };
 
-namespace TabView
-{
-    const int MODULE = 0;
-    const int FRAME  = 1;
-    const int ANIM   = 2;
-};
-
-
 
 
 class GraphWidget : public QGraphicsView
@@ -60,6 +52,7 @@ public:
     void clearGraphPixmapItem();
     void setSelectedPixmapItem(int idSelected);
     void DeletePixmapItem(int idDeleted);
+    QImage exportToImage();
 
 
 public slots:

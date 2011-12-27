@@ -44,6 +44,9 @@ public:
     void setModuleList_Module();
     void setModuleList_Frame();
     void setModuleList_Anim();
+    void setupViewModule();
+    void setupViewFrame();
+    void setupViewAnim();
 
 private slots:
     void ZoomOut();
@@ -57,6 +60,8 @@ private:
     QToolBar *windowEditToolBar;
     QAction* zoomInAct;
     QAction* zoomOutAct;
+
+    int m_modeView;
 
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
