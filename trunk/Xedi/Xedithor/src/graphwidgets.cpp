@@ -34,6 +34,7 @@ GraphWidget::GraphWidget(QWidget *parent)
     //QGraphicsScene* Scene = new QGraphicsScene(this);
     //setScene(m_scene);
 
+
     // X-axis component
     m_scene->addLine(0,HeightRectView / 2,WidthRectView, HeightRectView / 2);
     for(int x = 0; x < WidthRectView; x = x + 25) {
@@ -58,6 +59,7 @@ GraphWidget::GraphWidget(QWidget *parent)
         }
         m_scene->addRect(WidthRectView / 2, y, 1, 1);
     }
+
 
     //Set-up the view
     setSceneRect(0, 0, WidthRectView, HeightRectView);
@@ -182,12 +184,6 @@ void GraphWidget::mousePressEvent(QMouseEvent* event) {
     FirstRectPoint= event->pos();
 
     QPointF coordMouse = mapToScene(FirstRectPoint.x(),FirstRectPoint.y());
-    //std::cout<<" X: "<<coordMouse.x()<<std::endl;
-    //std::cout<<" Y: "<<coordMouse.y()<<std::endl;
-    //rectSelect->setRect(coordMouse.x(),coordMouse.y(),coordMouse.x(),coordMouse.x());
-    //rectSelect->update();
-    //std::cout<<"press mouse"<<std::endl;
-
     QGraphicsView::mousePressEvent(event);
 }
 
@@ -198,42 +194,43 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
     LastPanPoint = QPoint();
 
     LastRectPoint= event->pos();
+    if(m_tabView == TabView::FRAME) {
+        if(m_scene->selectedItems().count()>0) {
+            ModuleTableModel* m2;
+            foreach (QGraphicsItem *item, m_scene->selectedItems()) {
+                if(item->type()== QGraphicsPixmapItem::Type){
 
-    if(m_scene->selectedItems().count()>0) {
-        ModuleTableModel* m2;
-        foreach (QGraphicsItem *item, m_scene->selectedItems()) {
-            if(item->type()== QGraphicsPixmapItem::Type){
+                    int itemPosX = (item->pos().x()-(WidthRectView / 2));
+                    int itemPosY = (item->pos().y()-(HeightRectView / 2));
 
-                int itemPosX = (item->pos().x()-(WidthRectView / 2));
-                int itemPosY = (item->pos().y()-(HeightRectView / 2));
+                    std::cout<<"sel XX "<<itemPosX<<std::endl;
+                    std::cout<<"sel YY "<<itemPosY<<std::endl;
 
-                std::cout<<"sel XX "<<itemPosX<<std::endl;
-                std::cout<<"sel YY "<<itemPosY<<std::endl;
+                    int idItem = item->data(0).toInt();
 
-                int idItem = item->data(0).toInt();
+                    std::cout<<"id: "<<idItem<<std::endl;
 
-                std::cout<<"id: "<<idItem<<std::endl;
+                    m2 =static_cast<ModuleTableModel*>(m_table_bottom->model());
 
-                m2 =static_cast<ModuleTableModel*>(m_table_bottom->model());
+                    std::cout<<" r count: "<<m2->rowCount()<<std::endl;
+                    for(int i=0;i<m2->rowCount();i++){
+                        RowData* rd = m2->getDatainRow(i);
 
-                std::cout<<" r count: "<<m2->rowCount()<<std::endl;
-                for(int i=0;i<m2->rowCount();i++){
-                    RowData* rd = m2->getDatainRow(i);
+                        std::cout<<" id row : "<<rd->getData(0).toInt()<<std::endl;
 
-                    std::cout<<" id row : "<<rd->getData(0).toInt()<<std::endl;
-
-                    if(rd!=NULL && rd->getData(0).toInt()==idItem){
-                        QString sx = QString::number(itemPosX);
-                        QString sy = QString::number(itemPosY);
-                        rd->setData(2,sx);
-                        rd->setData(3,sy);
+                        if(rd!=NULL && rd->getData(0).toInt()==idItem){
+                            QString sx = QString::number(itemPosX);
+                            QString sy = QString::number(itemPosY);
+                            rd->setData(2,sx);
+                            rd->setData(3,sy);
+                        }
                     }
-                }
 
+                }
             }
+            m2->refresh();
         }
-        m2->refresh();
-    }
+    } // --- if view module
 
     QGraphicsView::mouseReleaseEvent(event);
 }
@@ -385,6 +382,7 @@ void GraphWidget::setupGraphViewModule()
 
 void GraphWidget::setupGraphViewFrame()
 {
+    clearGraphPixmapItem();
     m_scene->removeItem(rectSelect);
     m_scene->removeItem(pixmapGraphicsItem);
     m_tabView = TabView::FRAME;
@@ -392,7 +390,7 @@ void GraphWidget::setupGraphViewFrame()
 
 void GraphWidget::setupGraphViewAnim()
 {
-
+    clearGraphPixmapItem();
 }
 
 int GraphWidget::AddPixmapItem(QPixmap* pxmap)
@@ -465,9 +463,31 @@ void GraphWidget::DeletePixmapItem(int idDeleted)
 
 
 
+QImage GraphWidget::exportToImage()
+{
+    QRect sourceRect;
+    //QRect destRect;
+    QList<QGraphicsItem *> selectedItems;// = m_scene->selectedItems();
 
+    foreach (QGraphicsItem *item, m_scene->items()) {
+        if(item->type()== QGraphicsPixmapItem::Type){
+                selectedItems.push_back(item);
+        }
+    }
 
+    foreach(QGraphicsItem *current, selectedItems) {
+        sourceRect = sourceRect.unite((current->sceneBoundingRect().toRect()));
+    }
 
+    std::cout<<" SH: "<<sourceRect.height()<<std::endl;
+    std::cout<<" SW: "<<sourceRect.width()<<std::endl;
+    QImage image(sourceRect.height(),sourceRect.width(),QImage::Format_ARGB32);
+    image.fill(0);
+    QPainter painter(&image);
+    m_scene->render(&painter, image.rect(), sourceRect);
+
+    return image;
+}
 
 
 

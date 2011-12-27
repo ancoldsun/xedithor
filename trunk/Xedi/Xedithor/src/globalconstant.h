@@ -44,4 +44,11 @@ namespace Page
 const int WidthRectView  = 4000;
 const int HeightRectView = 4000;
 
+namespace TabView
+{
+    const int MODULE = 0;
+    const int FRAME  = 1;
+    const int ANIM   = 2;
+};
+
 #endif // GLOBALCONSTANT_H

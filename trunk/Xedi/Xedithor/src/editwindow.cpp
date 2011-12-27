@@ -3,6 +3,7 @@
 
 #include "editwindow.h"
 #include "ui_editwindow.h"
+#include "globalconstant.h"
 
 
 EditWindow::EditWindow(QWidget *parent) :
@@ -125,72 +126,99 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
 
     int imgClicked_ = index.row();
 
-    QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
-    QString moduleIDStr = modulesList->item(imgClicked_)->text();
-    QPixmap copyPixmap = pixmap.copy();
-    int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
-    //QString genIdStr = QString::number(genId_)
-    ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
-    if(m->rowCount()<1){
-        m->insertRow(0);
+    if(m_modeView == TabView::FRAME) {
+        QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
+        QString moduleIDStr = modulesList->item(imgClicked_)->text();
+        QPixmap copyPixmap = pixmap.copy();
+        int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
+        //QString genIdStr = QString::number(genId_)
+        ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
+        if(m->rowCount()<1){
+            m->insertRow(0);
 
-        ModuleTableModel* sub_model = m->getModel(0);
-        sub_model->insertRow(0);
-        /* set data */
-        RowData* rd = sub_model->getDatainRow(0);
-        rd->setData(0,QString::number(genId_));
-        rd->setData(1,moduleIDStr);
-        /* end set data */
-        sub_model->refresh();
-        /* update module frame count */
-        int mf_count = m->getDatainRow(0)->getData(2).toInt();
-        m->getDatainRow(0)->setData(2,QString::number(mf_count+1));
-
-        this->imageLabel->m_table_bottom->setModel(sub_model);
-    } else
-    {
-        int frameRowSelected = imageLabel->m_table->currentIndex().row();
-        if(frameRowSelected == -1){
-            frameRowSelected = 0;
-        }
-
-        ModuleTableModel* sub_model = m->getModel(frameRowSelected);
-        if(sub_model->rowCount()<1){
+            ModuleTableModel* sub_model = m->getModel(0);
             sub_model->insertRow(0);
-
             /* set data */
             RowData* rd = sub_model->getDatainRow(0);
             rd->setData(0,QString::number(genId_));
             rd->setData(1,moduleIDStr);
             /* end set data */
             sub_model->refresh();
-
             /* update module frame count */
-            int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
-            m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
+            int mf_count = m->getDatainRow(0)->getData(2).toInt();
+            m->getDatainRow(0)->setData(2,QString::number(mf_count+1));
 
-
-
-        }
-        else {
-            int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
-            if(frameModuleRowSelected == -1){
-                frameModuleRowSelected = 0;
+            this->imageLabel->m_table_bottom->setModel(sub_model);
+        } else
+        {
+            int frameRowSelected = imageLabel->m_table->currentIndex().row();
+            if(frameRowSelected == -1){
+                frameRowSelected = 0;
             }
-            sub_model->insertRow(frameModuleRowSelected);
-            /* set data */
-            RowData* rd = sub_model->getDatainRow(0);
-            rd->setData(0,QString::number(genId_));
-            rd->setData(1,moduleIDStr);
-            /* end set data */
-            sub_model->refresh();
 
-            /* update module frame count */
-            int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
-            m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
+            ModuleTableModel* sub_model = m->getModel(frameRowSelected);
+            if(sub_model->rowCount()<1){
+                sub_model->insertRow(0);
+
+                /* set data */
+                RowData* rd = sub_model->getDatainRow(0);
+                rd->setData(0,QString::number(genId_));
+                rd->setData(1,moduleIDStr);
+                /* end set data */
+                sub_model->refresh();
+
+                /* update module frame count */
+                int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
+                m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
 
 
+
+            }
+            else {
+                int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
+                if(frameModuleRowSelected == -1){
+                    frameModuleRowSelected = 0;
+                }
+                sub_model->insertRow(frameModuleRowSelected);
+                /* set data */
+                RowData* rd = sub_model->getDatainRow(0);
+                rd->setData(0,QString::number(genId_));
+                rd->setData(1,moduleIDStr);
+                /* end set data */
+                sub_model->refresh();
+
+                /* update module frame count */
+                int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
+                m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
+
+
+            }
         }
-    }
-    m->refresh();
+        m->refresh();
+    }  // -- end TabView::FRAME
+    else if(m_modeView == TabView::ANIM)
+    {
+        QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
+        QString moduleIDStr = modulesList->item(imgClicked_)->text();
+        QPixmap copyPixmap = pixmap.copy();
+        int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
+    } // -- end TabView::ANIM
+}
+
+void EditWindow::setupViewModule()
+{
+    m_modeView= TabView::MODULE;
+    this->imageLabel->setupGraphViewModule();
+}
+
+void EditWindow::setupViewFrame()
+{
+    m_modeView= TabView::FRAME;
+    this->imageLabel->setupGraphViewFrame();
+}
+
+void EditWindow::setupViewAnim()
+{
+    m_modeView= TabView::ANIM;
+    //this->imageLabel->setupGraphViewAnim();
 }

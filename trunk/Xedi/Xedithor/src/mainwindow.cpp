@@ -91,41 +91,6 @@ void MainWindow::CreateToolBar()
 
 void MainWindow::SetupTables()
 {
-    /*
-    for(int i=0;i<XD::NUM_TAB;i++)
-    {
-        for(int j=0;j<XD::NUM_TABLE;j++)
-        {
-            // set column num, row num
-            m_Atable[i][j]->setColumnCount(CMainWindow::COUNT_COLUMN_TABLE);
-            m_Atable[i][j]->setRowCount(1);
-
-             // set column width
-            int width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
-            for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
-            {
-                m_Atable[i][j]->setColumnWidth(m, width_col);
-            }
-            // set default table header
-            m_Atable[i][j]->setHorizontalHeaderItem(0,new QTableWidgetItem("Index",0));
-            m_Atable[i][j]->setHorizontalHeaderItem(1,new QTableWidgetItem("ID",1));
-            m_Atable[i][j]->setHorizontalHeaderItem(2,new QTableWidgetItem("X",2));
-            m_Atable[i][j]->setHorizontalHeaderItem(3,new QTableWidgetItem("Y",3));
-            m_Atable[i][j]->setHorizontalHeaderItem(4,new QTableWidgetItem("Width",4));
-            m_Atable[i][j]->setHorizontalHeaderItem(5,new QTableWidgetItem("Height",5));
-        }
-    }
-
-    //setup default first row value
-    m_Atable[XD::T_MODULE][XD::TABLE1]->setItem(0,0,new QTableWidgetItem("0",0));
-    m_Atable[XD::T_MODULE][XD::TABLE1]->setItem(0,1,new QTableWidgetItem("1000",1));
-    m_Atable[XD::T_MODULE][XD::TABLE1]->setItem(0,2,new QTableWidgetItem("0",2));
-    m_Atable[XD::T_MODULE][XD::TABLE1]->setItem(0,3,new QTableWidgetItem("0",3));
-    m_Atable[XD::T_MODULE][XD::TABLE1]->setItem(0,4,new QTableWidgetItem("32",4));
-    m_Atable[XD::T_MODULE][XD::TABLE1]->setItem(0,5,new QTableWidgetItem("32",5));
-
-    */
-
     /* module */
     m_moduleTableModel = new ModuleTableModel(this,1,6,new ModuleRowDataHandler());
     m_moduleTableModel->AddEditableColumn(2);
@@ -162,8 +127,6 @@ void MainWindow::SetupTables()
     connect(ui->ft_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
     connect(ui->ft_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
 
-
-
     /*frame - bottom table*/
     m_frameDescTableModel = new ModuleTableModel(this,0,6,new FrameDescRowDataHandler());
     ui->ft_tableView2->setModel(m_frameDescTableModel);
@@ -191,16 +154,6 @@ void MainWindow::SetupWidgetAlias()
     tNavButton[XD::T_MODULE][XD::GROUP1][XD::B_ADD] = ui->ft_navTable1_button1;
     tNavButton[XD::T_MODULE][XD::GROUP1][XD::B_ADD] = ui->ft_navTable1_button1;
     tNavButton[XD::T_MODULE][XD::GROUP1][XD::B_ADD] = ui->ft_navTable1_button1;
-
-    /*
-    //table
-    m_Atable[XD::T_MODULE][XD::TABLE1] =ui->mt_tableWidget1;
-    m_Atable[XD::T_MODULE][XD::TABLE2] =ui->mt_tableWidget2;
-    m_Atable[XD::T_FRAME][XD::TABLE1]  =ui->ft_tableWidget1;
-    m_Atable[XD::T_FRAME][XD::TABLE2]  =ui->ft_tableWidget2;
-    m_Atable[XD::T_ANIM][XD::TABLE1]   =ui->at_tableWidget1;
-    m_Atable[XD::T_ANIM][XD::TABLE2]   =ui->at_tableWidget2;
-    */
 }
 
 void MainWindow::SetupConnectWidgets()
@@ -214,14 +167,6 @@ void MainWindow::SetupConnectWidgets()
      connect(ui->mt_navTable1_button5, SIGNAL(clicked()), this, SLOT(Down_Clicked()));
      connect(ui->mt_navTable1_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
      connect(ui->mt_navTable1_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
-     // table 2
-     //connect(ui->mt_navTable2_button1, SIGNAL(clicked()), this, SLOT(Add_Clicked()));
-     //connect(ui->mt_navTable2_button2, SIGNAL(clicked()), this, SLOT(Clone_Clicked()));
-     //connect(ui->mt_navTable2_button3, SIGNAL(clicked()), this, SLOT(Del_Clicked()));
-     //connect(ui->mt_navTable2_button4, SIGNAL(clicked()), this, SLOT(Up_Clicked()));
-     //connect(ui->mt_navTable2_button5, SIGNAL(clicked()), this, SLOT(Down_Clicked()));
-     //connect(ui->mt_navTable2_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
-     // connect(ui->mt_navTable2_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
    // Tab Frame
      // table 1
      connect(ui->ft_navTable1_button1, SIGNAL(clicked()), this, SLOT(Add_Clicked()));
@@ -259,9 +204,6 @@ void MainWindow::SetupConnectWidgets()
 
      //tab widget connect
      connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(PageTabChanged(int)));
-
-     //doubleClicked ( const QModelIndex & index )
-
 }
 
 void MainWindow::newFile()
@@ -688,11 +630,11 @@ void MainWindow::TableEditCompleted(QString str)
         // set to modules table
         editWindow->imageLabel->m_table = ui->mt_tableView1;
         editWindow->imageLabel->m_table_bottom=NULL;
-        editWindow->imageLabel->setupGraphViewModule();
+        editWindow->setupViewModule();//imageLabel->setupGraphViewModule();
      }
      else if(indexPage == Page::FRAME)
      {
-
+         editWindow->getModuleList()->clear();
          ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
 
          std::cout<<"Page::FRAME: "<<m->rowCount()<<std::endl;
@@ -716,14 +658,52 @@ void MainWindow::TableEditCompleted(QString str)
          // graph now handle frame table
          editWindow->imageLabel->m_table = ui->ft_tableView1;
          editWindow->imageLabel->m_table_bottom = ui->ft_tableView2;
-         editWindow->imageLabel->setupGraphViewFrame();
+         editWindow->setupViewFrame();//imageLabel->setupGraphViewFrame();
 
      }
      else if(indexPage == Page::ANIM)
      {
+        ModuleTableModel* m  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
+        ModuleTableModel* m2;
 
+
+        QList<QPixmap> listPxmap;
+        //
+        for(int i=0;i<m->rowCount();i++)
+        {
+            editWindow->imageLabel->clearGraphPixmapItem();
+            m2 = m->getModel(i);
+            for(int j=0;j<m2->rowCount();j++)
+            {
+                RowData* rd       = m2->getDatainRow(j);
+                int id_           = rd->getData(0).toInt();
+                QString moduleID_ = rd->getData(1);
+                int px_           = rd->getData(2).toInt();
+                int py_           = rd->getData(3).toInt();
+                QPixmap pixmap = editWindow->modulesList->getItemByText(moduleID_)->icon().pixmap(100,100);
+                QPixmap copyPixmap = pixmap.copy();
+                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+            }
+            QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
+            listPxmap.push_back(pieceImage);
+        }
+        editWindow->getModuleList()->clear();
+        editWindow->imageLabel->clearGraphPixmapItem();
+        for(int i=0;i<listPxmap.count();i++){
+            editWindow->getModuleList()->addPiece(listPxmap.at(i),QPoint(0,0),QString::number(i));
+        }
+
+        //QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
+
+        //QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
+
+
+
+        //editWindow->getModuleList()->clear();
+        editWindow->setupViewAnim();
+
+        //editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0),0);
      }
-
  }
  void MainWindow::saveDataSprite()
  {
@@ -784,9 +764,7 @@ void MainWindow::TableEditCompleted(QString str)
         stream.writeAttribute("name", nameFrame);
 
         ModuleTableModel* m  = m_frameTableModel->getModel(ix);
-
         int nModuleInFrame = m->rowCount();
-
 
         for(int iy=0;iy<nModuleInFrame;iy++)
         {
@@ -798,28 +776,14 @@ void MainWindow::TableEditCompleted(QString str)
 
             stream.writeTextElement("RowModFrm", dataRow);
         }
-
-
-
-        /*
-        QString nRow=QString::number(ix);
-        QString dataRow="";
-        RowData* rd = m_moduleTableModel->getDatainRow(ix);
-        for(int iy=0;iy<m_moduleTableModel->columnCount();iy++)
-        {
-            dataRow=dataRow+rd->getData(iy)+" ";
-        }
-        */
-
-        //stream.writeTextElement("nRow", dataRow);
-
         stream.writeEndElement();
     }
     stream.writeEndElement(); // frames
 
     /* save anim */
     //todo:
-    //stream.writeEndElement(); // sprites
+
+    //end
     stream.writeEndDocument();
  }
 
@@ -924,11 +888,6 @@ void MainWindow::TableEditCompleted(QString str)
                                 header.push_back(xml.attributes().at(1).value().toString());
                                 header.push_back(xml.attributes().at(2).value().toString());
 
-                                //std::cout<<"--- itemFrame ---"<<std::endl;
-                                //std::cout<<"id : "<<xml.attributes().at(0).value().toString().toStdString().c_str()<<std::endl;
-                                //std::cout<<"N : "<<xml.attributes().at(1).value().toString().toStdString().c_str()<<std::endl;
-                                //std::cout<<"name: "<<xml.attributes().at(2).value().toString().toStdString().c_str()<<std::endl;
-
                                 while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
                                                         xml.name() == "itemFrame"))
                                 {
@@ -936,10 +895,8 @@ void MainWindow::TableEditCompleted(QString str)
                                     {
                                         if(xml.name() == "RowModFrm")
                                         {
-                                            //std::cout<<"--- DDD --"<<std::endl;
                                             xml.readNext();
                                             body.push_back(xml.text().toString());
-                                            //std::cout<<"--- data --"<<xml.text().toString().toStdString().c_str()<<std::endl;
                                         }
                                     }
                                     xml.readNext();
@@ -968,7 +925,7 @@ void MainWindow::TableEditCompleted(QString str)
      /* reset module table */
      m_moduleTableModel->clearData();
      /* reset frame table */
-     //todo:
+     m_frameTableModel->clearData();
      /* reset anim table */
      //todo:
  }
@@ -1063,13 +1020,12 @@ void MainWindow::TableEditCompleted(QString str)
 
         datRow.clear();
 
+        idC++;
         /* set last ID */
         int lastID_= UID::Instance().getLastUID(UIDType::FRAME_DESC);
         if( lastID_ < idC){ // 1 = uid module
             UID::Instance().setLastUID(idC+1,UIDType::FRAME_DESC);
         }
-
-        idC++;
     }
 
     /* set last ID */
