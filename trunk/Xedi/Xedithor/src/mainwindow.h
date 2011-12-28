@@ -85,10 +85,14 @@ private:
 
     QToolButton* tNavButton[XD::NUM_TAB][XD::NUM_GROUP][XD::NUM_BUTTON];
     QTableView* m_Atable[XD::NUM_TAB][XD::NUM_TABLE];
-
+    // module
     ModuleTableModel* m_moduleTableModel;
+    // frame
     ModuleTableModel* m_frameTableModel;
     ModuleTableModel* m_frameDescTableModel;
+    // animation
+    ModuleTableModel* m_animTableModel;
+    ModuleTableModel* m_animDescTableModel;
 
     QString m_ImgfileName;
     QString m_SprfileName;

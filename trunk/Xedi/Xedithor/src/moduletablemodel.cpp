@@ -20,6 +20,7 @@ ModuleTableModel::ModuleTableModel(QObject *parent,int row,int col,RowDataHandle
     m_handler->createRowHeader(m_Headers);
     // model in model
     m_hasModel    = false;
+    m_subHandler  = NULL;
 
 }
 
@@ -103,7 +104,10 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
         if(m_hasModel){
             // danger : no code will delete : new FrameDescRowDataHandler
             // todo   : make singleton for row handler
-            ModuleTableModel* childModel = new ModuleTableModel(this,0,6,new FrameDescRowDataHandler());
+            if(m_subHandler==NULL){
+                std::cout<<" WARNING: m_subHandler is NULL"<<std::endl;
+            }
+            ModuleTableModel* childModel = new ModuleTableModel(this,0,6,m_subHandler);
             childModel->AddEditableColumn(2);
             childModel->AddEditableColumn(3);
             m_listModel.insert(row,childModel);

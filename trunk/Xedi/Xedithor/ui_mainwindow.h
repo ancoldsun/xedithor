@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Dec 26 14:58:29 2011
+** Created: Thu Dec 29 02:02:24 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,6 +55,7 @@ public:
     QToolButton *mt_navTable1_button3;
     QToolButton *mt_navTable1_button4;
     QToolButton *mt_navTable1_button5;
+    QToolButton *toolButton;
     QToolButton *mt_navTable1_button6;
     QToolButton *mt_navTable1_button7;
     QTableView *mt_tableView1;
@@ -246,6 +247,11 @@ public:
         mt_navTable1_button5->setIcon(icon5);
 
         horizontalLayout_3->addWidget(mt_navTable1_button5);
+
+        toolButton = new QToolButton(mt_groupBox1);
+        toolButton->setObjectName(QString::fromUtf8("toolButton"));
+
+        horizontalLayout_3->addWidget(toolButton);
 
         mt_navTable1_button6 = new QToolButton(mt_groupBox1);
         mt_navTable1_button6->setObjectName(QString::fromUtf8("mt_navTable1_button6"));
@@ -599,6 +605,7 @@ public:
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         at_navTable2_button1 = new QToolButton(at_groupBox2);
         at_navTable2_button1->setObjectName(QString::fromUtf8("at_navTable2_button1"));
+        at_navTable2_button1->setEnabled(false);
         sizePolicy1.setHeightForWidth(at_navTable2_button1->sizePolicy().hasHeightForWidth());
         at_navTable2_button1->setSizePolicy(sizePolicy1);
         at_navTable2_button1->setMinimumSize(QSize(2, 0));
@@ -609,6 +616,7 @@ public:
 
         at_navTable2_button2 = new QToolButton(at_groupBox2);
         at_navTable2_button2->setObjectName(QString::fromUtf8("at_navTable2_button2"));
+        at_navTable2_button2->setEnabled(false);
         sizePolicy1.setHeightForWidth(at_navTable2_button2->sizePolicy().hasHeightForWidth());
         at_navTable2_button2->setSizePolicy(sizePolicy1);
         at_navTable2_button2->setMinimumSize(QSize(2, 0));
@@ -697,6 +705,7 @@ public:
         mt_navTable1_button3->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button4->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button5->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        toolButton->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("MainWindow", "Image Source", 0, QApplication::UnicodeUTF8));

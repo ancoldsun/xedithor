@@ -126,7 +126,7 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
 
     int imgClicked_ = index.row();
 
-    if(m_modeView == TabView::FRAME) {
+    //if(m_modeView == TabView::FRAME) {
         QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
         QString moduleIDStr = modulesList->item(imgClicked_)->text();
         QPixmap copyPixmap = pixmap.copy();
@@ -170,9 +170,6 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
                 /* update module frame count */
                 int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
                 m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
-
-
-
             }
             else {
                 int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
@@ -195,7 +192,8 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             }
         }
         m->refresh();
-    }  // -- end TabView::FRAME
+    //}  // -- end TabView::FRAME
+    /*
     else if(m_modeView == TabView::ANIM)
     {
         QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
@@ -203,6 +201,7 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
         QPixmap copyPixmap = pixmap.copy();
         int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
     } // -- end TabView::ANIM
+    */
 }
 
 void EditWindow::setupViewModule()

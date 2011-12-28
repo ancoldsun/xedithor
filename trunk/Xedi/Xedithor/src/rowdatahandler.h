@@ -40,8 +40,23 @@ public:
     void createDefaultRow(std::vector<QString>& vec,int col);///,std::vector<ModuleFrame*>&Table);
     void createRowHeader(QStringList& strList);
 };
-
+/* frame desc data */
 class FrameDescRowDataHandler :public RowDataHandler
+{
+public:
+    void createDefaultRow(std::vector<QString>& vec,int col);
+    void createRowHeader(QStringList& strList);
+};
+
+/* anim data */
+class AnimRowDataHandler :public RowDataHandler
+{
+public:
+    void createDefaultRow(std::vector<QString>& vec,int col);///,std::vector<ModuleFrame*>&Table);
+    void createRowHeader(QStringList& strList);
+};
+/* anim desc data */
+class AnimDescRowDataHandler :public RowDataHandler
 {
 public:
     void createDefaultRow(std::vector<QString>& vec,int col);
