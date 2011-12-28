@@ -36,6 +36,10 @@ public:
         m_hasModel=isHasModel;
     }
 
+    inline void setSubModelRowHandler(RowDataHandler* _row_handler) {
+        m_subHandler = _row_handler;
+    }
+
     ModuleTableModel* getModel(int rowN);
 
     void clearData();
@@ -50,9 +54,11 @@ private:
     int numberRow,numberCol;
     QStringList m_Headers;
     RowDataHandler* m_handler;
+    RowDataHandler* m_subHandler;
     QList<ModuleTableModel*> m_listModel;
     QList<int> m_editableColumn;
     bool m_hasModel;
+
     //QTimer *timer;
 
 

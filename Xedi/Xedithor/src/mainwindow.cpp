@@ -115,6 +115,7 @@ void MainWindow::SetupTables()
     /*frame - top table */
     m_frameTableModel = new ModuleTableModel(this,0,6,new FrameRowDataHandler());
     m_frameTableModel->setHasModel(true);
+    m_frameTableModel->setSubModelRowHandler(new FrameDescRowDataHandler());
     ui->ft_tableView1->setModel(m_frameTableModel);
     ui->ft_tableView1->setSelectionBehavior(QTableView::SelectRows);
     m_frameTableModel->AddEditableColumn(3);
@@ -141,7 +142,32 @@ void MainWindow::SetupTables()
     connect(ui->ft_tableView2->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
     //connect(ui->ft_tableView2->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
+    // anim top
+    m_animTableModel = new ModuleTableModel(this,0,6,new AnimRowDataHandler());
+    m_animTableModel->setHasModel(true);
+    m_animTableModel->setSubModelRowHandler(new AnimDescRowDataHandler());
+    ui->at_tableView1->setModel(m_animTableModel);
+    ui->at_tableView1->setSelectionBehavior(QTableView::SelectRows);
+    m_animTableModel->AddEditableColumn(3);
 
+    width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
+    for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
+    {
+        ui->at_tableView1->setColumnWidth(m, width_col);
+    }
+    connect(ui->at_tableView1, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
+    connect(ui->at_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
+
+    //frame anim
+    m_animDescTableModel = new ModuleTableModel(this,0,6,new AnimDescRowDataHandler());
+    ui->at_tableView2->setModel(m_animDescTableModel);
+    ui->at_tableView2->setSelectionBehavior(QTableView::SelectRows);
+
+    width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
+    for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
+    {
+        ui->at_tableView2->setColumnWidth(m, width_col);
+    }
 }
 
 void MainWindow::SetupWidgetAlias()
@@ -581,12 +607,23 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
             }
         }
     } else if(sender == ui->ft_tableView2){ // table module-frame
+
         int rowSelected_ = ui->ft_tableView2->currentIndex().row();
 
         ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
-        RowData* rd          = mf->getDatainRow(rowSelected_);
-        int id_              = rd->getData(0).toInt();
+        RowData* _row_data          = mf->getDatainRow(rowSelected_);
+        int id_                     = _row_data->getData(0).toInt();
         editWindow->imageLabel->setSelectedPixmapItem(id_);
+
+    }  else if(sender == ui->at_tableView1){ // table anim
+
+        int _rowSelected = ui->at_tableView1->currentIndex().row();
+        ModuleTableModel* _anim_model       = static_cast<ModuleTableModel*>(ui->at_tableView1->model());
+        ModuleTableModel* _frame_anim_model = _anim_model->getModel(_rowSelected);
+        ui->at_tableView2->setModel(_frame_anim_model);
+
+        // clear prev row images item
+        editWindow->imageLabel->clearGraphPixmapItem();
     }
 }
 
@@ -666,43 +703,54 @@ void MainWindow::TableEditCompleted(QString str)
         ModuleTableModel* m  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
         ModuleTableModel* m2;
 
+        if(editWindow->modulesList->count()>0) {
 
-        QList<QPixmap> listPxmap;
-        //
-        for(int i=0;i<m->rowCount();i++)
-        {
-            editWindow->imageLabel->clearGraphPixmapItem();
-            m2 = m->getModel(i);
-            for(int j=0;j<m2->rowCount();j++)
+            QList<QPixmap> listPxmap;
+            QList<QString> listStrFrameID;
+            //
+            for(int i=0;i<m->rowCount();i++)
             {
-                RowData* rd       = m2->getDatainRow(j);
-                int id_           = rd->getData(0).toInt();
-                QString moduleID_ = rd->getData(1);
-                int px_           = rd->getData(2).toInt();
-                int py_           = rd->getData(3).toInt();
-                QPixmap pixmap = editWindow->modulesList->getItemByText(moduleID_)->icon().pixmap(100,100);
-                QPixmap copyPixmap = pixmap.copy();
-                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                editWindow->imageLabel->clearGraphPixmapItem();
+                m2 = m->getModel(i);
+                for(int j=0;j<m2->rowCount();j++)
+                {
+                    RowData* rd       = m2->getDatainRow(j);
+                    int id_           = rd->getData(0).toInt();
+                    QString moduleID_ = rd->getData(1);
+                    int px_           = rd->getData(2).toInt();
+                    int py_           = rd->getData(3).toInt();
+                    QListWidgetItem* _img_item = editWindow->modulesList->getItemByText(moduleID_);
+
+                    if(_img_item!=NULL)
+                    {
+                        QIcon _icon = _img_item->icon();
+                        QPixmap pixmap = _icon.pixmap(100,100);
+                        QPixmap copyPixmap = pixmap.copy();
+                        editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                    }
+                }
+                QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
+                listStrFrameID.push_back(m->getDatainRow(i)->getData(1));
+                listPxmap.push_back(pieceImage);
             }
-            QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
-            listPxmap.push_back(pieceImage);
+            editWindow->getModuleList()->clear();
+            editWindow->imageLabel->clearGraphPixmapItem();
+
+            for(int i=0;i<listPxmap.count();i++)
+            {
+                QPixmap _pixmap = listPxmap.at(i);
+                editWindow->getModuleList()->addPiece(_pixmap,QPoint(0,0),listStrFrameID.at(i));
+            }
+            //QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
+            //QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
         }
-        editWindow->getModuleList()->clear();
-        editWindow->imageLabel->clearGraphPixmapItem();
-        for(int i=0;i<listPxmap.count();i++){
-            editWindow->getModuleList()->addPiece(listPxmap.at(i),QPoint(0,0),QString::number(i));
-        }
-
-        //QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
-
-        //QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
-
-
 
         //editWindow->getModuleList()->clear();
         editWindow->setupViewAnim();
-
         //editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0),0);
+        // graph now handle frame table
+        editWindow->imageLabel->m_table = ui->at_tableView1;
+        editWindow->imageLabel->m_table_bottom = ui->at_tableView2;
      }
  }
  void MainWindow::saveDataSprite()

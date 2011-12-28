@@ -86,3 +86,57 @@ void FrameDescRowDataHandler::createRowHeader(QStringList& strList)
     strList.push_back("next");
 }
 
+/* anim */
+void AnimRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,std::vector<ModuleFrame*>&Table)
+{
+    QString s="0";
+    if(col==0)
+        s="N/A";//QString::number(1);
+    else if(col==1)
+        s=QString::number(ANIM_START_ID+(UID::Instance().getLastUID(UIDType::ANIM)));
+    else if(col==3)
+        s="anim_";//QString::number(32);
+    else if(col==4)
+        s="N/A";//QString::number(32);
+    else if(col==5)
+        s="N/A";//QString::number(32);
+    vec.push_back(s);
+
+    //moduleFrame_ = new ModuleFrame();
+    //Table.push_back(moduleFrame_);
+}
+
+void AnimRowDataHandler::createRowHeader(QStringList& strList)
+{
+    strList.push_back("Index ");
+    strList.push_back("Anim ID");
+    strList.push_back("N Frm");
+    strList.push_back("Name");
+    strList.push_back("next");
+    strList.push_back("next");
+}
+
+/* anim description */
+void AnimDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
+{
+    QString s="0";
+    if(col==0)
+        s=QString::number(1);
+    else if(col==1)
+        s=QString::number(2000+1);
+    else if(col==4)
+        s="N/A";//QString::number(32);
+    else if(col==5)
+        s="N/A";//QString::number(32);
+    vec.push_back(s);
+}
+
+void AnimDescRowDataHandler::createRowHeader(QStringList& strList)
+{
+    strList.push_back(" UID ");
+    strList.push_back("Mod ID");
+    strList.push_back("offset X");
+    strList.push_back("offset Y");
+    strList.push_back("next");
+    strList.push_back("next");
+}
