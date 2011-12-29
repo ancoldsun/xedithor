@@ -624,6 +624,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
 
         // clear prev row images item
         editWindow->imageLabel->clearGraphPixmapItem();
+        editWindow->createAnimation();
     }
 }
 
@@ -749,8 +750,13 @@ void MainWindow::TableEditCompleted(QString str)
         editWindow->setupViewAnim();
         //editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0),0);
         // graph now handle frame table
-        editWindow->imageLabel->m_table = ui->at_tableView1;
+        editWindow->imageLabel->m_table        = ui->at_tableView1;
         editWindow->imageLabel->m_table_bottom = ui->at_tableView2;
+
+        editWindow->imageLabel->m_table_frame     = ui->ft_tableView1;
+        editWindow->imageLabel->m_table_frameDesc = ui->ft_tableView2;
+
+        editWindow->imageLabel->m_table_module   = ui->mt_tableView1;
      }
  }
  void MainWindow::saveDataSprite()

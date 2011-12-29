@@ -47,6 +47,7 @@ public:
     void setupViewModule();
     void setupViewFrame();
     void setupViewAnim();
+    void createAnimation();
 
 private slots:
     void ZoomOut();
