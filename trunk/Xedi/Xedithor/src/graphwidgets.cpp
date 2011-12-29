@@ -9,6 +9,7 @@
 #include "uidmanager.h"
 
 
+
 #include <iostream>
 
 
@@ -85,7 +86,12 @@ GraphWidget::GraphWidget(QWidget *parent)
     rowDataSelected = NULL;
 
     m_table_bottom=NULL;
+    m_animatedItem = NULL;
 
+    m_timer =new QTimer(this);
+    m_timer->setInterval(200);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(timerHit()));
+    m_timer->start(200);
 }
 
 void GraphWidget::setImageGraphicsItem(QPixmap* pxmap)
@@ -489,6 +495,38 @@ QImage GraphWidget::exportToImage()
     return image;
 }
 
+void GraphWidget::createAnimation(QList<QPixmap>&list)
+{
+
+    if(m_animatedItem!=NULL)
+    {
+        delete m_animatedItem;
+        m_animatedItem=NULL;
+    }
+    if(list.count()>0)
+    {
+        m_animatedItem = new AnimatedPixmapItem(list,this->m_scene);
+        m_animatedItem->setPos(WidthRectView / 2 ,HeightRectView / 2 );
+        m_animatedItem->setFrame( 0 );
+    }
+
+}
+
+void GraphWidget::timerEvent( QTimerEvent * )
+{
+    if(m_animatedItem!=NULL){
+        m_animatedItem->nextFrame();
+    }
+}
+
+void GraphWidget::timerHit()
+{
+    if(m_animatedItem!=NULL)
+    {
+        m_animatedItem->nextFrame();
+        repaint();
+    }
+}
 
 
 

@@ -125,7 +125,7 @@ void AnimDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
     else if(col==1)
         s=QString::number(2000+1);
     else if(col==4)
-        s="N/A";//QString::number(32);
+        s="1";//QString::number(32);
     else if(col==5)
         s="N/A";//QString::number(32);
     vec.push_back(s);
@@ -137,6 +137,6 @@ void AnimDescRowDataHandler::createRowHeader(QStringList& strList)
     strList.push_back("Mod ID");
     strList.push_back("offset X");
     strList.push_back("offset Y");
-    strList.push_back("next");
+    strList.push_back("timeline");
     strList.push_back("next");
 }

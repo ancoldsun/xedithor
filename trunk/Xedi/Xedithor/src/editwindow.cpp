@@ -221,3 +221,27 @@ void EditWindow::setupViewAnim()
     m_modeView= TabView::ANIM;
     //this->imageLabel->setupGraphViewAnim();
 }
+
+void EditWindow::createAnimation()
+{
+    ModuleTableModel* _model      =static_cast<ModuleTableModel*>(this->imageLabel->m_table_bottom->model());
+
+    QList<QPixmap> listPixmap;
+    std::cout<<"createAnimation..........: "<<std::endl;
+    for(int i=0;i<_model->rowCount();i++)
+    {
+        RowData* rd = _model->getDatainRow(i);
+
+        //int id_           = rd->getData(0).toInt();
+        QString moduleID_ = rd->getData(1);
+        //int px_           = rd->getData(2).toInt();
+        //int py_           = rd->getData(3).toInt();
+
+        QPixmap pixmap = modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
+        QPixmap copyPixmap = pixmap.copy();
+
+        std::cout<<"createAnimation..........: "<<i<<std::endl;
+        listPixmap.push_back(copyPixmap);
+    }
+    imageLabel->createAnimation(listPixmap);
+}

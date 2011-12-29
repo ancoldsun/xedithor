@@ -7,12 +7,16 @@
 
 #include <QtGui/QGraphicsView>
 #include <qtableview.h>
+#include <QTimerEvent>
+#include <QTimer>
+
 #include "moduletablemodel.h"
 
 #include "xscene.h"
 #include "rectselectionitem.h"
 #include "hlinegraphicsitem.h"
 #include "rowdata.h"
+#include "animatedPixmapItem.h"
 
 QT_BEGIN_NAMESPACE
     class QLabel;
@@ -34,6 +38,12 @@ public:
     RowData* rowDataSelected;
     QTableView* m_table;
     QTableView* m_table_bottom;
+
+    QTableView* m_table_frame;
+    QTableView* m_table_frameDesc;
+
+    QTableView* m_table_module;
+
     int posMouseX;
     int posMouseY;
     void setImageGraphicsItem(QPixmap* pxmap);
@@ -53,10 +63,12 @@ public:
     void setSelectedPixmapItem(int idSelected);
     void DeletePixmapItem(int idDeleted);
     QImage exportToImage();
+    void createAnimation(QList<QPixmap>&list);
 
 
 public slots:
     void setLabelMouse(QLabel* labelmouseinv);
+    void timerHit();
 
 protected:
     //Holds the current centerpoint for the view, used for panning and zooming
@@ -80,6 +92,8 @@ protected:
     void dragMoveEvent(QDragMoveEvent* event);
 
     virtual void drawForeground(QPainter* painter,const QRectF &rect);
+    virtual void timerEvent( QTimerEvent * );
+
 
 private:
     int timerId;
@@ -90,9 +104,11 @@ private:
     QRect* rectPointer;
     QGraphicsPixmapItem* pixmapGraphicsItem;
     RectSelectionItem* rectSelect;
+    QTimer *m_timer;
 
     HLineGraphicsItem* lineH;
     XScene *m_scene;
+    AnimatedPixmapItem* m_animatedItem;
 
 };
 
