@@ -108,6 +108,7 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
                 std::cout<<" WARNING: m_subHandler is NULL"<<std::endl;
             }
             ModuleTableModel* childModel = new ModuleTableModel(this,0,6,m_subHandler);
+            RowData::m_Handler = m_handler;
             childModel->AddEditableColumn(2);
             childModel->AddEditableColumn(3);
             m_listModel.insert(row,childModel);

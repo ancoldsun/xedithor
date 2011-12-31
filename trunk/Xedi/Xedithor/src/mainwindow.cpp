@@ -1041,8 +1041,8 @@ void MainWindow::TableEditCompleted(QString str)
     /* set last ID */
     int lastID_= UID::Instance().getLastUID(UIDType::MODULE);
     int newrowID_  = rd->getData(1).toInt() - 1000;
-    if( lastID_ < newrowID_){ // 1 = uid module
-        UID::Instance().setLastUID(newrowID_+2,UIDType::MODULE);
+    if( lastID_ <= newrowID_){ // 1 = uid module
+        UID::Instance().setLastUID(newrowID_+1,UIDType::MODULE);
     }
     UID::Instance().setAutoInc(true);
  }
@@ -1102,7 +1102,7 @@ void MainWindow::TableEditCompleted(QString str)
         idC++;
         /* set last ID */
         int lastID_= UID::Instance().getLastUID(UIDType::FRAME_DESC);
-        if( lastID_ < idC){ // 1 = uid module
+        if( lastID_ <= idC){ // 1 = uid module
             UID::Instance().setLastUID(idC+1,UIDType::FRAME_DESC);
         }
     }
@@ -1110,8 +1110,8 @@ void MainWindow::TableEditCompleted(QString str)
     /* set last ID */
     int lastID_= UID::Instance().getLastUID(UIDType::FRAME);
     int newrowID_  = rd->getData(1).toInt() - 3000;
-    if( lastID_ < newrowID_){ // 1 = uid module
-        UID::Instance().setLastUID(newrowID_+2,UIDType::FRAME);
+    if( lastID_ <= newrowID_){ // 1 = uid module
+        UID::Instance().setLastUID(newrowID_+1,UIDType::FRAME);
     }
     m->refresh();
 
