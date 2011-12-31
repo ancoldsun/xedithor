@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Dec 29 02:02:24 2011
+** Created: Sat Dec 31 15:13:59 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -112,6 +112,8 @@ public:
     QToolButton *at_navTable2_button6;
     QToolButton *at_navTable2_button7;
     QTableView *at_tableView2;
+    QWidget *tab;
+    QLabel *label;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -682,6 +684,12 @@ public:
         verticalLayout_8->addWidget(dockWidget_at);
 
         tabWidget->addTab(AnimTab, QString());
+        tab = new QWidget();
+        tab->setObjectName(QString::fromUtf8("tab"));
+        label = new QLabel(tab);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(80, 50, 181, 16));
+        tabWidget->addTab(tab, QString());
 
         horizontalLayout_5->addWidget(tabWidget);
 
@@ -758,6 +766,8 @@ public:
         at_navTable2_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         at_navTable2_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(AnimTab), QApplication::translate("MainWindow", "Animations", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "TODO: create sequential animation", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "Sequent Anim", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

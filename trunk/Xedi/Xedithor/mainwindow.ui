@@ -1235,6 +1235,24 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Sequent Anim</string>
+        </attribute>
+        <widget class="QLabel" name="label">
+         <property name="geometry">
+          <rect>
+           <x>80</x>
+           <y>50</y>
+           <width>181</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>TODO: create sequential animation</string>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </item>
     </layout>
