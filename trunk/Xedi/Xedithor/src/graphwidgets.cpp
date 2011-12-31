@@ -487,15 +487,15 @@ QImage GraphWidget::exportToImage()
 
     std::cout<<" SH: "<<sourceRect.height()<<std::endl;
     std::cout<<" SW: "<<sourceRect.width()<<std::endl;
-    QImage image(sourceRect.height(),sourceRect.width(),QImage::Format_ARGB32);
+    QImage image(sourceRect.width(),sourceRect.height(),QImage::Format_ARGB32);
     image.fill(0);
     QPainter painter(&image);
-    m_scene->render(&painter, image.rect(), sourceRect);
+    m_scene->render(&painter, image.rect(), sourceRect,Qt::IgnoreAspectRatio);
 
     return image;
 }
 
-void GraphWidget::createAnimation(QList<QPixmap>&list)
+void GraphWidget::createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos)
 {
 
     if(m_animatedItem!=NULL)
@@ -505,7 +505,7 @@ void GraphWidget::createAnimation(QList<QPixmap>&list)
     }
     if(list.count()>0)
     {
-        m_animatedItem = new AnimatedPixmapItem(list,this->m_scene);
+        m_animatedItem = new AnimatedPixmapItem(list,listPos,this->m_scene);
         m_animatedItem->setPos(WidthRectView / 2 ,HeightRectView / 2 );
         m_animatedItem->setFrame( 0 );
     }

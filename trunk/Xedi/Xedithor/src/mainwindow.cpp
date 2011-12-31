@@ -92,7 +92,7 @@ void MainWindow::CreateToolBar()
 void MainWindow::SetupTables()
 {
     /* module */
-    m_moduleTableModel = new ModuleTableModel(this,1,6,new ModuleRowDataHandler());
+    m_moduleTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new ModuleRowDataHandler());
     m_moduleTableModel->AddEditableColumn(2);
     m_moduleTableModel->AddEditableColumn(3);
     m_moduleTableModel->AddEditableColumn(4);
@@ -113,7 +113,7 @@ void MainWindow::SetupTables()
     editWindow->imageLabel->m_table = ui->mt_tableView1;
 
     /*frame - top table */
-    m_frameTableModel = new ModuleTableModel(this,0,6,new FrameRowDataHandler());
+    m_frameTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new FrameRowDataHandler());
     m_frameTableModel->setHasModel(true);
     m_frameTableModel->setSubModelRowHandler(new FrameDescRowDataHandler());
     ui->ft_tableView1->setModel(m_frameTableModel);
@@ -129,7 +129,7 @@ void MainWindow::SetupTables()
     connect(ui->ft_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
 
     /*frame - bottom table*/
-    m_frameDescTableModel = new ModuleTableModel(this,0,6,new FrameDescRowDataHandler());
+    m_frameDescTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new FrameDescRowDataHandler());
     ui->ft_tableView2->setModel(m_frameDescTableModel);
     ui->ft_tableView2->setSelectionBehavior(QTableView::SelectRows);
 
@@ -143,7 +143,7 @@ void MainWindow::SetupTables()
     //connect(ui->ft_tableView2->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
     // anim top
-    m_animTableModel = new ModuleTableModel(this,0,6,new AnimRowDataHandler());
+    m_animTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimRowDataHandler());
     m_animTableModel->setHasModel(true);
     m_animTableModel->setSubModelRowHandler(new AnimDescRowDataHandler());
     ui->at_tableView1->setModel(m_animTableModel);
@@ -159,7 +159,7 @@ void MainWindow::SetupTables()
     connect(ui->at_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
 
     //frame anim
-    m_animDescTableModel = new ModuleTableModel(this,0,6,new AnimDescRowDataHandler());
+    m_animDescTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimDescRowDataHandler());
     ui->at_tableView2->setModel(m_animDescTableModel);
     ui->at_tableView2->setSelectionBehavior(QTableView::SelectRows);
 
@@ -456,32 +456,27 @@ void MainWindow::Bottom_Clicked()
 
 void MainWindow::tableAddRow(QTableView* table)
 {
-   std::cout<<"ROW: "<<table->currentIndex().row()<<std::endl;
    int newRow = table->currentIndex().row();
    if(newRow==-1)
        newRow=0;
 
-   std::cout<<"ROW: "<<table->currentIndex().row()<<std::endl;
    ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
    table->model()->insertRow(m->rowCount());
+   QModelIndex index = table->model()->index(newRow+1,0);
+   table->setCurrentIndex(index);
    m->refresh();
 }
 
 void MainWindow::tableCloneRow(QTableView* table)
 {
-    std::cout<<"ROW: "<<table->currentIndex().row()<<std::endl;
-
     int rowToClone = table->currentIndex().row();
-    std::cout<<"ROW2: "<<table->currentIndex().row()<<std::endl;
     if(rowToClone !=-1)
     {
-       std::cout<<"ROW3: "<<table->currentIndex().row()<<std::endl;
         ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
-        std::cout<<"ROW4: "<<table->currentIndex().row()<<std::endl;
-       m->cloneRow(rowToClone);
-       std::cout<<"ROW5: "<<table->currentIndex().row()<<std::endl;
+        m->cloneRow(rowToClone);
+        QModelIndex index = table->model()->index(rowToClone+1,0);
+        table->setCurrentIndex(index);
     }
-
 }
 
 void MainWindow::tableDelRow(QTableView* table)
@@ -725,7 +720,7 @@ void MainWindow::TableEditCompleted(QString str)
                     if(_img_item!=NULL)
                     {
                         QIcon _icon = _img_item->icon();
-                        QPixmap pixmap = _icon.pixmap(100,100);
+                        QPixmap pixmap = _icon.pixmap(500,500);
                         QPixmap copyPixmap = pixmap.copy();
                         editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
                     }

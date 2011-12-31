@@ -157,7 +157,8 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             }
 
             ModuleTableModel* sub_model = m->getModel(frameRowSelected);
-            if(sub_model->rowCount()<1){
+            if(sub_model->rowCount()<1)
+            {
                 sub_model->insertRow(0);
 
                 /* set data */
@@ -171,14 +172,18 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
                 int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
                 m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
             }
-            else {
+            else
+            {
+                /*
                 int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
                 if(frameModuleRowSelected == -1){
                     frameModuleRowSelected = 0;
                 }
+                */
+                int frameModuleRowSelected = sub_model->rowCount();
                 sub_model->insertRow(frameModuleRowSelected);
                 /* set data */
-                RowData* rd = sub_model->getDatainRow(0);
+                RowData* rd = sub_model->getDatainRow(frameModuleRowSelected);
                 rd->setData(0,QString::number(genId_));
                 rd->setData(1,moduleIDStr);
                 /* end set data */
@@ -227,6 +232,7 @@ void EditWindow::createAnimation()
     ModuleTableModel* _model      =static_cast<ModuleTableModel*>(this->imageLabel->m_table_bottom->model());
 
     QList<QPixmap> listPixmap;
+    QList<QPoint> listPos;
     std::cout<<"createAnimation..........: "<<std::endl;
     for(int i=0;i<_model->rowCount();i++)
     {
@@ -234,14 +240,17 @@ void EditWindow::createAnimation()
 
         //int id_           = rd->getData(0).toInt();
         QString moduleID_ = rd->getData(1);
-        //int px_           = rd->getData(2).toInt();
-        //int py_           = rd->getData(3).toInt();
+        int _posx         = rd->getData(2).toInt();
+        int _posy         = rd->getData(3).toInt();
 
         QPixmap pixmap = modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
         QPixmap copyPixmap = pixmap.copy();
 
         std::cout<<"createAnimation..........: "<<i<<std::endl;
         listPixmap.push_back(copyPixmap);
+
+        QPoint _pos(_posx,_posy);
+        listPos.push_back(_pos);
     }
-    imageLabel->createAnimation(listPixmap);
+    imageLabel->createAnimation(listPixmap,listPos);
 }

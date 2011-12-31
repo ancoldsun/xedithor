@@ -1,3 +1,7 @@
+// Xedithor : 2D sprite editor
+// Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+// License  :
+//
 #ifndef ANIMATEDPIXMAPITEM_H
 #define ANIMATEDPIXMAPITEM_H
 
@@ -7,7 +11,7 @@
 class AnimatedPixmapItem : public QGraphicsItem
 {
 public:
-    AnimatedPixmapItem(const QList<QPixmap> &animation, QGraphicsScene *scene = 0);
+    AnimatedPixmapItem(const QList<QPixmap> &animation,const QList<QPoint> &listPos, QGraphicsScene *scene = 0);
 
     void setFrame(int frame);
     inline int frame() const                        { return currentFrame; }
@@ -29,6 +33,7 @@ private:
         QPixmap pixmap;
         QPainterPath shape;
         QRectF boundingRect;
+        QPoint position;
     };
 
     int currentFrame;

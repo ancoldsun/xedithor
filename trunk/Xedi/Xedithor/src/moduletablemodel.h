@@ -1,7 +1,7 @@
-/* Xedithor : 2D sprite editor
-*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
-*  License  :
-*/
+// Xedithor : 2D sprite editor
+// Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+// License  :
+//
 #ifndef MODULETABLEMODEL_H
 #define MODULETABLEMODEL_H
 
