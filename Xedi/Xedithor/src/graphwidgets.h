@@ -64,6 +64,13 @@ public:
     void DeletePixmapItem(int idDeleted);
     QImage exportToImage();
     void createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos);
+    inline void clearAnimation() {
+        if(m_animatedItem!=NULL)
+        {
+            delete m_animatedItem;
+            m_animatedItem=NULL;
+        }
+    }
 
 
 public slots:

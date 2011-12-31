@@ -168,6 +168,7 @@ void MainWindow::SetupTables()
     {
         ui->at_tableView2->setColumnWidth(m, width_col);
     }
+    connect(ui->at_tableView2, SIGNAL(clicked(const QModelIndex&)), this, SLOT(tableRowSelected(QModelIndex)));
 }
 
 void MainWindow::SetupWidgetAlias()
@@ -623,7 +624,31 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
             editWindow->imageLabel->clearGraphPixmapItem();
             editWindow->createAnimation();
         }
-    }
+    } else if(sender == ui->at_tableView2) {     // // table frame anim
+        std::cout<<"----should be clear anim "<<std::endl;
+        editWindow->imageLabel->clearAnimation();
+
+        ModuleTableModel* frameAnimModel= static_cast<ModuleTableModel*>(ui->at_tableView2->model());
+
+        // clear prev row images item
+        editWindow->imageLabel->clearGraphPixmapItem();
+        // create
+        for(int i=0;i<frameAnimModel->rowCount();i++)
+        {
+             RowData* rd = frameAnimModel->getDatainRow(i);
+
+            int id_           = rd->getData(0).toInt();
+            QString moduleID_ = rd->getData(1);
+            int px_           = rd->getData(2).toInt();
+            int py_           = rd->getData(3).toInt();
+            //qreal w_    =rd->getData(4).toDouble();
+            //qreal h_    =rd->getData(5).toDouble();
+
+            QPixmap pixmap = editWindow->modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
+            QPixmap copyPixmap = pixmap.copy();
+            editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+        }
+      }
 }
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)

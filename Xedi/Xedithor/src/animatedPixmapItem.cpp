@@ -72,6 +72,6 @@ void AnimatedPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 {
     QPoint posFrame = frames.at(currentFrame).position;
     painter->drawPixmap(posFrame.x(), posFrame.y(), frames.at(currentFrame).pixmap);
-    std::cout<<"Frame: "<<currentFrame<<std::endl;
+   /// std::cout<<"Frame: "<<currentFrame<<std::endl;
 }
 
