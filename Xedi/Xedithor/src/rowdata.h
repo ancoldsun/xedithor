@@ -30,7 +30,7 @@ private:
 };
 */
 
-class RowData
+class RowData: public QObject
 {
   public:
     RowData(int numbData,RowDataHandler* handler);
