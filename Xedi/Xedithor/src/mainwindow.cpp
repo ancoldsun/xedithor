@@ -612,14 +612,17 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
 
     }  else if(sender == ui->at_tableView1){ // table anim
 
-        int _rowSelected = ui->at_tableView1->currentIndex().row();
-        ModuleTableModel* _anim_model       = static_cast<ModuleTableModel*>(ui->at_tableView1->model());
-        ModuleTableModel* _frame_anim_model = _anim_model->getModel(_rowSelected);
-        ui->at_tableView2->setModel(_frame_anim_model);
+        if(editWindow->modulesList->count()>0)
+        {
+            int _rowSelected = ui->at_tableView1->currentIndex().row();
+            ModuleTableModel* _anim_model       = static_cast<ModuleTableModel*>(ui->at_tableView1->model());
+            ModuleTableModel* _frame_anim_model = _anim_model->getModel(_rowSelected);
+            ui->at_tableView2->setModel(_frame_anim_model);
 
-        // clear prev row images item
-        editWindow->imageLabel->clearGraphPixmapItem();
-        editWindow->createAnimation();
+            // clear prev row images item
+            editWindow->imageLabel->clearGraphPixmapItem();
+            editWindow->createAnimation();
+        }
     }
 }
 
@@ -698,6 +701,8 @@ void MainWindow::TableEditCompleted(QString str)
      {
         ModuleTableModel* m  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
         ModuleTableModel* m2;
+
+        std::cout<<"sss: "<<editWindow->modulesList->count()<<std::endl;
 
         if(editWindow->modulesList->count()>0) {
 
@@ -961,8 +966,8 @@ void MainWindow::TableEditCompleted(QString str)
         if(xml.hasError())
         {
             QMessageBox::critical(this,
-                                  "QXSRExample::parseXML",
-                                  xml.errorString(),
+                                  "Xedithor: parsing XML sprite",
+                                  "Xedithor: wrong formated sprite file",
                                   QMessageBox::Ok);
         }
         xml.clear();
@@ -1012,7 +1017,7 @@ void MainWindow::TableEditCompleted(QString str)
     int lastID_= UID::Instance().getLastUID(UIDType::MODULE);
     int newrowID_  = rd->getData(1).toInt() - 1000;
     if( lastID_ < newrowID_){ // 1 = uid module
-        UID::Instance().setLastUID(newrowID_+1,UIDType::MODULE);
+        UID::Instance().setLastUID(newrowID_+2,UIDType::MODULE);
     }
     UID::Instance().setAutoInc(true);
  }
@@ -1081,7 +1086,7 @@ void MainWindow::TableEditCompleted(QString str)
     int lastID_= UID::Instance().getLastUID(UIDType::FRAME);
     int newrowID_  = rd->getData(1).toInt() - 3000;
     if( lastID_ < newrowID_){ // 1 = uid module
-        UID::Instance().setLastUID(newrowID_+1,UIDType::FRAME);
+        UID::Instance().setLastUID(newrowID_+2,UIDType::FRAME);
     }
     m->refresh();
 

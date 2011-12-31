@@ -379,6 +379,11 @@ void GraphWidget::dragMoveEvent(QDragMoveEvent* event)
 
 void GraphWidget::setupGraphViewModule()
 {
+    if(m_animatedItem!=NULL)
+    {
+        delete m_animatedItem;
+        m_animatedItem=NULL;
+    }
     clearGraphPixmapItem();
 
     m_scene->addItem(rectSelect);
@@ -388,6 +393,12 @@ void GraphWidget::setupGraphViewModule()
 
 void GraphWidget::setupGraphViewFrame()
 {
+    if(m_animatedItem!=NULL)
+    {
+        delete m_animatedItem;
+        m_animatedItem=NULL;
+    }
+
     clearGraphPixmapItem();
     m_scene->removeItem(rectSelect);
     m_scene->removeItem(pixmapGraphicsItem);
