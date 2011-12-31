@@ -1,7 +1,7 @@
-/* Xedithor : 2D sprite editor
-*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
-*  License  :
-*/
+// Xedithor : 2D sprite editor
+// Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+// License  :
+//
 #ifndef GRAPHWIDGETS_H
 #define GRAPHWIDGETS_H
 
@@ -63,7 +63,7 @@ public:
     void setSelectedPixmapItem(int idSelected);
     void DeletePixmapItem(int idDeleted);
     QImage exportToImage();
-    void createAnimation(QList<QPixmap>&list);
+    void createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos);
 
 
 public slots:

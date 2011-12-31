@@ -1,7 +1,7 @@
-/* Xedithor : 2D sprite editor
-*  Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
-*  License  :
-*/
+// Xedithor : 2D sprite editor
+// Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
+// License  :
+//
 #ifndef GLOBALCONSTANT_H
 #define GLOBALCONSTANT_H
 
@@ -50,5 +50,11 @@ namespace TabView
     const int FRAME  = 1;
     const int ANIM   = 2;
 };
+
+namespace SETUPTABLE
+{
+    const int RowCount =0;
+    const int ColCount =6;
+}
 
 #endif // GLOBALCONSTANT_H
