@@ -170,5 +170,7 @@
         <file>images/Wrench.png</file>
         <file>images/Yes.png</file>
         <file>images/Zoom.png</file>
+        <file>images/invalid.png</file>
+        <file>images/invalidF.png</file>
     </qresource>
 </RCC>
