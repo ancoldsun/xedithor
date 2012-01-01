@@ -729,9 +729,10 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         // clear prev row images item
         editWindow->imageLabel->clearGraphPixmapItem();
         // create
-        for(int i=0;i<frameAnimModel->rowCount();i++)
-        {
-             RowData* rd = frameAnimModel->getDatainRow(i);
+        //for(int i=0;i<frameAnimModel->rowCount();i++)
+        //{
+            int i = ui->at_tableView2->currentIndex().row();
+            RowData* rd = frameAnimModel->getDatainRow(i);
 
             int id_           = rd->getData(0).toInt();
             QString moduleID_ = rd->getData(1);
@@ -747,7 +748,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
                 QPixmap copyPixmap = pixmap.copy();
                 editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
             }
-        }
+        //}
       }
 }
 
