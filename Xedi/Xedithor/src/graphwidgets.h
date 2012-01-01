@@ -72,6 +72,10 @@ public:
         }
     }
 
+    inline void setTimerInterval(int value){
+        this->m_timer->setInterval(value*10);
+    }
+
 
 public slots:
     void setLabelMouse(QLabel* labelmouseinv);

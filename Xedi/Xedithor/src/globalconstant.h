@@ -49,7 +49,7 @@ namespace TabView
     const int MODULE = 0;
     const int FRAME  = 1;
     const int ANIM   = 2;
-};
+}
 
 namespace SETUPTABLE
 {

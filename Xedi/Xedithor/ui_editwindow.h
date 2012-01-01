@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'editwindow.ui'
 **
-** Created: Mon Dec 12 22:52:30 2011
+** Created: Sat Dec 31 21:17:24 2011
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -64,6 +64,7 @@ public:
         dockWidget = new QDockWidget(EditWindow);
         dockWidget->setObjectName(QString::fromUtf8("dockWidget"));
         dockWidget->setMinimumSize(QSize(180, 121));
+        dockWidget->setMaximumSize(QSize(1000, 524287));
         dockWidget->setStyleSheet(QString::fromUtf8(""));
         dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
         dockWidgetContents = new QWidget();
@@ -89,6 +90,7 @@ public:
     void retranslateUi(QMainWindow *EditWindow)
     {
         EditWindow->setWindowTitle(QApplication::translate("EditWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        dockWidget->setWindowTitle(QApplication::translate("EditWindow", "List Modules-Frames", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

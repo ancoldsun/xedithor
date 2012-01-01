@@ -44,12 +44,14 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     editwindow.ui \
+    toolDialog.ui
 
 RESOURCES += \
     XedithorResources.qrc
 
 OTHER_FILES += \
     temp.txt
+
 
 
 

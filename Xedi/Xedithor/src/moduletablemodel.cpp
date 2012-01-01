@@ -40,13 +40,15 @@ QVariant ModuleTableModel::data(const QModelIndex &index, int role) const
     {
         RowData* dat =m_gridData2.at(index.row());
         int col = index.column();
-        return dat->getData(col);
+        if(dat != NULL)
+            return dat->getData(col);
     }
     else if(role == Qt::EditRole)
     {
         RowData* dat =m_gridData2.at(index.row());
         int col = index.column();
-        return dat->getData(col);
+        if(dat != NULL)
+         return dat->getData(col);
     }
 
     return QVariant();

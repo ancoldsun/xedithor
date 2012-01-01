@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Dec 31 15:13:59 2011
+** Created: Sun Jan 1 13:02:36 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,7 +55,6 @@ public:
     QToolButton *mt_navTable1_button3;
     QToolButton *mt_navTable1_button4;
     QToolButton *mt_navTable1_button5;
-    QToolButton *toolButton;
     QToolButton *mt_navTable1_button6;
     QToolButton *mt_navTable1_button7;
     QTableView *mt_tableView1;
@@ -177,7 +176,10 @@ public:
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         tabWidget = new QTabWidget(dockWidgetContents_3);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setEnabled(true);
         tabWidget->setStyleSheet(QString::fromUtf8(""));
+        tabWidget->setTabShape(QTabWidget::Rounded);
+        tabWidget->setElideMode(Qt::ElideNone);
         ImageModuleTab = new QWidget();
         ImageModuleTab->setObjectName(QString::fromUtf8("ImageModuleTab"));
         ImageModuleTab->setStyleSheet(QString::fromUtf8(""));
@@ -189,9 +191,10 @@ public:
         mt_groupBox1->setObjectName(QString::fromUtf8("mt_groupBox1"));
         mt_groupBox1->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 255);"));
         horizontalLayout_3 = new QHBoxLayout(mt_groupBox1);
-        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setSpacing(2);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(2, 2, 2, 4);
         mt_navTable1_button1 = new QToolButton(mt_groupBox1);
         mt_navTable1_button1->setObjectName(QString::fromUtf8("mt_navTable1_button1"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -249,11 +252,6 @@ public:
         mt_navTable1_button5->setIcon(icon5);
 
         horizontalLayout_3->addWidget(mt_navTable1_button5);
-
-        toolButton = new QToolButton(mt_groupBox1);
-        toolButton->setObjectName(QString::fromUtf8("toolButton"));
-
-        horizontalLayout_3->addWidget(toolButton);
 
         mt_navTable1_button6 = new QToolButton(mt_groupBox1);
         mt_navTable1_button6->setObjectName(QString::fromUtf8("mt_navTable1_button6"));
@@ -313,9 +311,10 @@ public:
         ft_groupBox1->setObjectName(QString::fromUtf8("ft_groupBox1"));
         ft_groupBox1->setStyleSheet(QString::fromUtf8("background-color: rgb(124, 163, 78);"));
         horizontalLayout_6 = new QHBoxLayout(ft_groupBox1);
-        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setSpacing(2);
         horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        horizontalLayout_6->setContentsMargins(2, 2, 2, 4);
         ft_navTable1_button1 = new QToolButton(ft_groupBox1);
         ft_navTable1_button1->setObjectName(QString::fromUtf8("ft_navTable1_button1"));
         sizePolicy1.setHeightForWidth(ft_navTable1_button1->sizePolicy().hasHeightForWidth());
@@ -397,6 +396,7 @@ public:
         dockWidget_ft->setMinimumSize(QSize(350, 199));
         dockWidget_ft->setLayoutDirection(Qt::LeftToRight);
         dockWidget_ft->setFeatures(QDockWidget::NoDockWidgetFeatures);
+        dockWidget_ft->setAllowedAreas(Qt::AllDockWidgetAreas);
         dockWidgetContents_5 = new QWidget();
         dockWidgetContents_5->setObjectName(QString::fromUtf8("dockWidgetContents_5"));
         dockWidgetContents_5->setEnabled(true);
@@ -414,9 +414,10 @@ public:
         ft_groupBox2 = new QGroupBox(dockWidgetContents_5);
         ft_groupBox2->setObjectName(QString::fromUtf8("ft_groupBox2"));
         horizontalLayout_7 = new QHBoxLayout(ft_groupBox2);
-        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setSpacing(2);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        horizontalLayout_7->setContentsMargins(2, 2, 2, 4);
         ft_navTable2_button1 = new QToolButton(ft_groupBox2);
         ft_navTable2_button1->setObjectName(QString::fromUtf8("ft_navTable2_button1"));
         ft_navTable2_button1->setEnabled(false);
@@ -507,9 +508,10 @@ public:
         at_groupBox1->setObjectName(QString::fromUtf8("at_groupBox1"));
         at_groupBox1->setStyleSheet(QString::fromUtf8("background-color: rgb(170, 167, 165);"));
         horizontalLayout_8 = new QHBoxLayout(at_groupBox1);
-        horizontalLayout_8->setSpacing(6);
+        horizontalLayout_8->setSpacing(2);
         horizontalLayout_8->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
+        horizontalLayout_8->setContentsMargins(2, 2, 2, 4);
         at_navTable1_button1 = new QToolButton(at_groupBox1);
         at_navTable1_button1->setObjectName(QString::fromUtf8("at_navTable1_button1"));
         sizePolicy1.setHeightForWidth(at_navTable1_button1->sizePolicy().hasHeightForWidth());
@@ -602,9 +604,10 @@ public:
         at_groupBox2 = new QGroupBox(dockWidgetContents_7);
         at_groupBox2->setObjectName(QString::fromUtf8("at_groupBox2"));
         horizontalLayout_9 = new QHBoxLayout(at_groupBox2);
-        horizontalLayout_9->setSpacing(6);
+        horizontalLayout_9->setSpacing(2);
         horizontalLayout_9->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        horizontalLayout_9->setContentsMargins(2, 2, 2, 4);
         at_navTable2_button1 = new QToolButton(at_groupBox2);
         at_navTable2_button1->setObjectName(QString::fromUtf8("at_navTable2_button1"));
         at_navTable2_button1->setEnabled(false);
@@ -713,7 +716,6 @@ public:
         mt_navTable1_button3->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button4->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button5->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
-        toolButton->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         mt_navTable1_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("MainWindow", "Image Source", 0, QApplication::UnicodeUTF8));
@@ -728,6 +730,7 @@ public:
         ft_navTable1_button5->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         ft_navTable1_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         ft_navTable1_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        dockWidget_ft->setWindowTitle(QString());
 #ifndef QT_NO_ACCESSIBILITY
         dockWidgetContents_5->setAccessibleName(QString());
 #endif // QT_NO_ACCESSIBILITY

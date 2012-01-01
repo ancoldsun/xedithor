@@ -12,6 +12,7 @@
 #include "editwindow.h"
 #include "globalconstant.h"
 #include "moduletablemodel.h"
+//#include "ui_toolDialog.h"
 
 #include <iostream>
 
@@ -50,6 +51,8 @@ private slots:
     void about();
     void print();
 
+    void showToolDialog();
+
     void Add_Clicked();
     void Clone_Clicked();
     void Del_Clicked();
@@ -63,7 +66,7 @@ private:
     Ui::MainWindow *ui;
     QMenu *fileMenu;
     QMenu *editMenu;
-    QMenu *formatMenu;
+    QMenu *toolMenu;
     QMenu *helpMenu;
 
    // QLabel *imageLabel;
@@ -73,14 +76,17 @@ private:
 
     QToolBar *fileToolBar;
     QToolBar *editToolBar;
-
+    // file
     QAction* newAct;
     QAction* openAct;
     QAction* saveAct;
     QAction* printAct;
     QAction* exitAct;
-
+    // tool
+    QAction* toolFrameAct;
     EditWindow *editWindow;
+    //Ui::Dialog toolDialogFrm;
+    //QDialog* m_toolDialog;
     QToolBar *windowEditToolBar;
 
     QToolButton* tNavButton[XD::NUM_TAB][XD::NUM_GROUP][XD::NUM_BUTTON];

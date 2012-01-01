@@ -36,6 +36,11 @@ EditWindow::EditWindow(QWidget *parent) :
     windowEditToolBar = new QToolBar(this);
     windowEditToolBar->addAction(zoomInAct);
     windowEditToolBar->addAction(zoomOutAct);
+    QSlider* slider =new QSlider((Qt::Horizontal));
+    slider->setFixedWidth(100);
+    slider->setTickInterval(100);
+    slider->setValue(100);
+    windowEditToolBar->addWidget(slider);
     this->addToolBar(windowEditToolBar);
     scaleFactor=1.0f;
 
@@ -43,12 +48,13 @@ EditWindow::EditWindow(QWidget *parent) :
     this->statusBar()->addWidget(mouseInfoLabel);
     imageLabel->setLabelMouse(mouseInfoLabel);
 
+
+
     /* list module/frame  */
     modulesList = new ModulesList(500);
-    modulesList->setFixedWidth(300);
-    modulesList->setFixedHeight(600);
     modulesList->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    modulesList->setParent(ui->dockWidgetContents);
+    //modulesList always follow the parent (this)
+    ui->dockWidgetContents->layout()->addWidget(modulesList);
 
     modulesList->setViewMode(QListView::ListMode);
     modulesList->setFlow(QListView::TopToBottom);
@@ -59,7 +65,7 @@ EditWindow::EditWindow(QWidget *parent) :
 
     //image list connect
     connect(modulesList,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(FrameDoubleClicked(QModelIndex)));
-
+    connect(slider,SIGNAL(valueChanged(int)),this,SLOT(setTimerInterval(int)));
 }
 
 EditWindow::~EditWindow()
@@ -126,7 +132,7 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
 
     int imgClicked_ = index.row();
 
-    //if(m_modeView == TabView::FRAME) {
+    if(m_modeView == TabView::FRAME || m_modeView == TabView::ANIM) {
         QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
         QString moduleIDStr = modulesList->item(imgClicked_)->text();
         QPixmap copyPixmap = pixmap.copy();
@@ -197,7 +203,7 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             }
         }
         m->refresh();
-    //}  // -- end TabView::FRAME
+    }  // -- end TabView::FRAME
     /*
     else if(m_modeView == TabView::ANIM)
     {
