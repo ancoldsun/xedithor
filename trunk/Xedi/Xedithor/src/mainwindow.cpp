@@ -1137,6 +1137,42 @@ void MainWindow::TableEditCompleted(QString str)
                         xml.readNext();
                     }
                 }
+                if(xml.name() == "anims")
+                {
+                    xml.readNext();
+                    while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                                            xml.name() == "anims"))
+                    {
+                        if(xml.tokenType() == QXmlStreamReader::StartElement)
+                        {
+                            if(xml.name() == "itemAnim")
+                            {
+                                QList<QString> header;
+                                QList<QString> body;
+
+                                header.push_back(xml.attributes().at(0).value().toString());
+                                header.push_back(xml.attributes().at(1).value().toString());
+                                header.push_back(xml.attributes().at(2).value().toString());
+
+                                while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
+                                                        xml.name() == "itemAnim"))
+                                {
+                                    if(xml.tokenType() == QXmlStreamReader::StartElement)
+                                    {
+                                        if(xml.name() == "RowFrmAnim")
+                                        {
+                                            xml.readNext();
+                                            body.push_back(xml.text().toString());
+                                        }
+                                    }
+                                    xml.readNext();
+                                }
+                                parseDataRowAnim(header,body);
+                            }
+                        }
+                        xml.readNext();
+                    }
+                }
             }
         }
         if(xml.hasError())
@@ -1263,6 +1299,73 @@ void MainWindow::TableEditCompleted(QString str)
     int newrowID_  = rd->getData(1).toInt() - 3000;
     if( lastID_ <= newrowID_){ // 1 = uid module
         UID::Instance().setLastUID(newrowID_+1,UIDType::FRAME);
+    }
+    _model_frame->refresh();
+
+    UID::Instance().setAutoInc(true);
+ }
+
+ void MainWindow::parseDataRowAnim(QList<QString>&header,QList<QString>&body)
+ {
+    UID::Instance().setAutoInc(false);
+
+    m_animTableModel->insertRow(m_animTableModel->rowCount());
+    /* set data row */
+    int rowNow = m_animTableModel->rowCount()-1;
+    RowData* rd = m_animTableModel->getDatainRow(rowNow);
+    rd->setData(1,header.at(0));
+    rd->setData(2,header.at(1));
+    rd->setData(3,header.at(2));
+
+    /* set sub Model */
+    ModuleTableModel* _model_frame = m_animTableModel->getModel(rowNow);
+
+    int idC =0;
+    QList<QString> datRow;
+    foreach(QString str,body){
+
+        QString strDataRow = str;
+        QString buff="";
+        QChar chSpace = QChar::fromAscii(' ');
+        for(int i=0;i<strDataRow.count();i++)
+        {
+            QChar ch = strDataRow.at(i);
+            if(ch!=chSpace)
+            {
+                buff+=ch;
+            }
+            else
+            {
+                datRow.insert(i,buff);
+                buff="";
+            }
+        }
+
+        _model_frame->insertRow(_model_frame->rowCount());
+        int r = _model_frame->rowCount();
+
+        RowData* rd2 = _model_frame->getDatainRow(r-1);
+
+        rd2->setData(0,QString::number(idC));
+        rd2->setData(1,datRow.at(0));
+        rd2->setData(2,datRow.at(1));
+        rd2->setData(3,datRow.at(2));
+
+        datRow.clear();
+
+        idC++;
+        // set last ID
+        int lastID_= UID::Instance().getLastUID(UIDType::ANIM_DESC);
+        if( lastID_ <= idC){ // 1 = uid module
+            UID::Instance().setLastUID(idC+1,UIDType::ANIM_DESC);
+        }
+    }
+
+    /* set last ID */
+    int lastID_= UID::Instance().getLastUID(UIDType::ANIM);
+    int newrowID_  = rd->getData(1).toInt() - 5000;
+    if( lastID_ <= newrowID_){ // 1 = uid module
+        UID::Instance().setLastUID(newrowID_+1,UIDType::ANIM);
     }
     _model_frame->refresh();
 
