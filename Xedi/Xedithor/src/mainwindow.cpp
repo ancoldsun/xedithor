@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //m_toolDialog = new QDialog(this);
     //toolDialogFrm.setupUi(m_toolDialog);
 
+
 }
 
 MainWindow::~MainWindow()
@@ -262,6 +263,11 @@ void MainWindow::SetupConnectWidgets()
 
      //tab widget connect
      connect(ui->tabWidget,SIGNAL(currentChanged(int)),this,SLOT(PageTabChanged(int)));
+
+     //timer
+     m_timer = new QTimer(this);
+     m_timer->setInterval(200);
+     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerHit()));
 }
 
 void MainWindow::newFile()
@@ -667,9 +673,9 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
             // create
             for(int i=0;i<mf_bottom->rowCount();i++)
             {
-                std::cout<<"Row: "<<i<<" rc "<<mf_bottom->rowCount()<<std::endl;
+                //std::cout<<"Row: "<<i<<" rc "<<mf_bottom->rowCount()<<std::endl;
                 RowData* rd = mf_bottom->getDatainRow(i);
-                std::cout<<"after Row: "<<i<<std::endl;
+                //std::cout<<"after Row: "<<i<<std::endl;
 
                 int id_           = rd->getData(0).toInt();
                 QString moduleID_ = rd->getData(1);
@@ -753,7 +759,7 @@ void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & 
 
 void MainWindow::TableEditCompleted(QString str)
 {
-    std::cout<<"data edit completed...........: "<<std::endl;
+    //std::cout<<"data edit completed...........: "<<std::endl;
     int rowSelected_ = ui->mt_tableView1->currentIndex().row();
 
     ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
@@ -777,7 +783,7 @@ void MainWindow::TableEditCompleted(QString str)
 
  void MainWindow::PageTabChanged(int indexPage)
  {
-     std::cout<<"page: "<<indexPage<<std::endl;
+     //std::cout<<"page: "<<indexPage<<std::endl;
 
      if(indexPage== Page::MODULE)
      {
@@ -793,7 +799,7 @@ void MainWindow::TableEditCompleted(QString str)
          editWindow->getModuleList()->clear();
          ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
 
-         std::cout<<"Page::FRAME: "<<m->rowCount()<<std::endl;
+         //std::cout<<"Page::FRAME: "<<m->rowCount()<<std::endl;
          editWindow->getModuleList()->clear();
          for(int i=0;i<m->rowCount();i++)
          {
@@ -815,6 +821,7 @@ void MainWindow::TableEditCompleted(QString str)
          editWindow->imageLabel->m_table = ui->ft_tableView1;
          editWindow->imageLabel->m_table_bottom = ui->ft_tableView2;
          editWindow->setupViewFrame();//imageLabel->setupGraphViewFrame();
+         m_timer->start(200);
 
      }
      else if(indexPage == Page::ANIM)
@@ -822,7 +829,7 @@ void MainWindow::TableEditCompleted(QString str)
         ModuleTableModel* m  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
         ModuleTableModel* m2;
 
-        std::cout<<"sss: "<<editWindow->modulesList->count()<<std::endl;
+        //std::cout<<"sss: "<<editWindow->modulesList->count()<<std::endl;
 
         if(editWindow->modulesList->count()>0) {
 
@@ -852,12 +859,14 @@ void MainWindow::TableEditCompleted(QString str)
                                 QPixmap copyPixmap = pixmap.copy();
                                 editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
                                 nModuleInFrame++;
+                                rd->setValid(true);
                         }
                         else
                         {
                                 QPixmap pixmap = QPixmap::fromImage(QImage(":/images/invalidF.png"));
                                 editWindow->imageLabel->AddPixmapItem(&pixmap,false,id_,px_,py_);
                                 nModuleInFrame++;
+                                rd->setValid(false);
                         }
                     }
                     if(nModuleInFrame>0)
@@ -1206,7 +1215,7 @@ void MainWindow::TableEditCompleted(QString str)
     rd->setData(3,header.at(2));
 
     /* set sub Model */
-    ModuleTableModel* m = m_frameTableModel->getModel(rowNow);
+    ModuleTableModel* _model_frame = m_frameTableModel->getModel(rowNow);
 
     int idC =0;
     QList<QString> datRow;
@@ -1229,10 +1238,10 @@ void MainWindow::TableEditCompleted(QString str)
             }
         }
 
-        m->insertRow(m->rowCount());
-        int r = m->rowCount();
+        _model_frame->insertRow(_model_frame->rowCount());
+        int r = _model_frame->rowCount();
 
-        RowData* rd2 = m->getDatainRow(r-1);
+        RowData* rd2 = _model_frame->getDatainRow(r-1);
 
         rd2->setData(0,QString::number(idC));
         rd2->setData(1,datRow.at(0));
@@ -1255,7 +1264,7 @@ void MainWindow::TableEditCompleted(QString str)
     if( lastID_ <= newrowID_){ // 1 = uid module
         UID::Instance().setLastUID(newrowID_+1,UIDType::FRAME);
     }
-    m->refresh();
+    _model_frame->refresh();
 
     UID::Instance().setAutoInc(true);
  }
@@ -1265,3 +1274,34 @@ void MainWindow::TableEditCompleted(QString str)
      std::cout<<"TableDoubleClicked Row: "<<index.row()<<std::endl;
      std::cout<<"TableDoubleClicked Col: "<<index.column()<<std::endl;
  }
+
+ void MainWindow::timerHit()
+ {
+     m_timer->stop();
+     std::cout<<"timer is OUT: "<<std::endl;
+
+     //if tab frame   // check valid frame (use valid module)
+     ModuleTableModel* _model_frame  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
+     ModuleTableModel* _sub_model_frame;
+
+     for(int i=0;i<_model_frame->rowCount();i++)
+     {
+         RowData* _rowdataFrame = _model_frame->getDatainRow(i);
+         _sub_model_frame = _model_frame->getModel(i);
+         for(int j=0;j<_sub_model_frame->rowCount();j++)
+         {
+            RowData* _rowdata = _sub_model_frame->getDatainRow(j);
+            QString _moduleID = _rowdata->getData(1);
+            if(editWindow->modulesList->getItemByText(_moduleID) == NULL) {
+                _rowdataFrame->setValid(false);
+                _rowdata->setValid(false);
+            }
+            else{
+                _rowdataFrame->setValid(true);
+                _rowdata->setValid(true);
+            }
+         }
+     }
+     _model_frame->refresh();
+     // end if tab frame
+}

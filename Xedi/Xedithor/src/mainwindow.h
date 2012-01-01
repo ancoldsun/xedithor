@@ -107,6 +107,7 @@ private:
 
     QString m_ImgfileName;
     QString m_SprfileName;
+    QTimer* m_timer;
 
     void CreateActions();
     void CreateMainMenus();
@@ -138,6 +139,7 @@ public slots:
 
     //tab widget
     void PageTabChanged(int indexPage);
+    void timerHit();
 
 
 };

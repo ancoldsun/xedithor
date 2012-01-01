@@ -8,6 +8,7 @@ RowData::RowData(int numbData ):m_IDModule(mLast_ID_Module++)
     {
         m_Handler->createDefaultRow(m_ColData,i);
     }
+    isValidData=true;
 }
 RowData::~RowData()
 {
