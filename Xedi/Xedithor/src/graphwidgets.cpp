@@ -408,6 +408,7 @@ void GraphWidget::setupGraphViewFrame()
 void GraphWidget::setupGraphViewAnim()
 {
     clearGraphPixmapItem();
+    m_tabView = TabView::ANIM;
 }
 
 int GraphWidget::AddPixmapItem(QPixmap* pxmap)

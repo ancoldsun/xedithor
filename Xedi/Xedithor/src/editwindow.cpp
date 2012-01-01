@@ -4,6 +4,7 @@
 #include "editwindow.h"
 #include "ui_editwindow.h"
 #include "globalconstant.h"
+#include "uidmanager.h"
 
 
 EditWindow::EditWindow(QWidget *parent) :
@@ -136,7 +137,17 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
         QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
         QString moduleIDStr = modulesList->item(imgClicked_)->text();
         QPixmap copyPixmap = pixmap.copy();
-        int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
+        int genId_;
+        if(m_modeView == TabView::FRAME)
+        {
+            genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
+        }
+        else if(m_modeView == TabView::ANIM)
+        {
+            int _idPixmap = UID::Instance().getLastUID(UIDType::ANIM_DESC);
+            genId_ = this->imageLabel->AddPixmapItem(&copyPixmap,false,_idPixmap,0,0);
+        }
+
         //QString genIdStr = QString::number(genId_)
         ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
         if(m->rowCount()<1){

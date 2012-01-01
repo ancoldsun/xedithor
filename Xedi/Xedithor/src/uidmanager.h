@@ -13,7 +13,8 @@ namespace UIDType
     const int FRAME   = 1;
     const int ANIM    = 2;
     const int FRAME_DESC   = 3;
-    const int UIDType_MAX =4;
+    const int ANIM_DESC   = 4;
+    const int UIDType_MAX =5;
 }
 
 class UID

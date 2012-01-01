@@ -128,6 +128,7 @@ private:
     void resetDataTable();
     void parseDataRow(QString strDataRow);
     void parseDataRowFrame(QList<QString>&header,QList<QString>&body);
+    void parseDataRowAnim(QList<QString>&header,QList<QString>&body);
 
 
 public slots:
