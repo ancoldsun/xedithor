@@ -42,6 +42,7 @@ public:
     }
 
     ModuleTableModel* getModel(int rowN);
+    void copyContent(ModuleTableModel* otherModel);
 
     void clearData();
     void refresh();

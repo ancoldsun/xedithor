@@ -431,13 +431,13 @@ void MainWindow::Del_Clicked()
             ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
             RowData* rd = m->getDatainRow(row_);
             int id_ =rd->getData(0).toInt();
-            std::cout<<"id deleted..: "<<id_<<std::endl;
+            //std::cout<<"id deleted..: "<<id_<<std::endl;
             editWindow->imageLabel->DeletePixmapItem(id_);
             /* end del */
 
             /* update module frame count */
             row_ = ui->ft_tableView1->currentIndex().row();
-            std::cout<<"row_ deleted..: "<<row_<<std::endl;
+            //std::cout<<"row_ deleted..: "<<row_<<std::endl;
             if(row_ == -1){
                 row_ = 0;
             }

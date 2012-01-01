@@ -166,8 +166,11 @@ bool ModuleTableModel::cloneRow(int row)
 
     RowData* dat= m_gridData2.at(row);
     insertRows(row+1,1);
+    // take row data from new inserted row
     RowData* newRowData =m_gridData2.at(row+1);
+    // delete it
     delete newRowData;
+    // replace it with new one, data filled from cloned row
     newRowData = new RowData(numberCol);
     for(int i=0;i<numberCol;i++)
     {
@@ -175,6 +178,13 @@ bool ModuleTableModel::cloneRow(int row)
         {
             newRowData->setData(i,dat->getData(i));
         }
+    }
+    if(this->m_hasModel){
+
+        ModuleTableModel* sourceModel = getModel(row);
+        ModuleTableModel* destModel = getModel(row+1);
+
+        destModel->copyContent(sourceModel);
     }
     return true;
 }
@@ -228,4 +238,19 @@ ModuleTableModel::~ModuleTableModel(){
             delete m_listModel.at(n);
             m_gridData2.removeAt(n);
         }
+}
+
+void ModuleTableModel::copyContent(ModuleTableModel* otherModel)
+{
+   for(int i=0;i<otherModel->rowCount();i++){
+       this->insertRows(i,1);
+
+       RowData* _rowDataSrc = otherModel->getDatainRow(i);
+       RowData* _rowDataDest = this->getDatainRow(i);
+
+       for(int j=0;j<numberCol;j++)
+       {
+           _rowDataDest->setData(j,_rowDataSrc->getData(j));
+       }
+   }
 }
