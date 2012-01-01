@@ -49,6 +49,7 @@ ModulesList::ModulesList(int pieceSize, QWidget *parent)
     setViewMode(QListView::IconMode);
     setIconSize(QSize(m_PieceSize, m_PieceSize));
     setSpacing(10);
+
     //setAcceptDrops(true);
     //setDropIndicatorShown(true);
 }
@@ -137,5 +138,6 @@ QListWidgetItem* ModulesList::getItemByText(QString str)
             return item_;
         }
     }
+    return NULL;
 }
 

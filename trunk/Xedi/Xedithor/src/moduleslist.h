@@ -22,7 +22,7 @@ protected:
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
     void startDrag(Qt::DropActions supportedActions);
-
+private:
     int m_PieceSize;
 };
 
