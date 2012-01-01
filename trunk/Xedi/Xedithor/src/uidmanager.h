@@ -31,6 +31,7 @@ public:
 
     void setLastUID(int lastUid,int typeUID);
     int getLastUID(int typeUID);
+    void resetUID();
 };
 
 #endif // UIDMANAGER_H

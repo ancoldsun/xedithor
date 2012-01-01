@@ -43,7 +43,7 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>500</width>
+     <width>1000</width>
      <height>524287</height>
     </size>
    </property>
@@ -52,6 +52,9 @@
    </property>
    <property name="features">
     <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>List Modules-Frames</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>

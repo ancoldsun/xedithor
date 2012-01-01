@@ -31,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_lastRowSelectedFT = 0;
 
+    //m_toolDialog = new QDialog(this);
+    //toolDialogFrm.setupUi(m_toolDialog);
+
 }
 
 MainWindow::~MainWindow()
@@ -66,19 +69,34 @@ void MainWindow::CreateActions()
     exitAct->setStatusTip(tr("Exit the application"));
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
+    // tool
+
+    toolFrameAct = new QAction(QIcon(":/images/Calculator.png"),tr("&Frame"), this);
+    //toolFrameAct->setShortcuts(QKeySequence::Save);
+    //toolFrameAct->setStatusTip(tr("Save the document to disk"));
+    connect(toolFrameAct, SIGNAL(triggered()), this, SLOT(showToolDialog()));
+
     // open image button
     connect(ui->openImageButton, SIGNAL(clicked()), this, SLOT(open()));
 }
 
 void MainWindow::CreateMainMenus()
 {
-    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu = menuBar()->addMenu(tr("&File  "));
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
     fileMenu->addAction(saveAct);
     fileMenu->addAction(printAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
+
+    editMenu = menuBar()->addMenu(tr("&Edit  "));
+
+    toolMenu = menuBar()->addMenu(tr("&Tool  "));
+    toolMenu->addAction(toolFrameAct);
+
+    helpMenu = menuBar()->addMenu(tr("&Help  "));
+    //
 }
 
 void MainWindow::CreateToolBar()
@@ -235,7 +253,30 @@ void MainWindow::SetupConnectWidgets()
 
 void MainWindow::newFile()
 {
+    QMessageBox msgBox;
+    msgBox.setText("The document has been modified.");
+    msgBox.setInformativeText("Do you want to save your changes?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int ret = msgBox.exec();
 
+    switch (ret) {
+      case QMessageBox::Save:
+          saveDataSprite();
+          break;
+      case QMessageBox::Discard:
+          // Don't Save was clicked
+          break;
+      case QMessageBox::Cancel:
+          return;
+    }
+    this->resetDataTable();
+    editWindow->getModuleList()->clear();
+    editWindow->imageLabel->clearGraphPixmapItem();
+
+    UID::Instance().resetUID();
+    m_ImgfileName="Image : None";
+    ui->imagePathInfo->setText(m_ImgfileName);
 }
 
 void MainWindow::open()
@@ -277,6 +318,12 @@ void MainWindow::about()
 void MainWindow::print()
 {
 
+}
+
+void MainWindow::showToolDialog()
+{
+    //int returnModal = m_toolDialog->exec();
+   // std::cout<<"returnModal.."<<returnModal<<std::endl;
 }
 
 //table button clicked
@@ -695,6 +742,7 @@ void MainWindow::TableEditCompleted(QString str)
      }
      else if(indexPage == Page::FRAME)
      {
+         m_lastRowSelectedFT =-1;
          editWindow->getModuleList()->clear();
          ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
 
@@ -736,28 +784,31 @@ void MainWindow::TableEditCompleted(QString str)
             //
             for(int i=0;i<m->rowCount();i++)
             {
-                editWindow->imageLabel->clearGraphPixmapItem();
-                m2 = m->getModel(i);
-                for(int j=0;j<m2->rowCount();j++)
+                if(m->getDatainRow(i)->getData(2).toInt()>0)
                 {
-                    RowData* rd       = m2->getDatainRow(j);
-                    int id_           = rd->getData(0).toInt();
-                    QString moduleID_ = rd->getData(1);
-                    int px_           = rd->getData(2).toInt();
-                    int py_           = rd->getData(3).toInt();
-                    QListWidgetItem* _img_item = editWindow->modulesList->getItemByText(moduleID_);
-
-                    if(_img_item!=NULL)
+                    editWindow->imageLabel->clearGraphPixmapItem();
+                    m2 = m->getModel(i);
+                    for(int j=0;j<m2->rowCount();j++)
                     {
-                        QIcon _icon = _img_item->icon();
-                        QPixmap pixmap = _icon.pixmap(500,500);
-                        QPixmap copyPixmap = pixmap.copy();
-                        editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                        RowData* rd       = m2->getDatainRow(j);
+                        int id_           = rd->getData(0).toInt();
+                        QString moduleID_ = rd->getData(1);
+                        int px_           = rd->getData(2).toInt();
+                        int py_           = rd->getData(3).toInt();
+                        QListWidgetItem* _img_item = editWindow->modulesList->getItemByText(moduleID_);
+
+                        if(_img_item!=NULL)
+                        {
+                            QIcon _icon = _img_item->icon();
+                            QPixmap pixmap = _icon.pixmap(500,500);
+                            QPixmap copyPixmap = pixmap.copy();
+                            editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                        }
                     }
+                    QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
+                    listStrFrameID.push_back(m->getDatainRow(i)->getData(1));
+                    listPxmap.push_back(pieceImage);
                 }
-                QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
-                listStrFrameID.push_back(m->getDatainRow(i)->getData(1));
-                listPxmap.push_back(pieceImage);
             }
             editWindow->getModuleList()->clear();
             editWindow->imageLabel->clearGraphPixmapItem();
@@ -860,7 +911,40 @@ void MainWindow::TableEditCompleted(QString str)
     stream.writeEndElement(); // frames
 
     /* save anim */
-    //todo:
+    stream.writeStartElement("anims");
+    numberRow = m_animTableModel->rowCount();
+    numberRowStr = QString::number(numberRow);
+    stream.writeAttribute("nAnims", numberRowStr);
+
+    for(int ix=0;ix<numberRow;ix++)
+    {
+        stream.writeStartElement("itemAnim");
+
+        RowData* rd = m_animTableModel->getDatainRow(ix);
+        QString IdAnim = rd->getData(1);
+        QString nFrmAnim = rd->getData(2);
+        QString nameAnim = rd->getData(3);
+
+        stream.writeAttribute("ID", IdAnim);
+        stream.writeAttribute("nAnimFrame", nFrmAnim);
+        stream.writeAttribute("name", nameAnim);
+
+        ModuleTableModel* m  = m_animTableModel->getModel(ix);
+        int nFrameAnim = m->rowCount();
+
+        for(int iy=0;iy<nFrameAnim;iy++)
+        {
+            QString dataRow="";
+            RowData* rd2 = m->getDatainRow(iy);
+            dataRow=dataRow+rd2->getData(1)+" ";
+            dataRow=dataRow+rd2->getData(2)+" ";
+            dataRow=dataRow+rd2->getData(3)+" ";
+
+            stream.writeTextElement("RowFrmAnim", dataRow);
+        }
+        stream.writeEndElement();
+    }
+    stream.writeEndElement(); // Anims
 
     //end
     stream.writeEndDocument();
@@ -879,7 +963,7 @@ void MainWindow::TableEditCompleted(QString str)
         if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
         {
             QMessageBox::critical(this,
-                               "QXSRExample::parseXML",
+                               "Xedithor: parsing XML sprite",
                                "Couldn't open "+m_SprfileName,
                                QMessageBox::Ok);
             std::cout<<"error open"<<std::endl;
@@ -1006,7 +1090,7 @@ void MainWindow::TableEditCompleted(QString str)
      /* reset frame table */
      m_frameTableModel->clearData();
      /* reset anim table */
-     //todo:
+     m_animTableModel->clearData();
  }
 
  void MainWindow::parseDataRow(QString strDataRow)

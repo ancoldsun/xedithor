@@ -98,3 +98,88 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect)
     */
 
         qDebug(QString::number( index.column()).toStdString().c_str());
+
+///////////////////////////////
+
+
+
+
+    for(int i=0;i<_model->rowCount();i++) // loop n frames
+    {
+        RowData* rd = _model->getDatainRow(i);
+        int id_ =rd->getData(1).toInt();
+        int px_   =rd->getData(2).toInt();
+        int py_   =rd->getData(3).toInt();
+        for(int j=0;j<_modelframe->rowCount();j++)
+        {
+            //std::cout<<" bb "<<std::endl;
+            RowData* rd2 = _modelframe->getDatainRow(j);
+            int id_frame = rd2->getData(1).toInt();
+            if(id_ == id_frame)
+            {
+                std::cout<<" FRAME:  "<<id_frame<<std::endl;
+                ModuleTableModel* m = _modelframe->getModel(j);
+
+                for(int k=0;k<m->rowCount();k++)
+                {
+
+                    //std::cout<<" zz "<<std::endl;
+                    RowData* rd3 = m->getDatainRow(k);
+                    int id_mod   = rd3->getData(1).toInt();
+                    int fpx_   =rd3->getData(2).toInt();
+                    int fpy_   =rd3->getData(3).toInt();
+                    for(int l=0;l<_modelmod->rowCount();l++)
+                    {
+                        RowData* rd4 = _modelmod->getDatainRow(l);
+                        if(id_mod == rd4->getData(1).toInt())
+                        {
+                            std::cout<<" Module:  "<<id_mod<<std::endl;
+                            //std::cout<<" AA "<<std::endl;
+                            int mpx_   =rd4->getData(2).toInt();
+                            int mpy_   =rd4->getData(3).toInt();
+                            int mw_    =rd4->getData(4).toInt();
+                            int mh_    =rd4->getData(5).toInt();
+
+                            QPixmap pieceImage =pixmapGraphicsItem->pixmap().copy(mpx_, mpy_, mw_, mh_);
+
+                            int posx_ = px_ + fpx_;
+                            int posy_ = py_ + fpy_;
+                            QGraphicsPixmapItem* itemPixMap= new QGraphicsPixmapItem(pieceImage);
+                            itemPixMap->setPos(posx_ + WidthRectView / 2 ,posy_ +  HeightRectView / 2 );
+                            //itemPixMap->setFlag(QGraphicsItem::ItemIsSelectable, true);
+                            //itemPixMap->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+                            itemPixMap->setAcceptHoverEvents ( true);
+                            //itemPixMap->setFlag( QGraphicsItem::ItemIsMovable, true );
+
+                            QVariant varI;
+                            int id_ =0;
+                            varI.setValue(id_);
+                            itemPixMap->setData(0,varI);
+                            this->scene()->addItem(itemPixMap);
+
+                            /*
+                            QGraphicsItemAnimation *animation = new QGraphicsItemAnimation;
+                            animation->setItem(itemPixMap);
+                            animation->setTimeLine(timeline);
+                            animation->setRotationAt (1, 360);
+                            QObject::connect (timeline, SIGNAL(finished()), animation, SLOT(deleteLater()));
+                            */
+                        }
+                    }
+
+                }
+            }
+        }
+
+   }
+
+
+
+
+
+
+
+
+
+
+

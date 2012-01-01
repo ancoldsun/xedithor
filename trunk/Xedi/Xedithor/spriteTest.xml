@@ -20,7 +20,7 @@
         <nRow>0 1019 319 381 59 79 </nRow>
         <nRow>0 1020 197 374 53 90 </nRow>
     </modules>
-    <frames nFrames="3">
+    <frames nFrames="4">
         <itemFrame ID="3000" nModFrame="4" name="frame_">
             <RowModFrm>1017 -116 -4 </RowModFrm>
             <RowModFrm>1013 59 -3 </RowModFrm>
@@ -49,5 +49,11 @@
             <RowModFrm>1019 97 48 </RowModFrm>
             <RowModFrm>1020 34 41 </RowModFrm>
         </itemFrame>
+        <itemFrame ID="3004" nModFrame="6" name="frame_">
+            <RowModFrm>1005 0 0 </RowModFrm>
+            <RowModFrm>1003 89 84 </RowModFrm>
+            <RowModFrm>1005 -13 101 </RowModFrm>
+        </itemFrame>
     </frames>
+    <anims nAnims="0"/>
 </sprites>

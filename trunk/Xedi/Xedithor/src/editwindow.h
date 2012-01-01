@@ -76,6 +76,9 @@ public:
      ModulesList* modulesList;
 public slots:
      void FrameDoubleClicked(const QModelIndex& index);
+     inline void setTimerInterval(int value){
+         this->imageLabel->setTimerInterval(value);
+     }
 
 
 };

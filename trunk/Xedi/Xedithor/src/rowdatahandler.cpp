@@ -134,7 +134,7 @@ void AnimDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
 void AnimDescRowDataHandler::createRowHeader(QStringList& strList)
 {
     strList.push_back(" UID ");
-    strList.push_back("Mod ID");
+    strList.push_back("Frm ID");
     strList.push_back("offset X");
     strList.push_back("offset Y");
     strList.push_back("timeline");
