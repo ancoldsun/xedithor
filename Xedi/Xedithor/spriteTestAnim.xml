@@ -106,23 +106,23 @@
             <RowFrmAnim>3004 1 1 </RowFrmAnim>
         </itemAnim>
         <itemAnim ID="5001" nAnimFrame="17" name="anim_">
-            <RowFrmAnim>3005 0 2 </RowFrmAnim>
-            <RowFrmAnim>3006 0 3 </RowFrmAnim>
-            <RowFrmAnim>3007 0 2 </RowFrmAnim>
-            <RowFrmAnim>3008 0 2 </RowFrmAnim>
-            <RowFrmAnim>3009 0 2 </RowFrmAnim>
-            <RowFrmAnim>3010 0 2 </RowFrmAnim>
-            <RowFrmAnim>3011 0 4 </RowFrmAnim>
-            <RowFrmAnim>3012 0 2 </RowFrmAnim>
-            <RowFrmAnim>3013 0 28 </RowFrmAnim>
-            <RowFrmAnim>3014 3 27 </RowFrmAnim>
-            <RowFrmAnim>3015 0 21 </RowFrmAnim>
-            <RowFrmAnim>3016 0 4 </RowFrmAnim>
-            <RowFrmAnim>3017 0 9 </RowFrmAnim>
-            <RowFrmAnim>3018 -1 7 </RowFrmAnim>
-            <RowFrmAnim>3019 -1 4 </RowFrmAnim>
-            <RowFrmAnim>3020 -1 4 </RowFrmAnim>
-            <RowFrmAnim>3021 0 5 </RowFrmAnim>
+            <RowFrmAnim>3005 0 -32 </RowFrmAnim>
+            <RowFrmAnim>3006 0 -38 </RowFrmAnim>
+            <RowFrmAnim>3007 0 -44 </RowFrmAnim>
+            <RowFrmAnim>3008 0 -44 </RowFrmAnim>
+            <RowFrmAnim>3009 0 -38 </RowFrmAnim>
+            <RowFrmAnim>3010 0 -33 </RowFrmAnim>
+            <RowFrmAnim>3011 0 -33 </RowFrmAnim>
+            <RowFrmAnim>3012 0 -29 </RowFrmAnim>
+            <RowFrmAnim>3013 0 -29 </RowFrmAnim>
+            <RowFrmAnim>3014 0 -28 </RowFrmAnim>
+            <RowFrmAnim>3015 0 -35 </RowFrmAnim>
+            <RowFrmAnim>3016 0 -45 </RowFrmAnim>
+            <RowFrmAnim>3017 2 -47 </RowFrmAnim>
+            <RowFrmAnim>3018 3 -50 </RowFrmAnim>
+            <RowFrmAnim>3019 1 -52 </RowFrmAnim>
+            <RowFrmAnim>3020 1 -52 </RowFrmAnim>
+            <RowFrmAnim>3021 1 -52 </RowFrmAnim>
         </itemAnim>
     </anims>
 </sprites>
