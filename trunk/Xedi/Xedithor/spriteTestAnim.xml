@@ -21,7 +21,7 @@
         <nRow>0 1024 567 293 39 28 </nRow>
         <nRow>0 1026 612 293 39 28 </nRow>
         <nRow>0 1028 657 293 39 28 </nRow>
-        <nRow>0 1030 702 286 42 35 </nRow>
+        <nRow>0 1030 702 286 42 37 </nRow>
         <nRow>0 1032 751 277 44 45 </nRow>
         <nRow>0 1034 804 275 44 47 </nRow>
         <nRow>0 1036 854 272 48 51 </nRow>
@@ -31,70 +31,70 @@
     </modules>
     <frames nFrames="22">
         <itemFrame ID="3000" nModFrame="1" name="frame_">
-            <RowModFrm>1000 0 0 </RowModFrm>
+            <RowModFrm>1000 18 15 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3001" nModFrame="1" name="frame_">
-            <RowModFrm>1002 0 0 </RowModFrm>
+            <RowModFrm>1002 18 17 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3002" nModFrame="1" name="frame_">
-            <RowModFrm>1004 0 0 </RowModFrm>
+            <RowModFrm>1004 27 19 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3003" nModFrame="1" name="frame_">
-            <RowModFrm>1006 0 0 </RowModFrm>
+            <RowModFrm>1006 29 16 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3004" nModFrame="1" name="frame_">
-            <RowModFrm>1008 0 0 </RowModFrm>
+            <RowModFrm>1008 31 17 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3005" nModFrame="1" name="frame_">
-            <RowModFrm>1010 0 0 </RowModFrm>
+            <RowModFrm>1010 17 14 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3006" nModFrame="1" name="frame_">
-            <RowModFrm>1012 0 0 </RowModFrm>
+            <RowModFrm>1012 27 13 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3007" nModFrame="1" name="frame_">
-            <RowModFrm>1014 0 0 </RowModFrm>
+            <RowModFrm>1014 22 10 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3008" nModFrame="1" name="frame_">
-            <RowModFrm>1016 0 0 </RowModFrm>
+            <RowModFrm>1016 15 8 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3009" nModFrame="1" name="frame_">
-            <RowModFrm>1018 0 0 </RowModFrm>
+            <RowModFrm>1018 23 16 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3010" nModFrame="1" name="frame_">
-            <RowModFrm>1020 0 0 </RowModFrm>
+            <RowModFrm>1020 22 16 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3011" nModFrame="1" name="frame_">
-            <RowModFrm>1022 0 0 </RowModFrm>
+            <RowModFrm>1022 22 14 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3012" nModFrame="1" name="frame_">
-            <RowModFrm>1024 0 0 </RowModFrm>
+            <RowModFrm>1024 25 18 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3013" nModFrame="1" name="frame_">
-            <RowModFrm>1026 0 0 </RowModFrm>
+            <RowModFrm>1026 29 17 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3014" nModFrame="1" name="frame_">
-            <RowModFrm>1028 0 0 </RowModFrm>
+            <RowModFrm>1028 35 24 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3015" nModFrame="1" name="frame_">
-            <RowModFrm>1030 0 0 </RowModFrm>
+            <RowModFrm>1030 38 17 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3016" nModFrame="1" name="frame_">
-            <RowModFrm>1032 0 0 </RowModFrm>
+            <RowModFrm>1032 19 11 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3017" nModFrame="1" name="frame_">
-            <RowModFrm>1034 0 0 </RowModFrm>
+            <RowModFrm>1034 16 5 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3018" nModFrame="1" name="frame_">
-            <RowModFrm>1036 0 0 </RowModFrm>
+            <RowModFrm>1036 15 4 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3019" nModFrame="1" name="frame_">
-            <RowModFrm>1038 0 0 </RowModFrm>
+            <RowModFrm>1038 14 5 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3020" nModFrame="1" name="frame_">
-            <RowModFrm>1040 0 0 </RowModFrm>
+            <RowModFrm>1040 14 2 </RowModFrm>
         </itemFrame>
         <itemFrame ID="3021" nModFrame="1" name="frame_">
-            <RowModFrm>1042 0 0 </RowModFrm>
+            <RowModFrm>1042 12 2 </RowModFrm>
         </itemFrame>
     </frames>
     <anims nAnims="2">
