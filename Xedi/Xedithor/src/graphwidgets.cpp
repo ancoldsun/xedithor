@@ -209,8 +209,8 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
                     int itemPosX = (item->pos().x()-(WidthRectView / 2));
                     int itemPosY = (item->pos().y()-(HeightRectView / 2));
 
-                    std::cout<<"sel XX "<<itemPosX<<std::endl;
-                    std::cout<<"sel YY "<<itemPosY<<std::endl;
+                    //std::cout<<"sel XX "<<itemPosX<<std::endl;
+                    //std::cout<<"sel YY "<<itemPosY<<std::endl;
 
                     int idItem = item->data(0).toInt();
 
@@ -218,11 +218,11 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
 
                     m2 =static_cast<ModuleTableModel*>(m_table_bottom->model());
 
-                    std::cout<<" r count: "<<m2->rowCount()<<std::endl;
+                    //std::cout<<" r count: "<<m2->rowCount()<<std::endl;
                     for(int i=0;i<m2->rowCount();i++){
                         RowData* rd = m2->getDatainRow(i);
 
-                        std::cout<<" id row : "<<rd->getData(0).toInt()<<std::endl;
+                        //std::cout<<" id row : "<<rd->getData(0).toInt()<<std::endl;
 
                         if(rd!=NULL && rd->getData(0).toInt()==idItem){
                             QString sx = QString::number(itemPosX);
@@ -496,8 +496,8 @@ QImage GraphWidget::exportToImage()
         sourceRect = sourceRect.unite((current->sceneBoundingRect().toRect()));
     }
 
-    std::cout<<" SH: "<<sourceRect.height()<<std::endl;
-    std::cout<<" SW: "<<sourceRect.width()<<std::endl;
+    //std::cout<<" SH: "<<sourceRect.height()<<std::endl;
+    //std::cout<<" SW: "<<sourceRect.width()<<std::endl;
     QImage image(sourceRect.width(),sourceRect.height(),QImage::Format_ARGB32);
     image.fill(0);
     QPainter painter(&image);

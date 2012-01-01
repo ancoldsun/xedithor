@@ -52,6 +52,8 @@ private slots:
     void print();
 
     void showToolDialog();
+    void showContentHelp();
+    void showAbout();
 
     void Add_Clicked();
     void Clone_Clicked();
@@ -84,6 +86,9 @@ private:
     QAction* exitAct;
     // tool
     QAction* toolFrameAct;
+    //help
+    QAction* helpContentAct;
+    QAction* helpAboutAct;
     EditWindow *editWindow;
     //Ui::Dialog toolDialogFrm;
     //QDialog* m_toolDialog;

@@ -22,7 +22,7 @@ void XScene::dragEnterEvent( QGraphicsSceneDragDropEvent * ev )
 
 void XScene::dragMoveEvent( QGraphicsSceneDragDropEvent * ev )
 {
-    std::cout<<"XScene dragMoveEvent("<<std::endl;
+    //std::cout<<"XScene dragMoveEvent("<<std::endl;
 }
 
 

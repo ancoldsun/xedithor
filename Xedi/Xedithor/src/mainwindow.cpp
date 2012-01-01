@@ -59,9 +59,9 @@ void MainWindow::CreateActions()
     saveAct->setStatusTip(tr("Save the document to disk"));
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
-    printAct = new QAction(QIcon(":/images/paste.png"),tr("&Print..."), this);
+    printAct = new QAction(QIcon(":/images/paste.png"),tr("&Export..."), this);
     printAct->setShortcuts(QKeySequence::Print);
-    printAct->setStatusTip(tr("Print the document"));
+    printAct->setStatusTip(tr("Export Sprite"));
     connect(printAct, SIGNAL(triggered()), this, SLOT(print()));
 
     exitAct = new QAction(QIcon(":/images/new.png"),tr("E&xit"), this);
@@ -76,6 +76,18 @@ void MainWindow::CreateActions()
     //toolFrameAct->setStatusTip(tr("Save the document to disk"));
     connect(toolFrameAct, SIGNAL(triggered()), this, SLOT(showToolDialog()));
 
+    //help
+    helpContentAct = new QAction(tr("&Contents"), this);
+    //helpContentAct->setShortcuts(QKeySequence::Save);
+    //helpContentAct->setStatusTip(tr("Save the document to disk"));
+    //connect(helpContentAct, SIGNAL(triggered()), this, SLOT(showContentHelp()));
+
+    helpAboutAct = new QAction(tr("&About"), this);
+    helpAboutAct->setShortcuts(QKeySequence::HelpContents);
+    helpAboutAct->setStatusTip(tr("Open About"));
+    connect(helpAboutAct, SIGNAL(triggered()), this, SLOT(showAbout()));
+
+
     // open image button
     connect(ui->openImageButton, SIGNAL(clicked()), this, SLOT(open()));
 }
@@ -89,14 +101,15 @@ void MainWindow::CreateMainMenus()
     fileMenu->addAction(printAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
-
+    //edit
     editMenu = menuBar()->addMenu(tr("&Edit  "));
-
+    //tool
     toolMenu = menuBar()->addMenu(tr("&Tool  "));
     toolMenu->addAction(toolFrameAct);
-
+    //help
     helpMenu = menuBar()->addMenu(tr("&Help  "));
-    //
+    helpMenu->addAction(helpContentAct);
+    helpMenu->addAction(helpAboutAct);
 }
 
 void MainWindow::CreateToolBar()
@@ -324,6 +337,28 @@ void MainWindow::showToolDialog()
 {
     //int returnModal = m_toolDialog->exec();
    // std::cout<<"returnModal.."<<returnModal<<std::endl;
+}
+
+void MainWindow::showContentHelp()
+{
+    //int returnModal = m_toolDialog->exec();
+   // std::cout<<"returnModal.."<<returnModal<<std::endl;
+}
+
+void MainWindow::showAbout()
+{
+    QString strAb = "Xedithor 1.0.0 : 2D Sprite Editor";
+    strAb = strAb + "\n";
+    strAb = strAb + "\nBased on Qt 4.7.4 (32 bit)";
+    strAb = strAb + "\n";
+    strAb = strAb + "\nBuilt on 31 12 2011 at 00:14:13";
+    strAb = strAb + "\n";
+    strAb = strAb + "\nCopyright 2011-2012  Edi Ermawan <edi.ermawan@gmail.com>";
+    strAb = strAb + "\n";
+    strAb = strAb + "\nStill under development, help is welcomed !";
+    strAb = strAb + "\nVisit: http://offground.wordpress.com/";
+    QMessageBox::about(this,"About Xedithor",strAb);
+
 }
 
 //table button clicked
@@ -643,10 +678,18 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
                 //qreal w_    =rd->getData(4).toDouble();
                 //qreal h_    =rd->getData(5).toDouble();
 
-                QPixmap pixmap = editWindow->modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
-                QPixmap copyPixmap = pixmap.copy();
-                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
-
+                QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
+                if(_item!=NULL)
+                {
+                    QPixmap pixmap      = _item->icon().pixmap(500,500);
+                    QPixmap copyPixmap = pixmap.copy();
+                    editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                }
+                else
+                {
+                    QPixmap pixmap = QPixmap::fromImage(QImage(":/images/invalid.png"));
+                    editWindow->imageLabel->AddPixmapItem(&pixmap,false,id_,px_,py_);
+                }
             }
         }
     } else if(sender == ui->ft_tableView2){ // table module-frame
@@ -691,9 +734,13 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
             //qreal w_    =rd->getData(4).toDouble();
             //qreal h_    =rd->getData(5).toDouble();
 
-            QPixmap pixmap = editWindow->modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
-            QPixmap copyPixmap = pixmap.copy();
-            editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+            QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
+            if(_item!=NULL)
+            {
+                QPixmap pixmap      = _item->icon().pixmap(500,500);
+                QPixmap copyPixmap = pixmap.copy();
+                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+            }
         }
       }
 }
@@ -788,6 +835,7 @@ void MainWindow::TableEditCompleted(QString str)
                 {
                     editWindow->imageLabel->clearGraphPixmapItem();
                     m2 = m->getModel(i);
+                    int nModuleInFrame = 0;
                     for(int j=0;j<m2->rowCount();j++)
                     {
                         RowData* rd       = m2->getDatainRow(j);
@@ -799,15 +847,25 @@ void MainWindow::TableEditCompleted(QString str)
 
                         if(_img_item!=NULL)
                         {
-                            QIcon _icon = _img_item->icon();
-                            QPixmap pixmap = _icon.pixmap(500,500);
-                            QPixmap copyPixmap = pixmap.copy();
-                            editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                                QIcon _icon = _img_item->icon();
+                                QPixmap pixmap = _icon.pixmap(500,500);
+                                QPixmap copyPixmap = pixmap.copy();
+                                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+                                nModuleInFrame++;
+                        }
+                        else
+                        {
+                                QPixmap pixmap = QPixmap::fromImage(QImage(":/images/invalidF.png"));
+                                editWindow->imageLabel->AddPixmapItem(&pixmap,false,id_,px_,py_);
+                                nModuleInFrame++;
                         }
                     }
-                    QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
-                    listStrFrameID.push_back(m->getDatainRow(i)->getData(1));
-                    listPxmap.push_back(pieceImage);
+                    if(nModuleInFrame>0)
+                    {
+                        QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
+                        listStrFrameID.push_back(m->getDatainRow(i)->getData(1));
+                        listPxmap.push_back(pieceImage);
+                    }
                 }
             }
             editWindow->getModuleList()->clear();
@@ -1134,10 +1192,10 @@ void MainWindow::TableEditCompleted(QString str)
  void MainWindow::parseDataRowFrame(QList<QString>&header,QList<QString>&body)
  {
     UID::Instance().setAutoInc(false);
-    std::cout<<"------------------------"<<std::endl;
-    std::cout<<"ID     :"<<header.at(0).toStdString().c_str()<<std::endl;
-    std::cout<<"N      :"<<header.at(1).toStdString().c_str()<<std::endl;
-    std::cout<<"Name   :"<<header.at(2).toStdString().c_str()<<std::endl;
+    //std::cout<<"------------------------"<<std::endl;
+    //std::cout<<"ID     :"<<header.at(0).toStdString().c_str()<<std::endl;
+    //std::cout<<"N      :"<<header.at(1).toStdString().c_str()<<std::endl;
+    //std::cout<<"Name   :"<<header.at(2).toStdString().c_str()<<std::endl;
 
     m_frameTableModel->insertRow(m_frameTableModel->rowCount());
     /* set data row */
@@ -1153,7 +1211,7 @@ void MainWindow::TableEditCompleted(QString str)
     int idC =0;
     QList<QString> datRow;
     foreach(QString str,body){
-        std::cout<<"---body: "<<str.toStdString().c_str()<<std::endl;
+        //std::cout<<"---body: "<<str.toStdString().c_str()<<std::endl;
         QString strDataRow = str;
         QString buff="";
         QChar chSpace = QChar::fromAscii(' ');
