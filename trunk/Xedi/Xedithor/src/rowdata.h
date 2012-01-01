@@ -40,6 +40,12 @@ class RowData: public QObject
     ~RowData();
     QString getData(const int nCol);
     void setData(const int nCol, const QString data);
+    void setValid(bool val){
+        isValidData=val;
+    }
+    bool isValid(){
+        return isValidData;
+    }
 
     /*std::vector<ModuleFrame*> getTable(){
         return m_listRow;
@@ -48,6 +54,7 @@ class RowData: public QObject
 
   private:
     std::vector<QString> m_ColData;
+    bool isValidData;
    //std::vector<ModuleFrame*> m_listRow; // row in row :D, use for row that have list of row
 
     int m_IDModule;

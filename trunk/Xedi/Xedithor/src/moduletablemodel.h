@@ -11,6 +11,7 @@
 #include <qlist.h>
 #include <QStringList>
 #include <QTimer>
+#include <QColor>
 
 #include "rowdata.h"
 

@@ -50,6 +50,12 @@ QVariant ModuleTableModel::data(const QModelIndex &index, int role) const
         if(dat != NULL)
          return dat->getData(col);
     }
+    else if(role == Qt::BackgroundRole)
+    {
+        RowData* dat =m_gridData2.at(index.row());
+        if(!(dat->isValid()))
+         return QVariant(QColor(255, 0, 0, 127));
+    }
 
     return QVariant();
 }
