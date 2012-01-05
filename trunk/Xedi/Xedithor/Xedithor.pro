@@ -14,7 +14,6 @@ SOURCES += src\main.cpp\
         src\mainwindow.cpp \
     src/xscene.cpp \
     src/rectselectionitem.cpp \
-    src/moduletablemodel.cpp \
     src/hlinegraphicsitem.cpp \
     src/graphwidgets.cpp \
     src/editwindow.cpp \
@@ -22,13 +21,13 @@ SOURCES += src\main.cpp\
     src/rowdata.cpp \
     src/rowdatahandler.cpp \
     src/uidmanager.cpp \
-    src/animatedPixmapItem.cpp
+    src/animatedPixmapItem.cpp \
+    src/mfatablemodel.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
     src/rowdata.h \
     src/rectselectionitem.h \
-    src/moduletablemodel.h \
     src/mainwindow.h \
     src/hlinegraphicsitem.h \
     src/graphwidgets.h \
@@ -37,7 +36,8 @@ HEADERS  += mainwindow.h \
     src/moduleslist.h \
     src/rowdatahandler.h \
     src/uidmanager.h \
-    src/animatedPixmapItem.h
+    src/animatedPixmapItem.h \
+    src/mfatablemodel.h
 
 
 FORMS    += mainwindow.ui \
@@ -49,6 +49,10 @@ RESOURCES += \
 
 OTHER_FILES += \
     temp.txt
+
+
+
+
 
 
 
