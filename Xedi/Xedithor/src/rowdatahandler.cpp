@@ -10,7 +10,7 @@ void ModuleRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
 {
     QString s="0";
     if(col==0)
-        s=QString::number(0);//m_IDModule
+        s=QString::number(0);
     else if(col==1)
         s=QString::number(MODULE_START_ID+(UID::Instance().getLastUID(UIDType::MODULE)));
     else if(col==4)
@@ -36,19 +36,16 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,
 {
     QString s="0";
     if(col==0)
-        s="N/A";//QString::number(1);
+        s="N/A";
     else if(col==1)
         s=QString::number(FRAME_START_ID+(UID::Instance().getLastUID(UIDType::FRAME)));
     else if(col==3)
-        s="frame_";//QString::number(32);
+        s="frame_";
     else if(col==4)
-        s="N/A";//QString::number(32);
+        s="N/A";
     else if(col==5)
-        s="N/A";//QString::number(32);
+        s="N/A";
     vec.push_back(s);
-
-    //moduleFrame_ = new ModuleFrame();
-    //Table.push_back(moduleFrame_);
 }
 
 void FrameRowDataHandler::createRowHeader(QStringList& strList)
@@ -70,9 +67,9 @@ void FrameDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col
     else if(col==1)
         s=QString::number(2000+1);
     else if(col==4)
-        s="N/A";//QString::number(32);
+        s="N/A";
     else if(col==5)
-        s="N/A";//QString::number(32);
+        s="N/A";
     vec.push_back(s);
 }
 
@@ -87,23 +84,20 @@ void FrameDescRowDataHandler::createRowHeader(QStringList& strList)
 }
 
 /* anim */
-void AnimRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,std::vector<ModuleFrame*>&Table)
+void AnimRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
 {
     QString s="0";
     if(col==0)
-        s="N/A";//QString::number(1);
+        s="N/A";
     else if(col==1)
         s=QString::number(ANIM_START_ID+(UID::Instance().getLastUID(UIDType::ANIM)));
     else if(col==3)
-        s="anim_";//QString::number(32);
+        s="anim_";
     else if(col==4)
-        s="N/A";//QString::number(32);
+        s="N/A";
     else if(col==5)
-        s="N/A";//QString::number(32);
+        s="N/A";
     vec.push_back(s);
-
-    //moduleFrame_ = new ModuleFrame();
-    //Table.push_back(moduleFrame_);
 }
 
 void AnimRowDataHandler::createRowHeader(QStringList& strList)
@@ -125,9 +119,9 @@ void AnimDescRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
     else if(col==1)
         s=QString::number(2000+1);
     else if(col==4)
-        s="1";//QString::number(32);
+        s="1";
     else if(col==5)
-        s="N/A";//QString::number(32);
+        s="N/A";
     vec.push_back(s);
 }
 

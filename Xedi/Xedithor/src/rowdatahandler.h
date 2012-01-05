@@ -52,7 +52,7 @@ public:
 class AnimRowDataHandler :public RowDataHandler
 {
 public:
-    void createDefaultRow(std::vector<QString>& vec,int col);///,std::vector<ModuleFrame*>&Table);
+    void createDefaultRow(std::vector<QString>& vec,int col);
     void createRowHeader(QStringList& strList);
 };
 /* anim desc data */

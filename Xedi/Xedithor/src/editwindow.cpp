@@ -24,12 +24,12 @@ EditWindow::EditWindow(QWidget *parent) :
     this->setCentralWidget(imageLabel);
 
     //create Actions
-    zoomInAct = new QAction(QIcon(":/images/Selection.png"),tr("&ZoomIn"), this);
+    zoomInAct = new QAction(QIcon(":/images/Selection.png"),tr("&Select.."), this);
     zoomInAct->setShortcuts(QKeySequence::ZoomIn);
     zoomInAct->setStatusTip(tr("ZoomIn.."));
     connect(zoomInAct, SIGNAL(triggered()), this, SLOT(ZoomIn()));
 
-    zoomOutAct = new QAction(QIcon(":/images/pan.png"),tr("&ZoomOut..."), this);
+    zoomOutAct = new QAction(QIcon(":/images/pan.png"),tr("&Pan.."), this);
     zoomOutAct->setShortcuts(QKeySequence::ZoomOut);
     zoomOutAct->setStatusTip(tr("ZoomOut.."));
     connect(zoomOutAct, SIGNAL(triggered()), this, SLOT(ZoomOut()));
@@ -49,10 +49,8 @@ EditWindow::EditWindow(QWidget *parent) :
     this->statusBar()->addWidget(mouseInfoLabel);
     imageLabel->setLabelMouse(mouseInfoLabel);
 
-
-
     /* list module/frame  */
-    modulesList = new ModulesList(500);
+    modulesList = new ModulesList(ITEM_PIXMAP::Max_H);
     modulesList->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     //modulesList always follow the parent (this)
     ui->dockWidgetContents->layout()->addWidget(modulesList);
@@ -102,7 +100,7 @@ void EditWindow::adjustScrollBar(QScrollBar *scrollBar, double factor)
 
 void EditWindow::setModuleList_Module()
 {
-    modulesList = new ModulesList(500);
+    modulesList = new ModulesList(ITEM_PIXMAP::Max_H);
     modulesList->setFixedWidth(510);
     modulesList->setFixedHeight(800);
     modulesList->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -129,12 +127,10 @@ void EditWindow::setModuleList_Anim()
 
 void EditWindow::FrameDoubleClicked(const QModelIndex& index)
 {
-    std::cout<<"image index: "<<index.row()<<std::endl;
-
     int imgClicked_ = index.row();
 
     if(m_modeView == TabView::FRAME || m_modeView == TabView::ANIM) {
-        QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
+        QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
         QString moduleIDStr = modulesList->item(imgClicked_)->text();
         QPixmap copyPixmap = pixmap.copy();
         int genId_;
@@ -148,7 +144,6 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             genId_ = this->imageLabel->AddPixmapItem(&copyPixmap,false,_idPixmap,0,0);
         }
 
-        //QString genIdStr = QString::number(genId_)
         ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
         if(m->rowCount()<1){
             m->insertRow(0);
@@ -191,12 +186,6 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             }
             else
             {
-                /*
-                int frameModuleRowSelected = imageLabel->m_table_bottom->currentIndex().row();
-                if(frameModuleRowSelected == -1){
-                    frameModuleRowSelected = 0;
-                }
-                */
                 int frameModuleRowSelected = sub_model->rowCount();
                 sub_model->insertRow(frameModuleRowSelected);
                 /* set data */
@@ -209,21 +198,10 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
                 /* update module frame count */
                 int mf_count = m->getDatainRow(frameRowSelected)->getData(2).toInt();
                 m->getDatainRow(frameRowSelected)->setData(2,QString::number(mf_count+1));
-
-
             }
         }
         m->refresh();
     }  // -- end TabView::FRAME
-    /*
-    else if(m_modeView == TabView::ANIM)
-    {
-        QPixmap pixmap = modulesList->item(imgClicked_)->icon().pixmap(500,500);
-        QString moduleIDStr = modulesList->item(imgClicked_)->text();
-        QPixmap copyPixmap = pixmap.copy();
-        int genId_ = this->imageLabel->AddPixmapItem(&copyPixmap);
-    } // -- end TabView::ANIM
-    */
 }
 
 void EditWindow::setupViewModule()
@@ -250,20 +228,17 @@ void EditWindow::createAnimation()
 
     QList<QPixmap> listPixmap;
     QList<QPoint> listPos;
-    std::cout<<"createAnimation..........: "<<std::endl;
     for(int i=0;i<_model->rowCount();i++)
     {
         RowData* rd = _model->getDatainRow(i);
 
-        //int id_           = rd->getData(0).toInt();
         QString moduleID_ = rd->getData(1);
         int _posx         = rd->getData(2).toInt();
         int _posy         = rd->getData(3).toInt();
 
-        QPixmap pixmap = modulesList->getItemByText(moduleID_)->icon().pixmap(500,500);
+        QPixmap pixmap = modulesList->getItemByText(moduleID_)->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
         QPixmap copyPixmap = pixmap.copy();
 
-        std::cout<<"createAnimation..........: "<<i<<std::endl;
         listPixmap.push_back(copyPixmap);
 
         QPoint _pos(_posx,_posy);

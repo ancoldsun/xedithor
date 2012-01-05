@@ -39,11 +39,6 @@ public:
     QTableView* m_table;
     QTableView* m_table_bottom;
 
-    QTableView* m_table_frame;
-    QTableView* m_table_frameDesc;
-
-    QTableView* m_table_module;
-
     int posMouseX;
     int posMouseY;
     void setImageGraphicsItem(QPixmap* pxmap);

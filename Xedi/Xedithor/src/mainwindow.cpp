@@ -30,11 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_SprfileName="none";
 
     m_lastRowSelectedFT = 0;
-
-    //m_toolDialog = new QDialog(this);
-    //toolDialogFrm.setupUi(m_toolDialog);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -71,7 +66,6 @@ void MainWindow::CreateActions()
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
     // tool
-
     toolFrameAct = new QAction(QIcon(":/images/Calculator.png"),tr("&Frame"), this);
     //toolFrameAct->setShortcuts(QKeySequence::Save);
     //toolFrameAct->setStatusTip(tr("Save the document to disk"));
@@ -87,7 +81,6 @@ void MainWindow::CreateActions()
     helpAboutAct->setShortcuts(QKeySequence::HelpContents);
     helpAboutAct->setStatusTip(tr("Open About"));
     connect(helpAboutAct, SIGNAL(triggered()), this, SLOT(showAbout()));
-
 
     // open image button
     connect(ui->openImageButton, SIGNAL(clicked()), this, SLOT(open()));
@@ -341,7 +334,7 @@ void MainWindow::print()
 
 void MainWindow::showToolDialog()
 {
-    //int returnModal = m_toolDialog->exec();
+   // int returnModal = m_toolDialog->exec();
    // std::cout<<"returnModal.."<<returnModal<<std::endl;
 }
 
@@ -371,7 +364,6 @@ void MainWindow::showAbout()
 void MainWindow::Add_Clicked()
 {
     QWidget *sender = (QWidget *) QObject::sender();
-    std::cout<<"ADD.."<<sender->objectName().toStdString()<<std::endl;
 
     if(sender == ui->mt_navTable1_button1 ){
         tableAddRow(ui->mt_tableView1);
@@ -393,7 +385,6 @@ void MainWindow::Add_Clicked()
 
 void MainWindow::Clone_Clicked()
 {
-    std::cout<<"CLONE.."<<std::endl;
     QWidget *sender = (QWidget *) QObject::sender();
     if(sender == ui->mt_navTable1_button2 ){
         tableCloneRow(ui->mt_tableView1);
@@ -414,7 +405,6 @@ void MainWindow::Clone_Clicked()
 
 void MainWindow::Del_Clicked()
 {
-    std::cout<<"DEL.."<<std::endl;
     QWidget *sender = (QWidget *) QObject::sender();
     if(sender == ui->mt_navTable1_button3 ){
         tableDelRow(ui->mt_tableView1);
@@ -459,7 +449,6 @@ void MainWindow::Del_Clicked()
 
 void MainWindow::Up_Clicked()
 {
-    std::cout<<"UP.."<<std::endl;
     QWidget *sender = (QWidget *) QObject::sender();
     if(sender == ui->mt_navTable1_button4 ){
         tableUpSel(ui->mt_tableView1);
@@ -480,7 +469,6 @@ void MainWindow::Up_Clicked()
 
 void MainWindow::Down_Clicked()
 {
-    std::cout<<"DOWN.."<<std::endl;
     QWidget *sender = (QWidget *) QObject::sender();
     if(sender == ui->mt_navTable1_button5 ){
         tableDownSel(ui->mt_tableView1);
@@ -501,7 +489,6 @@ void MainWindow::Down_Clicked()
 
 void MainWindow::Top_Clicked()
 {
-    std::cout<<"TOP.."<<std::endl;
     QWidget *sender = (QWidget *) QObject::sender();
     if(sender == ui->mt_navTable1_button6 ){
         tableTopSel(ui->mt_tableView1);
@@ -518,12 +505,10 @@ void MainWindow::Top_Clicked()
     else if(sender == ui->at_navTable2_button6){
         tableTopSel(ui->at_tableView2);
     }
-
 }
 
 void MainWindow::Bottom_Clicked()
 {
-    std::cout<<"BOTTOM.."<<std::endl;
     QWidget *sender = (QWidget *) QObject::sender();
     if(sender == ui->mt_navTable1_button7 ){
         tableBotSel(ui->mt_tableView1);
@@ -626,7 +611,6 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
     if(sender == ui->mt_tableView1 ){   // table module
 
         int rowSelected_ = ui->mt_tableView1->currentIndex().row();
-        std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
 
         ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
         RowData* rd = m->getDatainRow(rowSelected_);
@@ -663,8 +647,6 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         if(m_lastRowSelectedFT != rowSelected_)
         {
             m_lastRowSelectedFT = rowSelected_;
-            std::cout<<"tableRowSelected Row: "<<rowSelected_<<std::endl;
-
             ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
             ModuleTableModel* mf_bottom = mf->getModel(rowSelected_);
             ui->ft_tableView2->setModel(mf_bottom);
@@ -673,9 +655,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
             // create
             for(int i=0;i<mf_bottom->rowCount();i++)
             {
-                //std::cout<<"Row: "<<i<<" rc "<<mf_bottom->rowCount()<<std::endl;
                 RowData* rd = mf_bottom->getDatainRow(i);
-                //std::cout<<"after Row: "<<i<<std::endl;
 
                 int id_           = rd->getData(0).toInt();
                 QString moduleID_ = rd->getData(1);
@@ -687,7 +667,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
                 QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
                 if(_item!=NULL)
                 {
-                    QPixmap pixmap      = _item->icon().pixmap(500,500);
+                    QPixmap pixmap      = _item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
                     QPixmap copyPixmap = pixmap.copy();
                     editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
                 }
@@ -721,34 +701,28 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
             editWindow->createAnimation();
         }
     } else if(sender == ui->at_tableView2) {     // // table frame anim
-        std::cout<<"----should be clear anim "<<std::endl;
         editWindow->imageLabel->clearAnimation();
 
         ModuleTableModel* frameAnimModel= static_cast<ModuleTableModel*>(ui->at_tableView2->model());
 
         // clear prev row images item
         editWindow->imageLabel->clearGraphPixmapItem();
-        // create
-        //for(int i=0;i<frameAnimModel->rowCount();i++)
-        //{
-            int i = ui->at_tableView2->currentIndex().row();
-            RowData* rd = frameAnimModel->getDatainRow(i);
 
-            int id_           = rd->getData(0).toInt();
-            QString moduleID_ = rd->getData(1);
-            int px_           = rd->getData(2).toInt();
-            int py_           = rd->getData(3).toInt();
-            //qreal w_    =rd->getData(4).toDouble();
-            //qreal h_    =rd->getData(5).toDouble();
+        int i = ui->at_tableView2->currentIndex().row();
+        RowData* rd = frameAnimModel->getDatainRow(i);
 
-            QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
-            if(_item!=NULL)
-            {
-                QPixmap pixmap      = _item->icon().pixmap(500,500);
-                QPixmap copyPixmap = pixmap.copy();
-                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
-            }
-        //}
+        int id_           = rd->getData(0).toInt();
+        QString moduleID_ = rd->getData(1);
+        int px_           = rd->getData(2).toInt();
+        int py_           = rd->getData(3).toInt();
+
+        QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
+        if(_item!=NULL)
+        {
+            QPixmap pixmap      = _item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
+            QPixmap copyPixmap = pixmap.copy();
+            editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+        }
       }
 }
 
@@ -760,7 +734,6 @@ void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & 
 
 void MainWindow::TableEditCompleted(QString str)
 {
-    //std::cout<<"data edit completed...........: "<<std::endl;
     int rowSelected_ = ui->mt_tableView1->currentIndex().row();
 
     ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
@@ -784,8 +757,6 @@ void MainWindow::TableEditCompleted(QString str)
 
  void MainWindow::PageTabChanged(int indexPage)
  {
-     //std::cout<<"page: "<<indexPage<<std::endl;
-
      if(indexPage== Page::MODULE)
      {
         editWindow->getModuleList()->clear();
@@ -800,7 +771,6 @@ void MainWindow::TableEditCompleted(QString str)
          editWindow->getModuleList()->clear();
          ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
 
-         //std::cout<<"Page::FRAME: "<<m->rowCount()<<std::endl;
          editWindow->getModuleList()->clear();
          for(int i=0;i<m->rowCount();i++)
          {
@@ -821,7 +791,7 @@ void MainWindow::TableEditCompleted(QString str)
          // graph now handle frame table
          editWindow->imageLabel->m_table = ui->ft_tableView1;
          editWindow->imageLabel->m_table_bottom = ui->ft_tableView2;
-         editWindow->setupViewFrame();//imageLabel->setupGraphViewFrame();
+         editWindow->setupViewFrame();
          m_timer->start(200);
 
      }
@@ -829,8 +799,6 @@ void MainWindow::TableEditCompleted(QString str)
      {
         ModuleTableModel* m  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
         ModuleTableModel* m2;
-
-        //std::cout<<"sss: "<<editWindow->modulesList->count()<<std::endl;
 
         if(editWindow->modulesList->count()>0) {
 
@@ -856,7 +824,7 @@ void MainWindow::TableEditCompleted(QString str)
                         if(_img_item!=NULL)
                         {
                                 QIcon _icon = _img_item->icon();
-                                QPixmap pixmap = _icon.pixmap(500,500);
+                                QPixmap pixmap = _icon.pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
                                 QPixmap copyPixmap = pixmap.copy();
                                 editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
                                 nModuleInFrame++;
@@ -886,22 +854,12 @@ void MainWindow::TableEditCompleted(QString str)
                 QPixmap _pixmap = listPxmap.at(i);
                 editWindow->getModuleList()->addPiece(_pixmap,QPoint(0,0),listStrFrameID.at(i));
             }
-            //QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
-            //QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
         }
-
-        //editWindow->getModuleList()->clear();
         editWindow->setupViewAnim();
-        //editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0),0);
-        // graph now handle frame table
         editWindow->imageLabel->m_table        = ui->at_tableView1;
         editWindow->imageLabel->m_table_bottom = ui->at_tableView2;
 
-        editWindow->imageLabel->m_table_frame     = ui->ft_tableView1;
-        editWindow->imageLabel->m_table_frameDesc = ui->ft_tableView2;
-
-        editWindow->imageLabel->m_table_module   = ui->mt_tableView1;
-     }
+    }
  }
  void MainWindow::saveDataSprite()
  {
@@ -1034,7 +992,6 @@ void MainWindow::TableEditCompleted(QString str)
                                "Xedithor: parsing XML sprite",
                                "Couldn't open "+m_SprfileName,
                                QMessageBox::Ok);
-            std::cout<<"error open"<<std::endl;
             return;
         }
         QXmlStreamReader xml(file);
@@ -1053,17 +1010,14 @@ void MainWindow::TableEditCompleted(QString str)
                 }
                 if(xml.name() == "image")
                 {
-                    //std::cout<<"image available"<<std::endl;
                     xml.readNext();
                     xml.readNext();
-                    //std::cout<<"image available"<<xml.name().toString().toStdString().c_str()<<std::endl;
                     if(xml.tokenType() == QXmlStreamReader::StartElement)
                     {
-                        //std::cout<<"--- 3 ---"<<std::endl;
+
                         if(xml.name() == "path")
                         {
                            xml.readNext();
-                           //std::cout<<xml.text().toString().toStdString().c_str()<<std::endl;
                            /* open image */
                            m_ImgfileName = xml.text().toString();
                            QImage image(m_ImgfileName);
@@ -1084,8 +1038,6 @@ void MainWindow::TableEditCompleted(QString str)
                 }
                 if(xml.name() == "modules")
                 {
-                    //std::cout<<"--- modules ---"<<std::endl;
-                    //std::cout<<"nModules: "<<xml.attributes().data()->value().toString().toStdString().c_str()<<std::endl;
                     xml.readNext();
                     while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
                                             xml.name() == "modules"))
@@ -1094,7 +1046,6 @@ void MainWindow::TableEditCompleted(QString str)
                         {
                             if(xml.name() == "nRow")
                             {
-                                //std::cout<<"--- nRow ---"<<std::endl;
                                 xml.readNext();
                                 parseDataRow(xml.text().toString());
                             }
@@ -1228,7 +1179,7 @@ void MainWindow::TableEditCompleted(QString str)
     }
     /* set last ID */
     int lastID_= UID::Instance().getLastUID(UIDType::MODULE);
-    int newrowID_  = rd->getData(1).toInt() - 1000;
+    int newrowID_  = rd->getData(1).toInt() - C_UID::MODULE_START;
     if( lastID_ <= newrowID_){ // 1 = uid module
         UID::Instance().setLastUID(newrowID_+1,UIDType::MODULE);
     }
@@ -1238,11 +1189,6 @@ void MainWindow::TableEditCompleted(QString str)
  void MainWindow::parseDataRowFrame(QList<QString>&header,QList<QString>&body)
  {
     UID::Instance().setAutoInc(false);
-    //std::cout<<"------------------------"<<std::endl;
-    //std::cout<<"ID     :"<<header.at(0).toStdString().c_str()<<std::endl;
-    //std::cout<<"N      :"<<header.at(1).toStdString().c_str()<<std::endl;
-    //std::cout<<"Name   :"<<header.at(2).toStdString().c_str()<<std::endl;
-
     m_frameTableModel->insertRow(m_frameTableModel->rowCount());
     /* set data row */
     int rowNow = m_frameTableModel->rowCount()-1;
@@ -1257,7 +1203,6 @@ void MainWindow::TableEditCompleted(QString str)
     int idC =0;
     QList<QString> datRow;
     foreach(QString str,body){
-        //std::cout<<"---body: "<<str.toStdString().c_str()<<std::endl;
         QString strDataRow = str;
         QString buff="";
         QChar chSpace = QChar::fromAscii(' ');
@@ -1297,7 +1242,7 @@ void MainWindow::TableEditCompleted(QString str)
 
     /* set last ID */
     int lastID_= UID::Instance().getLastUID(UIDType::FRAME);
-    int newrowID_  = rd->getData(1).toInt() - 3000;
+    int newrowID_  = rd->getData(1).toInt() - C_UID::FRAME_START;
     if( lastID_ <= newrowID_){ // 1 = uid module
         UID::Instance().setLastUID(newrowID_+1,UIDType::FRAME);
     }
@@ -1364,7 +1309,7 @@ void MainWindow::TableEditCompleted(QString str)
 
     /* set last ID */
     int lastID_= UID::Instance().getLastUID(UIDType::ANIM);
-    int newrowID_  = rd->getData(1).toInt() - 5000;
+    int newrowID_  = rd->getData(1).toInt() - C_UID::ANIM_START;
     if( lastID_ <= newrowID_){ // 1 = uid module
         UID::Instance().setLastUID(newrowID_+1,UIDType::ANIM);
     }
@@ -1382,8 +1327,6 @@ void MainWindow::TableEditCompleted(QString str)
  void MainWindow::timerHit()
  {
      m_timer->stop();
-     std::cout<<"timer is OUT: "<<std::endl;
-
      //if tab frame   // check valid frame (use valid module)
      ModuleTableModel* _model_frame  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
      ModuleTableModel* _sub_model_frame;

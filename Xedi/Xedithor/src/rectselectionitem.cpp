@@ -28,13 +28,12 @@ void RectSelectionItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
 void RectSelectionItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    std::cout<<"rect press event"<<std::endl;
-
     QGraphicsItem::mousePressEvent(event);
 }
 
 void RectSelectionItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+    // todo : avoid rect W and H lower than 0
     switch(cursor_type)
     {
         case PosCursor::TOP_LEFT :
@@ -129,12 +128,6 @@ void RectSelectionItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void RectSelectionItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 {
-    //std::cout<<"~~~~~~~~~~~ hover...."<<std::endl;
-   // std::cout<<"---- x: "<<rect().x()<<std::endl;
-   // std::cout<<"---- y: "<<rect().y()<<std::endl;
-   // std::cout<<"---- x pos: "<<pos().x()<<std::endl;
-   // std::cout<<"---- y pos: "<<pos().y()<<std::endl;
-
     QPointF mpointF= event->pos();
 
     setFlag(QGraphicsItem::ItemIsMovable, false);
@@ -143,81 +136,64 @@ void RectSelectionItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
     cursor_type = PosCursor::NONE;
     if(mpointF.x()>this->rect().x()-adjust && mpointF.x()<this->rect().x()+adjust)
     {
-        std::cout<<"left area"<<std::endl;
         if(mpointF.y()>this->rect().y()-adjust && mpointF.y()<this->rect().y()+adjust)
         {
-            std::cout<<"TOP LEFT"<<std::endl;
             setCursor(Qt::SizeFDiagCursor);
             cursor_type = PosCursor::TOP_LEFT;
         }
         else if(mpointF.y()>this->rect().y()+rect().height()-adjust && mpointF.y()<this->rect().y()+rect().height()+adjust)
         {
-            std::cout<<"BOTTOM LEFT"<<std::endl;
             setCursor(Qt::SizeBDiagCursor);
             cursor_type = PosCursor::BOTTOM_LEFT;
         }
         else
         {
-            std::cout<<"SIDE LEFT"<<std::endl;
             setCursor(Qt::SizeHorCursor);
             cursor_type = PosCursor::LEFT_SIDE;
         }
     }
     else if(mpointF.x()>this->rect().x()+adjust && mpointF.x()<this->rect().x()+rect().width()-adjust)
     {
-        std::cout<<"center area"<<std::endl;
         if(mpointF.y()>this->rect().y()-adjust && mpointF.y()<this->rect().y()+adjust)
         {
-            std::cout<<"TOP"<<std::endl;
             setCursor(Qt::SizeVerCursor);
             cursor_type = PosCursor::TOP;
 
         }
         else if(mpointF.y()>this->rect().y()+adjust && mpointF.y()<this->rect().y()+rect().height()-adjust)
         {
-            std::cout<<"CENTER"<<std::endl;
             setFlag(QGraphicsItem::ItemIsMovable, true);
             setCursor(Qt::CrossCursor);
             cursor_type = PosCursor::CENTER;
         }
         else
         {
-            std::cout<<"BOTTOM"<<std::endl;
             setCursor(Qt::SizeVerCursor);
             cursor_type = PosCursor::BOTTOM;
         }
     }
     else if(mpointF.x()>this->rect().x()+rect().width()-adjust && mpointF.x()<this->rect().x()+rect().width()+adjust)
     {
-        std::cout<<"right area"<<std::endl;
         if(mpointF.y()>this->rect().y()-adjust && mpointF.y()<this->rect().y()+adjust)
         {
-            std::cout<<"TOP RIGHT"<<std::endl;
             setCursor(Qt::SizeBDiagCursor);
             cursor_type = PosCursor::TOP_RIGHT;
         }
         else if(mpointF.y()>this->rect().y()+rect().height()-adjust && mpointF.y()<this->rect().y()+rect().height()+adjust)
         {
-            std::cout<<"BOTTOM RIGHT"<<std::endl;
             setCursor(Qt::SizeFDiagCursor);
             cursor_type = PosCursor::BOTTOM_RIGHT;
         }
         else
         {
-            std::cout<<"SIDE RIGHT"<<std::endl;
             setCursor(Qt::SizeHorCursor);
             cursor_type = PosCursor::RIGHT_SIDE;
         }
-    }
-    else
-    {
-        std::cout<<"NOPE area.............."<<std::endl;
     }
 }
 
 void RectSelectionItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    std::cout<<"rect release event"<<std::endl;
     QGraphicsItem::mouseReleaseEvent(event);
 
 }
@@ -238,5 +214,5 @@ QPainterPath RectSelectionItem::shape() const
 
 void RectSelectionItem::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
 {
-    std::cout<<"dragMoveEvent dragMoveEvent.............."<<std::endl;
+    // todo:
 }
