@@ -8,10 +8,7 @@
 #include "rectselectionitem.h"
 #include "uidmanager.h"
 
-
-
 #include <iostream>
-
 
 GraphWidget::GraphWidget(QWidget *parent)
     : QGraphicsView(parent), timerId(0)
@@ -30,11 +27,6 @@ GraphWidget::GraphWidget(QWidget *parent)
     pixmapGraphicsItem=NULL;
 
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-
-    //Set-up the scene
-    //QGraphicsScene* Scene = new QGraphicsScene(this);
-    //setScene(m_scene);
-
 
     // X-axis component
     m_scene->addLine(0,HeightRectView / 2,WidthRectView, HeightRectView / 2);
@@ -172,24 +164,11 @@ void GraphWidget::SetCenter(const QPointF& centerPoint) {
 
 // Handles when the mouse button is pressed
 
-void GraphWidget::mousePressEvent(QMouseEvent* event) {
-
-    if(event->button() == Qt::RightButton){
-        if(this->cursor().shape() == Qt::ArrowCursor){
-           // setCursor(Qt::ClosedHandCursor);
-        }else {
-           // setCursor(Qt::ArrowCursor);
-        }
-    }
-    else{
-
-    }
-
+void GraphWidget::mousePressEvent(QMouseEvent* event)
+{
     //For panning the view
     LastPanPoint = event->pos();
     FirstRectPoint= event->pos();
-
-    QPointF coordMouse = mapToScene(FirstRectPoint.x(),FirstRectPoint.y());
     QGraphicsView::mousePressEvent(event);
 }
 
@@ -209,21 +188,12 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
                     int itemPosX = (item->pos().x()-(WidthRectView / 2));
                     int itemPosY = (item->pos().y()-(HeightRectView / 2));
 
-                    //std::cout<<"sel XX "<<itemPosX<<std::endl;
-                    //std::cout<<"sel YY "<<itemPosY<<std::endl;
-
                     int idItem = item->data(0).toInt();
-
-                    std::cout<<"id: "<<idItem<<std::endl;
 
                     m2 =static_cast<ModuleTableModel*>(m_table_bottom->model());
 
-                    //std::cout<<" r count: "<<m2->rowCount()<<std::endl;
                     for(int i=0;i<m2->rowCount();i++){
                         RowData* rd = m2->getDatainRow(i);
-
-                        //std::cout<<" id row : "<<rd->getData(0).toInt()<<std::endl;
-
                         if(rd!=NULL && rd->getData(0).toInt()==idItem){
                             QString sx = QString::number(itemPosX);
                             QString sy = QString::number(itemPosY);
@@ -277,8 +247,6 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
 
         if(rowSelected_!=-1)
         {
-
-            std::cout<<"selected: "<<rowSelected_<<std::endl;
             RowData* rd = m->getDatainRow(rowSelected_);
             QString sh = QString::number((int)(rectSelect->rect().width()));
             QString sw = QString::number((int)(rectSelect->rect().height()));
@@ -293,9 +261,6 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
             m->refresh();
        }
     }
-
-
-
     QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -346,17 +311,8 @@ void GraphWidget::resizeEvent(QResizeEvent* event) {
 }
 
 
-void GraphWidget::drawForeground(QPainter* painter,const QRectF &rect) {
-
-    /*
-    QPointF coordMouse = mapToScene(posMouseX,posMouseY);
-
-    painter->setRenderHint(QPainter::Antialiasing, true);
-    painter->setPen(QPen(Qt::black, 12, Qt::DashDotLine, Qt::RoundCap));
-    painter->setBrush(QBrush(Qt::green, Qt::SolidPattern));
-    painter->drawRect(coordMouse.x(), coordMouse.y(), 400, 240);
-    */
-
+void GraphWidget::drawForeground(QPainter* painter,const QRectF &rect)
+{
 
 }
 
@@ -374,7 +330,7 @@ void GraphWidget::setModeView(const int mode) {
 
 void GraphWidget::dragMoveEvent(QDragMoveEvent* event)
 {
-    std::cout<<"Drag event "<<std::endl;
+
 }
 
 void GraphWidget::setupGraphViewModule()
@@ -478,14 +434,11 @@ void GraphWidget::DeletePixmapItem(int idDeleted)
     }
 }
 
-
-
-
 QImage GraphWidget::exportToImage()
 {
     QRect sourceRect;
     //QRect destRect;
-    QList<QGraphicsItem *> selectedItems;// = m_scene->selectedItems();
+    QList<QGraphicsItem *> selectedItems;
 
     foreach (QGraphicsItem *item, m_scene->items()) {
         if(item->type()== QGraphicsPixmapItem::Type){
@@ -497,8 +450,6 @@ QImage GraphWidget::exportToImage()
         sourceRect = sourceRect.unite((current->sceneBoundingRect().toRect()));
     }
 
-    //std::cout<<" SH: "<<sourceRect.height()<<std::endl;
-    //std::cout<<" SW: "<<sourceRect.width()<<std::endl;
     QImage image(sourceRect.width(),sourceRect.height(),QImage::Format_ARGB32);
     image.fill(0);
     QPainter painter(&image);

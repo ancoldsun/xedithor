@@ -56,7 +56,6 @@ QVariant ModuleTableModel::data(const QModelIndex &index, int role) const
         if(!(dat->isValid()))
          return QVariant(QColor(255, 0, 0, 127));
     }
-
     return QVariant();
 }
 
@@ -64,11 +63,9 @@ bool ModuleTableModel::setData(const QModelIndex & index, const QVariant & value
 {
     if (role == Qt::EditRole)
     {
-        qDebug("test");
         //save value from editor to member m_gridData
         RowData* dat =m_gridData2.at(index.row());
         dat->setData(index.column(), value.toString());
-        //m_gridData[index.row()][index.column()] = value.toString();
 
         //--debug only
         //for presentation purposes only: build and emit a joined string
@@ -84,9 +81,9 @@ bool ModuleTableModel::setData(const QModelIndex & index, const QVariant & value
         }
         qDebug(result.toStdString().c_str());
         //--end debug only
+
         emit editCompleted( result );
     }
-
     return true;
 }
 
@@ -110,8 +107,6 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
         m_gridData2.insert(row, dat);
 
         if(m_hasModel){
-            // danger : no code will delete : new FrameDescRowDataHandler
-            // todo   : make singleton for row handler
             if(m_subHandler==NULL){
                 std::cout<<" WARNING: m_subHandler is NULL"<<std::endl;
             }
@@ -148,8 +143,6 @@ bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & pare
 
 QVariant ModuleTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    //std::cout<<"removeRows: "<<QVariant(section).Double<<std::endl;
-
     if (role != Qt::DisplayRole)
             return QVariant();
     if(orientation == Qt::Vertical)
@@ -174,7 +167,7 @@ bool ModuleTableModel::cloneRow(int row)
     newRowData = new RowData(numberCol);
     for(int i=0;i<numberCol;i++)
     {
-        if(i>1) //don't clone idx & ID
+        if(i>1) //don't clone idx & ID // todo :don't hardcoded
         {
             newRowData->setData(i,dat->getData(i));
         }
@@ -207,7 +200,7 @@ void ModuleTableModel::timerHit()
 */
 }
 
-void ModuleTableModel::refresh() // <-- need optimize this, for speed. now refresh all.
+void ModuleTableModel::refresh() // <-- todo: need optimize this, for speed. now refresh all.
 {
      QModelIndex topLeft  = createIndex(0,0);
      QModelIndex botright = createIndex(m_gridData2.count(),numberCol-1);
@@ -217,11 +210,9 @@ void ModuleTableModel::refresh() // <-- need optimize this, for speed. now refre
 
 void ModuleTableModel::clearData()
 {
-    std::cout<<"row count: "<<m_gridData2.count()<<std::endl;
     int rCount = m_gridData2.count();
     for(int i= rCount; i >=0 ; --i)
     {
-        std::cout<<"delete: "<<i<<std::endl;
         removeRows(i,1);
     }
 }

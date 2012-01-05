@@ -35,17 +35,5 @@ void HLineGraphicsItem::setDestPoint(QPointF& pointDest)
     destPoint=pointDest;
 }
 
-/*
-void HLineGraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    std::cout<<"rect press event"<<std::endl;
-}
-
-void HLineGraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
-    std::cout<<"rect release event"<<std::endl;
-}
-*/
-
 
 

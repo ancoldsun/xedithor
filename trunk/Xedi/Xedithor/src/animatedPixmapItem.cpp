@@ -21,7 +21,6 @@ AnimatedPixmapItem::AnimatedPixmapItem(const QList<QPixmap> &animation,
     }
 
     scene->addItem(this);
-    std::cout<<"constructor: "<<currentFrame<<std::endl;
 }
 
 void AnimatedPixmapItem::setFrame(int frame)
@@ -30,7 +29,6 @@ void AnimatedPixmapItem::setFrame(int frame)
         prepareGeometryChange();
         currentFrame = frame % frames.size();
     }
-    std::cout<<"setFrame: "<<currentFrame<<std::endl;
 }
 
 void AnimatedPixmapItem::nextFrame()
@@ -72,6 +70,5 @@ void AnimatedPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 {
     QPoint posFrame = frames.at(currentFrame).position;
     painter->drawPixmap(posFrame.x(), posFrame.y(), frames.at(currentFrame).pixmap);
-   /// std::cout<<"Frame: "<<currentFrame<<std::endl;
 }
 

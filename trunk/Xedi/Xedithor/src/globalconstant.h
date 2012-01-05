@@ -57,4 +57,17 @@ namespace SETUPTABLE
     const int ColCount =6;
 }
 
+namespace ITEM_PIXMAP
+{
+    const int Max_W=500;
+    const int Max_H=500;
+}
+
+namespace C_UID
+{
+    const int MODULE_START  = 1000;
+    const int FRAME_START   = 3000;
+    const int ANIM_START    = 5000;
+}
+
 #endif // GLOBALCONSTANT_H
