@@ -117,12 +117,12 @@ void MainWindow::CreateToolBar()
 void MainWindow::SetupTables()
 {
     /* module */
-    m_moduleTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new ModuleRowDataHandler());
-    m_moduleTableModel->AddEditableColumn(2);
-    m_moduleTableModel->AddEditableColumn(3);
-    m_moduleTableModel->AddEditableColumn(4);
-    m_moduleTableModel->AddEditableColumn(5);
-    ui->mt_tableView1->setModel(m_moduleTableModel);
+    m_MFATableModel = new MFATableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new ModuleRowDataHandler());
+    m_MFATableModel->AddEditableColumn(2);
+    m_MFATableModel->AddEditableColumn(3);
+    m_MFATableModel->AddEditableColumn(4);
+    m_MFATableModel->AddEditableColumn(5);
+    ui->mt_tableView1->setModel(m_MFATableModel);
     ui->mt_tableView1->setSelectionBehavior(QTableView::SelectRows);
 
     int width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
@@ -138,7 +138,7 @@ void MainWindow::SetupTables()
     editWindow->imageLabel->m_table = ui->mt_tableView1;
 
     /*frame - top table */
-    m_frameTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new FrameRowDataHandler());
+    m_frameTableModel = new MFATableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new FrameRowDataHandler());
     m_frameTableModel->setHasModel(true);
     m_frameTableModel->setSubModelRowHandler(new FrameDescRowDataHandler());
     ui->ft_tableView1->setModel(m_frameTableModel);
@@ -154,7 +154,7 @@ void MainWindow::SetupTables()
     connect(ui->ft_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
 
     /*frame - bottom table*/
-    m_frameDescTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new FrameDescRowDataHandler());
+    m_frameDescTableModel = new MFATableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new FrameDescRowDataHandler());
     ui->ft_tableView2->setModel(m_frameDescTableModel);
     ui->ft_tableView2->setSelectionBehavior(QTableView::SelectRows);
 
@@ -168,7 +168,7 @@ void MainWindow::SetupTables()
     //connect(ui->ft_tableView2->model(),SIGNAL(editCompleted(QString)),this,SLOT(TableEditCompleted(QString)));
 
     // anim top
-    m_animTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimRowDataHandler());
+    m_animTableModel = new MFATableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimRowDataHandler());
     m_animTableModel->setHasModel(true);
     m_animTableModel->setSubModelRowHandler(new AnimDescRowDataHandler());
     ui->at_tableView1->setModel(m_animTableModel);
@@ -184,7 +184,7 @@ void MainWindow::SetupTables()
     connect(ui->at_tableView1->model(),SIGNAL(dataChanged(QModelIndex,QModelIndex)),this,SLOT(UpdateDataCell(QModelIndex,QModelIndex)));
 
     //frame anim
-    m_animDescTableModel = new ModuleTableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimDescRowDataHandler());
+    m_animDescTableModel = new MFATableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimDescRowDataHandler());
     ui->at_tableView2->setModel(m_animDescTableModel);
     ui->at_tableView2->setSelectionBehavior(QTableView::SelectRows);
 
@@ -418,7 +418,7 @@ void MainWindow::Del_Clicked()
         int row_ = ui->ft_tableView2->currentIndex().row();
         if(row_ != -1){
             /* del item on graphics view */
-            ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
+            MFATableModel* m = static_cast<MFATableModel*>(ui->ft_tableView2->model());
             RowData* rd = m->getDatainRow(row_);
             int id_ =rd->getData(0).toInt();
             //std::cout<<"id deleted..: "<<id_<<std::endl;
@@ -431,7 +431,7 @@ void MainWindow::Del_Clicked()
             if(row_ == -1){
                 row_ = 0;
             }
-            m = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
+            m = static_cast<MFATableModel*>(ui->ft_tableView1->model());
             int mf_count = m->getDatainRow(row_)->getData(2).toInt();
             m->getDatainRow(row_)->setData(2,QString::number(mf_count-1));
             m->refresh();
@@ -534,7 +534,7 @@ void MainWindow::tableAddRow(QTableView* table)
    if(newRow==-1)
        newRow=0;
 
-   ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+   MFATableModel* m = static_cast<MFATableModel*>(table->model());
    table->model()->insertRow(m->rowCount());
    QModelIndex index = table->model()->index(newRow+1,0);
    table->setCurrentIndex(index);
@@ -546,7 +546,7 @@ void MainWindow::tableCloneRow(QTableView* table)
     int rowToClone = table->currentIndex().row();
     if(rowToClone !=-1)
     {
-        ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+        MFATableModel* m = static_cast<MFATableModel*>(table->model());
         m->cloneRow(rowToClone);
         QModelIndex index = table->model()->index(rowToClone+1,0);
         table->setCurrentIndex(index);
@@ -555,7 +555,7 @@ void MainWindow::tableCloneRow(QTableView* table)
 
 void MainWindow::tableDelRow(QTableView* table)
 {
-    ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+    MFATableModel* m = static_cast<MFATableModel*>(table->model());
     int currRow = table->currentIndex().row();
     if(m->rowCount()>0 && currRow !=-1)
     {
@@ -568,7 +568,7 @@ void MainWindow::tableUpSel(QTableView* table)
     int currRow = table->currentIndex().row();
     if(currRow>0)
     {
-        ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+        MFATableModel* m = static_cast<MFATableModel*>(table->model());
         m->swapRow(currRow,--currRow);
         table->setCurrentIndex(table->model()->index(currRow , 0, QModelIndex()));
     }
@@ -578,7 +578,7 @@ void MainWindow::tableDownSel(QTableView* table)
 {
     int currRow = table->currentIndex().row();
 
-    ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+    MFATableModel* m = static_cast<MFATableModel*>(table->model());
     if(currRow<m->rowCount()-1)
     {
         m->swapRow(currRow,++currRow);
@@ -591,14 +591,14 @@ void MainWindow::tableTopSel(QTableView* table)
 {
     table->setCurrentIndex(table->model()->index(0 , 0, QModelIndex()));
     int currRow = table->currentIndex().row();
-    ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+    MFATableModel* m = static_cast<MFATableModel*>(table->model());
 
     m->swapRow(currRow,0);
 }
 
 void MainWindow::tableBotSel(QTableView* table)
 {
-    ModuleTableModel* m = static_cast<ModuleTableModel*>(table->model());
+    MFATableModel* m = static_cast<MFATableModel*>(table->model());
     int currRow = table->currentIndex().row();
     table->setCurrentIndex(table->model()->index(m->rowCount()-1 , 0, QModelIndex()));
 
@@ -612,7 +612,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
 
         int rowSelected_ = ui->mt_tableView1->currentIndex().row();
 
-        ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
+        MFATableModel* m = static_cast<MFATableModel*>(ui->mt_tableView1->model());
         RowData* rd = m->getDatainRow(rowSelected_);
 
         qreal px_ =rd->getData(2).toDouble();
@@ -647,8 +647,8 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         if(m_lastRowSelectedFT != rowSelected_)
         {
             m_lastRowSelectedFT = rowSelected_;
-            ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
-            ModuleTableModel* mf_bottom = mf->getModel(rowSelected_);
+            MFATableModel* mf = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+            MFATableModel* mf_bottom = mf->getModel(rowSelected_);
             ui->ft_tableView2->setModel(mf_bottom);
             // clear prev row images item
             editWindow->imageLabel->clearGraphPixmapItem();
@@ -682,7 +682,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
 
         int rowSelected_ = ui->ft_tableView2->currentIndex().row();
 
-        ModuleTableModel* mf = static_cast<ModuleTableModel*>(ui->ft_tableView2->model());
+        MFATableModel* mf = static_cast<MFATableModel*>(ui->ft_tableView2->model());
         RowData* _row_data          = mf->getDatainRow(rowSelected_);
         int id_                     = _row_data->getData(0).toInt();
         editWindow->imageLabel->setSelectedPixmapItem(id_);
@@ -692,8 +692,8 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
         if(editWindow->modulesList->count()>0)
         {
             int _rowSelected = ui->at_tableView1->currentIndex().row();
-            ModuleTableModel* _anim_model       = static_cast<ModuleTableModel*>(ui->at_tableView1->model());
-            ModuleTableModel* _frame_anim_model = _anim_model->getModel(_rowSelected);
+            MFATableModel* _anim_model       = static_cast<MFATableModel*>(ui->at_tableView1->model());
+            MFATableModel* _frame_anim_model = _anim_model->getModel(_rowSelected);
             ui->at_tableView2->setModel(_frame_anim_model);
 
             // clear prev row images item
@@ -703,7 +703,7 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
     } else if(sender == ui->at_tableView2) {     // // table frame anim
         editWindow->imageLabel->clearAnimation();
 
-        ModuleTableModel* frameAnimModel= static_cast<ModuleTableModel*>(ui->at_tableView2->model());
+        MFATableModel* frameAnimModel= static_cast<MFATableModel*>(ui->at_tableView2->model());
 
         // clear prev row images item
         editWindow->imageLabel->clearGraphPixmapItem();
@@ -736,7 +736,7 @@ void MainWindow::TableEditCompleted(QString str)
 {
     int rowSelected_ = ui->mt_tableView1->currentIndex().row();
 
-    ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
+    MFATableModel* m = static_cast<MFATableModel*>(ui->mt_tableView1->model());
     RowData* rd = m->getDatainRow(rowSelected_);
 
     qreal px_ =rd->getData(2).toDouble();
@@ -769,7 +769,7 @@ void MainWindow::TableEditCompleted(QString str)
      {
          m_lastRowSelectedFT =-1;
          editWindow->getModuleList()->clear();
-         ModuleTableModel* m = static_cast<ModuleTableModel*>(ui->mt_tableView1->model());
+         MFATableModel* m = static_cast<MFATableModel*>(ui->mt_tableView1->model());
 
          editWindow->getModuleList()->clear();
          for(int i=0;i<m->rowCount();i++)
@@ -797,8 +797,8 @@ void MainWindow::TableEditCompleted(QString str)
      }
      else if(indexPage == Page::ANIM)
      {
-        ModuleTableModel* m  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
-        ModuleTableModel* m2;
+        MFATableModel* m  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+        MFATableModel* m2;
 
         if(editWindow->modulesList->count()>0) {
 
@@ -884,15 +884,15 @@ void MainWindow::TableEditCompleted(QString str)
     stream.writeEndElement(); // image
     /* save modules */
     stream.writeStartElement("modules");
-    int numberRow = m_moduleTableModel->rowCount();
+    int numberRow = m_MFATableModel->rowCount();
     QString numberRowStr = QString::number(numberRow);
     stream.writeAttribute("nModules", numberRowStr);
     for(int ix=0;ix<numberRow;ix++)
     {
         QString nRow=QString::number(ix);
         QString dataRow="";
-        RowData* rd = m_moduleTableModel->getDatainRow(ix);
-        for(int iy=0;iy<m_moduleTableModel->columnCount();iy++)
+        RowData* rd = m_MFATableModel->getDatainRow(ix);
+        for(int iy=0;iy<m_MFATableModel->columnCount();iy++)
         {
             dataRow=dataRow+rd->getData(iy)+" ";
         }
@@ -919,7 +919,7 @@ void MainWindow::TableEditCompleted(QString str)
         stream.writeAttribute("nModFrame", nModFrame);
         stream.writeAttribute("name", nameFrame);
 
-        ModuleTableModel* m  = m_frameTableModel->getModel(ix);
+        MFATableModel* m  = m_frameTableModel->getModel(ix);
         int nModuleInFrame = m->rowCount();
 
         for(int iy=0;iy<nModuleInFrame;iy++)
@@ -955,7 +955,7 @@ void MainWindow::TableEditCompleted(QString str)
         stream.writeAttribute("nAnimFrame", nFrmAnim);
         stream.writeAttribute("name", nameAnim);
 
-        ModuleTableModel* m  = m_animTableModel->getModel(ix);
+        MFATableModel* m  = m_animTableModel->getModel(ix);
         int nFrameAnim = m->rowCount();
 
         for(int iy=0;iy<nFrameAnim;iy++)
@@ -1141,7 +1141,7 @@ void MainWindow::TableEditCompleted(QString str)
  void MainWindow::resetDataTable()
  {
      /* reset module table */
-     m_moduleTableModel->clearData();
+     m_MFATableModel->clearData();
      /* reset frame table */
      m_frameTableModel->clearData();
      /* reset anim table */
@@ -1152,7 +1152,7 @@ void MainWindow::TableEditCompleted(QString str)
  {
     UID::Instance().setAutoInc(false);
      /* create row */
-    m_moduleTableModel->insertRow(m_moduleTableModel->rowCount());
+    m_MFATableModel->insertRow(m_MFATableModel->rowCount());
     /* parse data row */
     QList<QString> datRow;
     QString buff="";
@@ -1171,7 +1171,7 @@ void MainWindow::TableEditCompleted(QString str)
         }
     }
     /* set data row */
-    RowData* rd = m_moduleTableModel->getDatainRow(m_moduleTableModel->rowCount()-1);
+    RowData* rd = m_MFATableModel->getDatainRow(m_MFATableModel->rowCount()-1);
 
     for(int i= 0; i < datRow.count(); i++)
     {
@@ -1198,7 +1198,7 @@ void MainWindow::TableEditCompleted(QString str)
     rd->setData(3,header.at(2));
 
     /* set sub Model */
-    ModuleTableModel* _model_frame = m_frameTableModel->getModel(rowNow);
+    MFATableModel* _model_frame = m_frameTableModel->getModel(rowNow);
 
     int idC =0;
     QList<QString> datRow;
@@ -1264,7 +1264,7 @@ void MainWindow::TableEditCompleted(QString str)
     rd->setData(3,header.at(2));
 
     /* set sub Model */
-    ModuleTableModel* _model_frame = m_animTableModel->getModel(rowNow);
+    MFATableModel* _model_frame = m_animTableModel->getModel(rowNow);
 
     int idC =0;
     QList<QString> datRow;
@@ -1328,8 +1328,8 @@ void MainWindow::TableEditCompleted(QString str)
  {
      m_timer->stop();
      //if tab frame   // check valid frame (use valid module)
-     ModuleTableModel* _model_frame  = static_cast<ModuleTableModel*>(ui->ft_tableView1->model());
-     ModuleTableModel* _sub_model_frame;
+     MFATableModel* _model_frame  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+     MFATableModel* _sub_model_frame;
 
      for(int i=0;i<_model_frame->rowCount();i++)
      {

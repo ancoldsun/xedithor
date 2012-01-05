@@ -144,11 +144,11 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
             genId_ = this->imageLabel->AddPixmapItem(&copyPixmap,false,_idPixmap,0,0);
         }
 
-        ModuleTableModel* m = static_cast<ModuleTableModel*>(this->imageLabel->m_table->model());
+        MFATableModel* m = static_cast<MFATableModel*>(this->imageLabel->m_table->model());
         if(m->rowCount()<1){
             m->insertRow(0);
 
-            ModuleTableModel* sub_model = m->getModel(0);
+            MFATableModel* sub_model = m->getModel(0);
             sub_model->insertRow(0);
             /* set data */
             RowData* rd = sub_model->getDatainRow(0);
@@ -168,7 +168,7 @@ void EditWindow::FrameDoubleClicked(const QModelIndex& index)
                 frameRowSelected = 0;
             }
 
-            ModuleTableModel* sub_model = m->getModel(frameRowSelected);
+            MFATableModel* sub_model = m->getModel(frameRowSelected);
             if(sub_model->rowCount()<1)
             {
                 sub_model->insertRow(0);
@@ -224,7 +224,7 @@ void EditWindow::setupViewAnim()
 
 void EditWindow::createAnimation()
 {
-    ModuleTableModel* _model      =static_cast<ModuleTableModel*>(this->imageLabel->m_table_bottom->model());
+    MFATableModel* _model      =static_cast<MFATableModel*>(this->imageLabel->m_table_bottom->model());
 
     QList<QPixmap> listPixmap;
     QList<QPoint> listPos;

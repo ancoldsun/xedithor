@@ -181,7 +181,7 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
     LastRectPoint= event->pos();
     if(m_tabView == TabView::FRAME) {
         if(m_scene->selectedItems().count()>0) {
-            ModuleTableModel* m2;
+            MFATableModel* m2;
             foreach (QGraphicsItem *item, m_scene->selectedItems()) {
                 if(item->type()== QGraphicsPixmapItem::Type){
 
@@ -190,7 +190,7 @@ void GraphWidget::mouseReleaseEvent(QMouseEvent* event) {
 
                     int idItem = item->data(0).toInt();
 
-                    m2 =static_cast<ModuleTableModel*>(m_table_bottom->model());
+                    m2 =static_cast<MFATableModel*>(m_table_bottom->model());
 
                     for(int i=0;i<m2->rowCount();i++){
                         RowData* rd = m2->getDatainRow(i);
@@ -242,7 +242,7 @@ void GraphWidget::mouseMoveEvent(QMouseEvent* event) {
 
 
     if(m_tabView == TabView::MODULE) {
-        ModuleTableModel* m =static_cast<ModuleTableModel*>(m_table->model());
+        MFATableModel* m =static_cast<MFATableModel*>(m_table->model());
         int rowSelected_ = m_table->currentIndex().row();
 
         if(rowSelected_!=-1)
