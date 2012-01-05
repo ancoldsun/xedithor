@@ -11,7 +11,7 @@
 
 #include "editwindow.h"
 #include "globalconstant.h"
-#include "moduletablemodel.h"
+#include "MFATableModel.h"
 //#include "ui_toolDialog.h"
 
 #include <iostream>
@@ -97,13 +97,13 @@ private:
     QToolButton* tNavButton[XD::NUM_TAB][XD::NUM_GROUP][XD::NUM_BUTTON];
     QTableView* m_Atable[XD::NUM_TAB][XD::NUM_TABLE];
     // module
-    ModuleTableModel* m_moduleTableModel;
+    MFATableModel* m_MFATableModel;
     // frame
-    ModuleTableModel* m_frameTableModel;
-    ModuleTableModel* m_frameDescTableModel;
+    MFATableModel* m_frameTableModel;
+    MFATableModel* m_frameDescTableModel;
     // animation
-    ModuleTableModel* m_animTableModel;
-    ModuleTableModel* m_animDescTableModel;
+    MFATableModel* m_animTableModel;
+    MFATableModel* m_animDescTableModel;
 
     QString m_ImgfileName;
     QString m_SprfileName;

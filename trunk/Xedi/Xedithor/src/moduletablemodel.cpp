@@ -1,9 +1,9 @@
 
-#include "moduletablemodel.h"
+#include "MFATableModel.h"
 
 int RowData::mLast_ID_Module=0;
 
-ModuleTableModel::ModuleTableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler)
+MFATableModel::MFATableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler)
     :QAbstractTableModel(parent)
 {
     numberRow=row;
@@ -24,17 +24,17 @@ ModuleTableModel::ModuleTableModel(QObject *parent,int row,int col,RowDataHandle
 
 }
 
-int ModuleTableModel::rowCount(const QModelIndex & /*parent*/) const
+int MFATableModel::rowCount(const QModelIndex & /*parent*/) const
 {
     return m_gridData2.count();
 }
 
-int ModuleTableModel::columnCount(const QModelIndex & /*parent*/) const
+int MFATableModel::columnCount(const QModelIndex & /*parent*/) const
 {
     return numberCol;
 }
 
-QVariant ModuleTableModel::data(const QModelIndex &index, int role) const
+QVariant MFATableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
@@ -59,7 +59,7 @@ QVariant ModuleTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ModuleTableModel::setData(const QModelIndex & index, const QVariant & value, int role)
+bool MFATableModel::setData(const QModelIndex & index, const QVariant & value, int role)
 {
     if (role == Qt::EditRole)
     {
@@ -87,7 +87,7 @@ bool ModuleTableModel::setData(const QModelIndex & index, const QVariant & value
     return true;
 }
 
-Qt::ItemFlags ModuleTableModel::flags(const QModelIndex & index) const
+Qt::ItemFlags MFATableModel::flags(const QModelIndex & index) const
 {
     for(int i=0;i<m_editableColumn.count();i++){
         if(m_editableColumn[i]==index.column()){
@@ -98,7 +98,7 @@ Qt::ItemFlags ModuleTableModel::flags(const QModelIndex & index) const
 }
 
 
-bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & parent )
+bool MFATableModel::insertRows ( int row, int count, const QModelIndex & parent )
 {
     beginInsertRows(parent, row, row+count-1);
     RowData::m_Handler = m_handler;
@@ -110,7 +110,7 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
             if(m_subHandler==NULL){
                 std::cout<<" WARNING: m_subHandler is NULL"<<std::endl;
             }
-            ModuleTableModel* childModel = new ModuleTableModel(this,0,6,m_subHandler);
+            MFATableModel* childModel = new MFATableModel(this,0,6,m_subHandler);
             RowData::m_Handler = m_handler;
             childModel->AddEditableColumn(2);
             childModel->AddEditableColumn(3);
@@ -122,7 +122,7 @@ bool ModuleTableModel::insertRows ( int row, int count, const QModelIndex & pare
     return true;
 }
 
-bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & parent )
+bool MFATableModel::removeRows ( int row, int count, const QModelIndex & parent )
 {
     beginRemoveRows(parent, row,row+count-1);
 
@@ -141,7 +141,7 @@ bool ModuleTableModel::removeRows ( int row, int count, const QModelIndex & pare
     return true;
 }
 
-QVariant ModuleTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant MFATableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
             return QVariant();
@@ -153,7 +153,7 @@ QVariant ModuleTableModel::headerData(int section, Qt::Orientation orientation, 
 
 }
 
-bool ModuleTableModel::cloneRow(int row)
+bool MFATableModel::cloneRow(int row)
 {
     RowData::m_Handler = m_handler;
 
@@ -174,33 +174,33 @@ bool ModuleTableModel::cloneRow(int row)
     }
     if(this->m_hasModel){
 
-        ModuleTableModel* sourceModel = getModel(row);
-        ModuleTableModel* destModel = getModel(row+1);
+        MFATableModel* sourceModel = getModel(row);
+        MFATableModel* destModel = getModel(row+1);
 
         destModel->copyContent(sourceModel);
     }
     return true;
 }
 
-bool ModuleTableModel::swapRow(int row1,int row2)
+bool MFATableModel::swapRow(int row1,int row2)
 {
    //TODO : swap data
 
    return true;
 }
 
-RowData* ModuleTableModel::getDatainRow(int iRow)
+RowData* MFATableModel::getDatainRow(int iRow)
 {
     return m_gridData2.at(iRow);
 }
 
-void ModuleTableModel::timerHit()
+void MFATableModel::timerHit()
 {
 /*
 */
 }
 
-void ModuleTableModel::refresh() // <-- todo: need optimize this, for speed. now refresh all.
+void MFATableModel::refresh() // <-- todo: need optimize this, for speed. now refresh all.
 {
      QModelIndex topLeft  = createIndex(0,0);
      QModelIndex botright = createIndex(m_gridData2.count(),numberCol-1);
@@ -208,7 +208,7 @@ void ModuleTableModel::refresh() // <-- todo: need optimize this, for speed. now
      emit dataChanged(topLeft, botright);
 }
 
-void ModuleTableModel::clearData()
+void MFATableModel::clearData()
 {
     int rCount = m_gridData2.count();
     for(int i= rCount; i >=0 ; --i)
@@ -217,12 +217,12 @@ void ModuleTableModel::clearData()
     }
 }
 
-ModuleTableModel* ModuleTableModel::getModel(int rowN)
+MFATableModel* MFATableModel::getModel(int rowN)
 {
     return m_listModel.at(rowN);
 }
 
-ModuleTableModel::~ModuleTableModel(){
+MFATableModel::~MFATableModel(){
     int totalChild = m_listModel.count();
 
     for (int n = 0; n < totalChild; ++n) {
@@ -231,7 +231,7 @@ ModuleTableModel::~ModuleTableModel(){
         }
 }
 
-void ModuleTableModel::copyContent(ModuleTableModel* otherModel)
+void MFATableModel::copyContent(MFATableModel* otherModel)
 {
    for(int i=0;i<otherModel->rowCount();i++){
        this->insertRows(i,1);

@@ -2,8 +2,8 @@
 // Copyright (C) 2011-2011 Edi Ermawan <edi.ermawan@gmail.Com>
 // License  :
 //
-#ifndef MODULETABLEMODEL_H
-#define MODULETABLEMODEL_H
+#ifndef MFATableModel_H
+#define MFATableModel_H
 
 
 #include <QAbstractTableModel>
@@ -15,12 +15,12 @@
 
 #include "rowdata.h"
 
-class ModuleTableModel : public QAbstractTableModel
+class MFATableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    ModuleTableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler);
-    ~ModuleTableModel();
+    MFATableModel(QObject *parent,int row,int col,RowDataHandler* rowHandler);
+    ~MFATableModel();
     void setupTable();
     int rowCount(const QModelIndex &parent = QModelIndex()) const ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -41,8 +41,8 @@ public:
         m_subHandler = _row_handler;
     }
 
-    ModuleTableModel* getModel(int rowN);
-    void copyContent(ModuleTableModel* otherModel);
+    MFATableModel* getModel(int rowN);
+    void copyContent(MFATableModel* otherModel);
 
     void clearData();
     void refresh();
@@ -57,7 +57,7 @@ private:
     QStringList m_Headers;
     RowDataHandler* m_handler;
     RowDataHandler* m_subHandler;
-    QList<ModuleTableModel*> m_listModel;
+    QList<MFATableModel*> m_listModel;
     QList<int> m_editableColumn;
     bool m_hasModel;
 
@@ -70,4 +70,4 @@ private slots:
     void timerHit();
 };
 
-#endif // MODULETABLEMODEL_H
+#endif // MFATableModel_H
