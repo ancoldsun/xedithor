@@ -15,7 +15,7 @@ MFATableModel::MFATableModel(QObject *parent,int row,int col,RowDataHandler* row
     for(int i=0;i<numberRow;i++)
     {
             RowData* dat = new RowData(numberCol);
-            m_gridData2.insert(i, dat);
+            m_gridData.insert(i, dat);
     }
     m_handler->createRowHeader(m_Headers);
     // model in model
@@ -26,7 +26,7 @@ MFATableModel::MFATableModel(QObject *parent,int row,int col,RowDataHandler* row
 
 int MFATableModel::rowCount(const QModelIndex & /*parent*/) const
 {
-    return m_gridData2.count();
+    return m_gridData.count();
 }
 
 int MFATableModel::columnCount(const QModelIndex & /*parent*/) const
@@ -38,21 +38,21 @@ QVariant MFATableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        RowData* dat =m_gridData2.at(index.row());
+        RowData* dat =m_gridData.at(index.row());
         int col = index.column();
         if(dat != NULL)
             return dat->getData(col);
     }
     else if(role == Qt::EditRole)
     {
-        RowData* dat =m_gridData2.at(index.row());
+        RowData* dat =m_gridData.at(index.row());
         int col = index.column();
         if(dat != NULL)
          return dat->getData(col);
     }
     else if(role == Qt::BackgroundRole)
     {
-        RowData* dat =m_gridData2.at(index.row());
+        RowData* dat =m_gridData.at(index.row());
         if(!(dat->isValid()))
          return QVariant(QColor(255, 0, 0, 127));
     }
@@ -64,17 +64,17 @@ bool MFATableModel::setData(const QModelIndex & index, const QVariant & value, i
     if (role == Qt::EditRole)
     {
         //save value from editor to member m_gridData
-        RowData* dat =m_gridData2.at(index.row());
+        RowData* dat =m_gridData.at(index.row());
         dat->setData(index.column(), value.toString());
 
         //--debug only
         //for presentation purposes only: build and emit a joined string
         QString result;
-        for(int row= 0; row < m_gridData2.count(); row++)
+        for(int row= 0; row < m_gridData.count(); row++)
         {
             for(int col= 0; col < numberCol; col++)
             {
-                dat =m_gridData2.at(row);
+                dat =m_gridData.at(row);
                 result +=dat->getData(col)+ " ";
             }
             result +="\n";
@@ -104,7 +104,7 @@ bool MFATableModel::insertRows ( int row, int count, const QModelIndex & parent 
     RowData::m_Handler = m_handler;
     for (int n = 0; n < count; ++n) {
         RowData* dat = new RowData(numberCol);
-        m_gridData2.insert(row, dat);
+        m_gridData.insert(row, dat);
 
         if(m_hasModel){
             if(m_subHandler==NULL){
@@ -126,11 +126,11 @@ bool MFATableModel::removeRows ( int row, int count, const QModelIndex & parent 
 {
     beginRemoveRows(parent, row,row+count-1);
 
-    if(row <= m_gridData2.count()-1)
+    if(row <= m_gridData.count()-1)
     {
         for (int n = 0; n < count; ++n) {
-                delete m_gridData2.at(row);
-                m_gridData2.removeAt(row);
+                delete m_gridData.at(row);
+                m_gridData.removeAt(row);
                 if(m_hasModel){
                     delete m_listModel.at(row);
                     m_listModel.removeAt(row);
@@ -157,10 +157,10 @@ bool MFATableModel::cloneRow(int row)
 {
     RowData::m_Handler = m_handler;
 
-    RowData* dat= m_gridData2.at(row);
+    RowData* dat= m_gridData.at(row);
     insertRows(row+1,1);
     // take row data from new inserted row
-    RowData* newRowData =m_gridData2.at(row+1);
+    RowData* newRowData =m_gridData.at(row+1);
     // delete it
     delete newRowData;
     // replace it with new one, data filled from cloned row
@@ -191,7 +191,7 @@ bool MFATableModel::swapRow(int row1,int row2)
 
 RowData* MFATableModel::getDatainRow(int iRow)
 {
-    return m_gridData2.at(iRow);
+    return m_gridData.at(iRow);
 }
 
 void MFATableModel::timerHit()
@@ -203,14 +203,14 @@ void MFATableModel::timerHit()
 void MFATableModel::refresh() // <-- todo: need optimize this, for speed. now refresh all.
 {
      QModelIndex topLeft  = createIndex(0,0);
-     QModelIndex botright = createIndex(m_gridData2.count(),numberCol-1);
+     QModelIndex botright = createIndex(m_gridData.count(),numberCol-1);
 
      emit dataChanged(topLeft, botright);
 }
 
 void MFATableModel::clearData()
 {
-    int rCount = m_gridData2.count();
+    int rCount = m_gridData.count();
     for(int i= rCount; i >=0 ; --i)
     {
         removeRows(i,1);
@@ -227,7 +227,7 @@ MFATableModel::~MFATableModel(){
 
     for (int n = 0; n < totalChild; ++n) {
             delete m_listModel.at(n);
-            m_gridData2.removeAt(n);
+            m_gridData.removeAt(n);
         }
 }
 

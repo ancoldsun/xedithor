@@ -51,8 +51,7 @@ public:
     }
 
 private:
-    //QString m_gridData[ROWS][COLS];  //holds text entered into QTableView
-    QList<RowData*>  m_gridData2;
+    QList<RowData*>  m_gridData;
     int numberRow,numberCol;
     QStringList m_Headers;
     RowDataHandler* m_handler;
@@ -60,9 +59,6 @@ private:
     QList<MFATableModel*> m_listModel;
     QList<int> m_editableColumn;
     bool m_hasModel;
-
-    //QTimer *timer;
-
 
 signals:
     void editCompleted(const QString &);
