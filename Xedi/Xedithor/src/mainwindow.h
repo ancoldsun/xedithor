@@ -12,7 +12,7 @@
 #include "editwindow.h"
 #include "globalconstant.h"
 #include "MFATableModel.h"
-//#include "ui_toolDialog.h"
+#include "ui_toolDialog.h"
 
 #include <iostream>
 
@@ -49,7 +49,7 @@ private slots:
     bool save();
     bool saveAs();
     void about();
-    void print();
+    void exportSprite();
 
     void showToolDialog();
     void showContentHelp();

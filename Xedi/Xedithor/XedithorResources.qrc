@@ -172,5 +172,6 @@
         <file>images/Zoom.png</file>
         <file>images/invalid.png</file>
         <file>images/invalidF.png</file>
+        <file>images/createModuleInfo.PNG</file>
     </qresource>
 </RCC>
