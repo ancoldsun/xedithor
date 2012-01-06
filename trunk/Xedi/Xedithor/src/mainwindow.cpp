@@ -58,7 +58,7 @@ void MainWindow::CreateActions()
     printAct = new QAction(QIcon(":/images/paste.png"),tr("&Export..."), this);
     printAct->setShortcuts(QKeySequence::Print);
     printAct->setStatusTip(tr("Export Sprite"));
-    connect(printAct, SIGNAL(triggered()), this, SLOT(print()));
+    connect(printAct, SIGNAL(triggered()), this, SLOT(exportSprite()));
 
     exitAct = new QAction(QIcon(":/images/new.png"),tr("E&xit"), this);
     exitAct->setShortcuts(QKeySequence::Quit);
@@ -327,15 +327,82 @@ void MainWindow::about()
 
 }
 
-void MainWindow::print()
+void MainWindow::exportSprite()
 {
+    //set tab module
+    ui->tabWidget->setCurrentIndex(TabView::MODULE);
 
+    MFATableModel* _moduleModel = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+
+    QString fileBin = "H:/Projects/Qt_Creator/Xedi/Xedithor/export/";
+
+    std::cout<<fileBin.toStdString().c_str()<<std::endl;
+    for(int i=0;i<_moduleModel->rowCount();i++)
+    {
+        std::cout<<"ROW: "<<i<<std::endl;
+        RowData* rd = _moduleModel->getDatainRow(i);
+
+        QString id_ =rd->getData(1);
+        qreal px_   =rd->getData(2).toDouble();
+        qreal py_   =rd->getData(3).toDouble();
+        qreal w_    =rd->getData(4).toDouble();
+        qreal h_    =rd->getData(5).toDouble();
+
+        /* slice image */
+        QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
+        pieceImage.save(fileBin+"mod_"+id_+".png",0,-1);
+    }
 }
 
 void MainWindow::showToolDialog()
 {
-   // int returnModal = m_toolDialog->exec();
-   // std::cout<<"returnModal.."<<returnModal<<std::endl;
+   QDialog* dialogTool = new QDialog(this);
+   Ui::Dialog toolDialogFrm;
+   toolDialogFrm.setupUi(dialogTool);
+
+   int retValue = dialogTool->exec();
+
+   if(retValue == QDialog::Accepted)
+   {
+       if(toolDialogFrm.tabWidget->currentIndex()==0){
+            int _startX    = toolDialogFrm.lineEditF_X->text().toInt();
+            int _startY    = toolDialogFrm.lineEditF_Y->text().toInt();
+            int _modW      = toolDialogFrm.lineEditF_W->text().toInt();
+            int _modH      = toolDialogFrm.lineEditF_H->text().toInt();
+            int _createnRow= toolDialogFrm.lineEditF_nRow->text().toInt();
+            int _createnCol= toolDialogFrm.lineEditF_nCol->text().toInt();
+            int _offsetRow = toolDialogFrm.lineEditF_offsetRow->text().toInt();
+            int _offsetCol = toolDialogFrm.lineEditF_offsetCol->text().toInt();
+
+            MFATableModel* _model = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+
+            for(int i=0;i<_createnRow;i++){
+                for(int j=0;j<_createnCol;j++)
+                {
+                    int xModValue=_startX + _modW*j + _offsetCol*j;
+                    int yModValue=_startY + _modH*i + _offsetRow*i;
+
+                    ui->mt_tableView1->model()->insertRow(_model->rowCount());
+                    RowData* _rowData = _model->getDatainRow(_model->rowCount()-1);
+
+                    _rowData->setData(2,QString::number(xModValue));
+                    _rowData->setData(3,QString::number(yModValue));
+                    _rowData->setData(4,QString::number(_modW));
+                    _rowData->setData(5,QString::number(_modH));
+                }
+            }
+           _model->refresh();
+       }
+       else if(toolDialogFrm.tabWidget->currentIndex()==1){
+            ui->tabWidget->setCurrentIndex(Page::FRAME);
+            // todo : implemented this
+            QMessageBox msg;
+            msg.setText("not implemented yet");
+            msg.exec();
+       }
+   }
+   delete dialogTool;
+   dialogTool=NULL;
 }
 
 void MainWindow::showContentHelp()

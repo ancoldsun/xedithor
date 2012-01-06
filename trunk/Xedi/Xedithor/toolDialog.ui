@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
-    <height>345</height>
+    <width>570</width>
+    <height>337</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Xedithor : create modules</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="XedithorResources.qrc">
+    <normaloff>:/images/Table.png</normaloff>:/images/Table.png</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -21,8 +25,8 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>561</width>
-     <height>291</height>
+     <width>551</width>
+     <height>281</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -30,7 +34,7 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>frame edit</string>
+     <string>create modules</string>
     </attribute>
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
@@ -38,11 +42,11 @@
        <x>10</x>
        <y>10</y>
        <width>201</width>
-       <height>181</height>
+       <height>231</height>
       </rect>
      </property>
      <property name="title">
-      <string>Generate Sprite Sheet</string>
+      <string>Generate module Sheet</string>
      </property>
      <widget class="QLabel" name="label_15">
       <property name="geometry">
@@ -57,7 +61,7 @@
        <string>Col</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_7">
+     <widget class="QLineEdit" name="lineEditF_nRow">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -65,6 +69,9 @@
         <width>41</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>2</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
@@ -106,7 +113,7 @@
        <string>Row</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_10">
+     <widget class="QLineEdit" name="lineEditF_offsetCol">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -115,8 +122,11 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="text">
+       <string>0</string>
+      </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_5">
+     <widget class="QLineEdit" name="lineEditF_W">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -124,6 +134,9 @@
         <width>41</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>32</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_12">
@@ -152,7 +165,7 @@
        <string>Row,Col Offset</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
+     <widget class="QLineEdit" name="lineEditF_H">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -160,6 +173,9 @@
         <width>41</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>32</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_7">
@@ -175,7 +191,7 @@
        <string>W</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_9">
+     <widget class="QLineEdit" name="lineEditF_offsetRow">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -184,8 +200,11 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="text">
+       <string>0</string>
+      </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="lineEditF_Y">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -194,8 +213,11 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="text">
+       <string>100</string>
+      </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="lineEditF_X">
       <property name="geometry">
        <rect>
         <x>90</x>
@@ -203,6 +225,9 @@
         <width>41</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_9">
@@ -218,7 +243,7 @@
        <string>H</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_8">
+     <widget class="QLineEdit" name="lineEditF_nCol">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -226,6 +251,9 @@
         <width>41</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>2</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_11">
@@ -281,18 +309,57 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>20</y>
+       <width>321</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-image: url(:/images/createModuleInfo.PNG);</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>module edit</string>
+     <string>create frames</string>
     </attribute>
+    <widget class="QRadioButton" name="radioButton_createFrame1">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>40</y>
+       <width>181</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create 1 module 1 frame</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_createFrame2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>221</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create all module 1 frame</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>312</y>
+     <x>340</x>
+     <y>300</y>
      <width>75</width>
      <height>31</height>
     </rect>
@@ -304,8 +371,8 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>312</y>
+     <x>430</x>
+     <y>300</y>
      <width>75</width>
      <height>31</height>
     </rect>
@@ -315,13 +382,15 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="XedithorResources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>open()</slot>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>387</x>

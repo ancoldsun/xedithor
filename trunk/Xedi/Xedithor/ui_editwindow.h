@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'editwindow.ui'
 **
-** Created: Sat Dec 31 21:17:24 2011
+** Created: Sat Jan 7 04:34:34 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
