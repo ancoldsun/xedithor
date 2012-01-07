@@ -79,8 +79,6 @@ public slots:
      inline void setTimerInterval(int value){
          this->imageLabel->setTimerInterval(value);
      }
-
-
 };
 
 #endif // EDITWINDOW_H

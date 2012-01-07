@@ -22,7 +22,8 @@ SOURCES += src\main.cpp\
     src/rowdatahandler.cpp \
     src/uidmanager.cpp \
     src/animatedPixmapItem.cpp \
-    src/mfatablemodel.cpp
+    src/mfatablemodel.cpp \
+    src/packtextureparser.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     src/rowdatahandler.h \
     src/uidmanager.h \
     src/animatedPixmapItem.h \
-    src/mfatablemodel.h
+    src/mfatablemodel.h \
+    src/packtextureparser.h
 
 
 FORMS    += mainwindow.ui \
@@ -49,6 +51,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     temp.txt
+
+
 
 
 
