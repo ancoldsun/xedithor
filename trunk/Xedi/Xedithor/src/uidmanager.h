@@ -23,8 +23,8 @@ private:
     static UID* m_instance;
     int m_uid[UIDType::UIDType_MAX];
     bool m_isAutoInc;
-public:
     UID();
+public:
     static UID& Instance();
     void setAutoInc(bool val){
         m_isAutoInc=val;

@@ -11,10 +11,6 @@
 #include <string>
 #include <vector>
 
-
-
-
-
 /* abstract class
 *  for customizable data
 */
@@ -37,7 +33,7 @@ public:
 class FrameRowDataHandler :public RowDataHandler
 {
 public:
-    void createDefaultRow(std::vector<QString>& vec,int col);///,std::vector<ModuleFrame*>&Table);
+    void createDefaultRow(std::vector<QString>& vec,int col);
     void createRowHeader(QStringList& strList);
 };
 /* frame desc data */

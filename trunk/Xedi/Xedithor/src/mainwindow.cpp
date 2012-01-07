@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "uidmanager.h"
+#include "packtextureparser.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -334,7 +335,9 @@ void MainWindow::exportSprite()
 
     MFATableModel* _moduleModel = static_cast<MFATableModel*>(ui->mt_tableView1->model());
 
-    QString fileBin = "H:/Projects/Qt_Creator/Xedi/Xedithor/export/";
+    QString fileBin  = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_in/";
+    QString exportOut = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_out/";
+    QString exportOutBin = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_out/";
 
     std::cout<<fileBin.toStdString().c_str()<<std::endl;
     for(int i=0;i<_moduleModel->rowCount();i++)
@@ -352,6 +355,105 @@ void MainWindow::exportSprite()
         QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
         pieceImage.save(fileBin+"mod_"+id_+".png",0,-1);
     }
+
+    //execute texture packer (external executable jar)
+    QProcess packerProc(this);
+    QStringList arg;
+    arg.append("-jar");
+    arg.append("H:/Projects/Qt_Creator/Xedi/Xedithor/extbin/texturepacker.jar");
+    arg.append(fileBin);
+    arg.append(exportOut);
+    packerProc.execute("java",arg);
+
+    QFile fileOut(exportOut+"pack");
+
+    if(!fileOut.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0, "error", fileOut.errorString());
+    }
+
+    PackTextureParser parser(fileOut);
+    QList<QList<qint32>> result = parser.doParsing();
+
+    // write to stream
+    QFile fileBinOut(exportOutBin+"sprite.bin");
+    fileBinOut.open(QIODevice::WriteOnly);
+    QDataStream streamOut(&fileBinOut);
+
+    // write module
+    streamOut << (quint32)0xEFFE0EEF;
+    streamOut << (qint32)result.count(); // N-module
+
+    foreach(QList<qint32> items,result){
+        foreach(qint32 item,items){
+            streamOut << (qint32)item;
+        }
+    }
+    // write frame
+    streamOut << (quint32)0xFFFA0EFF;
+    int numberRow = m_frameTableModel->rowCount();
+    streamOut << (qint32)numberRow;
+    for(int ix=0;ix<numberRow;ix++)
+    {
+
+        RowData* rd = m_frameTableModel->getDatainRow(ix);
+        int IdFrame = rd->getData(1).toInt();
+        int nModFrame = rd->getData(2).toInt();
+        streamOut << (qint32)IdFrame;
+        streamOut << (qint32)nModFrame;
+
+        MFATableModel* m  = m_frameTableModel->getModel(ix);
+        int nModuleInFrame = m->rowCount();
+
+        for(int iy=0;iy<nModuleInFrame;iy++)
+        {
+            RowData* rd2 = m->getDatainRow(iy);
+            int modID = rd2->getData(1).toInt();
+            int offX = rd2->getData(2).toInt();
+            int offY = rd2->getData(3).toInt();
+
+            streamOut << (qint32)modID;
+            streamOut << (qint32)offX;
+            streamOut << (qint32)offY;
+            streamOut << (qint32)32;
+            streamOut << (qint32)32;
+        }
+    }
+    // write anims
+    streamOut << (quint32)0xEEEA0EFF;
+    numberRow = m_animTableModel->rowCount();
+    streamOut << (qint32)numberRow;
+
+    for(int ix=0;ix<numberRow;ix++)
+    {
+        RowData* rd  = m_animTableModel->getDatainRow(ix);
+        int IdAnim   = rd->getData(1).toInt();
+        int nFrmAnim = rd->getData(2).toInt();
+        streamOut << (qint32)IdAnim;
+        streamOut << (qint32)nFrmAnim;
+
+        MFATableModel* m  = m_animTableModel->getModel(ix);
+        int nFrameAnim = m->rowCount();
+
+        for(int iy=0;iy<nFrameAnim;iy++)
+        {
+            RowData* rd2 = m->getDatainRow(iy);
+            int FrmID=rd2->getData(1).toInt();
+            int offX =rd2->getData(2).toInt();
+            int offY =rd2->getData(3).toInt();
+
+            streamOut << (qint32)FrmID;
+            streamOut << (qint32)offX;
+            streamOut << (qint32)offY;
+            streamOut << (qint32)16;
+            streamOut << (qint32)16;
+        }
+    }
+    streamOut << (quint32)0xFBFBFBFB;
+    QPixmap packedImage = QPixmap::fromImage(QImage(exportOut+"export_in1.png"));
+    streamOut <<packedImage;
+    fileBinOut.close();
+    fileOut.close();
+    std::cout<<"done: "<<std::endl;
 }
 
 void MainWindow::showToolDialog()
