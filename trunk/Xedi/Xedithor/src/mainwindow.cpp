@@ -328,15 +328,25 @@ void MainWindow::about()
 
 }
 
-void MainWindow::exportSprite()
+void MainWindow::exportSprite() // todo : separate this as other class: writer
 {
     //set tab module
     ui->tabWidget->setCurrentIndex(TabView::MODULE);
 
     MFATableModel* _moduleModel = static_cast<MFATableModel*>(ui->mt_tableView1->model());
 
-    QString fileBin  = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_in/";
-    QString exportOut = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_out/";
+    QApplication::applicationDirPath();
+
+    QString dirApp = QApplication::applicationDirPath();
+    QDir dirTempImg(dirApp);
+
+    dirTempImg.mkpath("temp/img");
+    dirTempImg.mkpath("temp/outpack");
+    dirTempImg.makeAbsolute();
+
+    QString fileBin      = dirApp+"/temp/img/";
+    QString exportOut    = dirApp+"/temp/outpack/";
+
     QString exportOutBin = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_out/";
 
     std::cout<<fileBin.toStdString().c_str()<<std::endl;
@@ -360,13 +370,12 @@ void MainWindow::exportSprite()
     QProcess packerProc(this);
     QStringList arg;
     arg.append("-jar");
-    arg.append("H:/Projects/Qt_Creator/Xedi/Xedithor/extbin/texturepacker.jar");
+    arg.append(dirApp+"/extbin/texturepacker.jar");
     arg.append(fileBin);
     arg.append(exportOut);
     packerProc.execute("java",arg);
 
     QFile fileOut(exportOut+"pack");
-
     if(!fileOut.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "error", fileOut.errorString());
     }
@@ -375,9 +384,16 @@ void MainWindow::exportSprite()
     QList<QList<qint32>> result = parser.doParsing();
 
     // write to stream
-    QFile fileBinOut(exportOutBin+"sprite.bin");
+    QFile fileBinOut(exportOutBin+"spriteA.bin");
     fileBinOut.open(QIODevice::WriteOnly);
     QDataStream streamOut(&fileBinOut);
+
+    // write image
+    QFile fileimg(exportOut+"img1.png");
+    if (!fileimg.open(QIODevice::ReadOnly))
+        return;
+    QByteArray blob = fileimg.readAll();
+    streamOut <<blob;
 
     // write module
     streamOut << (quint32)0xEFFE0EEF;
@@ -448,12 +464,32 @@ void MainWindow::exportSprite()
             streamOut << (qint32)16;
         }
     }
-    streamOut << (quint32)0xFBFBFBFB;
-    QPixmap packedImage = QPixmap::fromImage(QImage(exportOut+"export_in1.png"));
-    streamOut <<packedImage;
+
+    // close
     fileBinOut.close();
     fileOut.close();
+    fileimg.close();
     std::cout<<"done: "<<std::endl;
+    // remove temp dir
+
+    QDir delDir(dirApp+"/temp/img/");
+    QFileInfoList files = delDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
+    for(int file = 0; file < files.count(); file++)
+    {
+        delDir.remove(files.at(file).fileName());
+    }
+    delDir.rmdir(delDir.path());
+
+    QDir delDir2(dirApp+"/temp/outpack/");
+    QFileInfoList files2 = delDir2.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
+    for(int file = 0; file < files2.count(); file++)
+    {
+        delDir2.remove(files2.at(file).fileName());
+    }
+    delDir2.rmdir(delDir2.path());
+
+    QDir delDir3(dirApp+"/temp/");
+    delDir3.rmdir(delDir3.path());
 }
 
 void MainWindow::showToolDialog()
