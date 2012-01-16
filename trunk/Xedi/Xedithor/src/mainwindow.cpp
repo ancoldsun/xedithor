@@ -5,6 +5,10 @@
 #include "ui_mainwindow.h"
 #include "uidmanager.h"
 #include "packtextureparser.h"
+#include "exportdialog.h"
+#include "ui_exportDialog.h"
+
+#include "spriteexporter.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -328,168 +332,53 @@ void MainWindow::about()
 
 }
 
-void MainWindow::exportSprite() // todo : separate this as other class: writer
+void spin(int &iteration)
 {
-    //set tab module
-    ui->tabWidget->setCurrentIndex(TabView::MODULE);
+    const int work = 1000 * 1000 * 40;
+    volatile int v = 0;
+    for (int j = 0; j < work; ++j)
+        ++v;
 
-    MFATableModel* _moduleModel = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+    qDebug() << "iteration" << iteration << "in thread" << QThread::currentThreadId();
+}
 
-    QApplication::applicationDirPath();
+void MainWindow::exportSprite()
+{
+    ExportDialog* expDlg = new ExportDialog(this);
+    int retValue = expDlg->exec();
 
-    QString dirApp = QApplication::applicationDirPath();
-    QDir dirTempImg(dirApp);
-
-    dirTempImg.mkpath("temp/img");
-    dirTempImg.mkpath("temp/outpack");
-    dirTempImg.makeAbsolute();
-
-    QString fileBin      = dirApp+"/temp/img/";
-    QString exportOut    = dirApp+"/temp/outpack/";
-
-    QString exportOutBin = "H:/Projects/Qt_Creator/Xedi/Xedithor/export_out/";
-
-    std::cout<<fileBin.toStdString().c_str()<<std::endl;
-    for(int i=0;i<_moduleModel->rowCount();i++)
+    if(retValue == QDialog::Accepted)
     {
-        std::cout<<"ROW: "<<i<<std::endl;
-        RowData* rd = _moduleModel->getDatainRow(i);
+        QString exportOutBin      = expDlg->getTexturePackerOut();
+        QString texturePackerPath = expDlg->getTexturePacker();
+        int formatExport = expDlg->getExportFormat();
 
-        QString id_ =rd->getData(1);
-        qreal px_   =rd->getData(2).toDouble();
-        qreal py_   =rd->getData(3).toDouble();
-        qreal w_    =rd->getData(4).toDouble();
-        qreal h_    =rd->getData(5).toDouble();
+        MFATableModel* _moduleModel = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+        MFATableModel* _frameModel  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+        MFATableModel* _animModel   = static_cast<MFATableModel*>(ui->at_tableView1->model());
 
-        /* slice image */
-        QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
-        pieceImage.save(fileBin+"mod_"+id_+".png",0,-1);
-    }
+        SpriteExporter exporter(this->pixmapOpened,
+                                _moduleModel,
+                                _frameModel,
+                                _animModel,
+                                formatExport);
+        exporter.setTexturePackerPath(texturePackerPath);
+        exporter.setExportOutPath(exportOutBin);
+        exporter.setImgSrcPath(this->m_ImgfileName);
+        int checkExport = exporter.DoExporting();
 
-    //execute texture packer (external executable jar)
-    QProcess packerProc(this);
-    QStringList arg;
-    arg.append("-jar");
-    arg.append(dirApp+"/extbin/texturepacker.jar");
-    arg.append(fileBin);
-    arg.append(exportOut);
-    packerProc.execute("java",arg);
-
-    QFile fileOut(exportOut+"pack");
-    if(!fileOut.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0, "error", fileOut.errorString());
-    }
-
-    PackTextureParser parser(fileOut);
-    QList<QList<qint32>> result = parser.doParsing();
-
-    // write to stream
-    QFile fileBinOut(exportOutBin+"spriteA.bin");
-    fileBinOut.open(QIODevice::WriteOnly);
-    QDataStream streamOut(&fileBinOut);
-
-    // write image
-    QFile fileimg(exportOut+"img1.png");
-    if (!fileimg.open(QIODevice::ReadOnly))
-        return;
-    QByteArray blob = fileimg.readAll();
-    streamOut <<blob;
-
-    // write module
-    streamOut << (quint32)0xEFFE0EEF;
-    streamOut << (qint32)result.count(); // N-module
-
-    foreach(QList<qint32> items,result){
-        foreach(qint32 item,items){
-            streamOut << (qint32)item;
+        if(checkExport!=0){
+            //error
+            QMessageBox::critical(this,
+                               "Xedithor: export sprite",
+                               "Error when exporting, Error Code "+QString::number(checkExport),
+                               QMessageBox::Ok);
         }
-    }
-    // write frame
-    streamOut << (quint32)0xFFFA0EFF;
-    int numberRow = m_frameTableModel->rowCount();
-    streamOut << (qint32)numberRow;
-    for(int ix=0;ix<numberRow;ix++)
-    {
 
-        RowData* rd = m_frameTableModel->getDatainRow(ix);
-        int IdFrame = rd->getData(1).toInt();
-        int nModFrame = rd->getData(2).toInt();
-        streamOut << (qint32)IdFrame;
-        streamOut << (qint32)nModFrame;
-
-        MFATableModel* m  = m_frameTableModel->getModel(ix);
-        int nModuleInFrame = m->rowCount();
-
-        for(int iy=0;iy<nModuleInFrame;iy++)
-        {
-            RowData* rd2 = m->getDatainRow(iy);
-            int modID = rd2->getData(1).toInt();
-            int offX = rd2->getData(2).toInt();
-            int offY = rd2->getData(3).toInt();
-
-            streamOut << (qint32)modID;
-            streamOut << (qint32)offX;
-            streamOut << (qint32)offY;
-            streamOut << (qint32)32;
-            streamOut << (qint32)32;
-        }
-    }
-    // write anims
-    streamOut << (quint32)0xEEEA0EFF;
-    numberRow = m_animTableModel->rowCount();
-    streamOut << (qint32)numberRow;
-
-    for(int ix=0;ix<numberRow;ix++)
-    {
-        RowData* rd  = m_animTableModel->getDatainRow(ix);
-        int IdAnim   = rd->getData(1).toInt();
-        int nFrmAnim = rd->getData(2).toInt();
-        streamOut << (qint32)IdAnim;
-        streamOut << (qint32)nFrmAnim;
-
-        MFATableModel* m  = m_animTableModel->getModel(ix);
-        int nFrameAnim = m->rowCount();
-
-        for(int iy=0;iy<nFrameAnim;iy++)
-        {
-            RowData* rd2 = m->getDatainRow(iy);
-            int FrmID=rd2->getData(1).toInt();
-            int offX =rd2->getData(2).toInt();
-            int offY =rd2->getData(3).toInt();
-
-            streamOut << (qint32)FrmID;
-            streamOut << (qint32)offX;
-            streamOut << (qint32)offY;
-            streamOut << (qint32)16;
-            streamOut << (qint32)16;
-        }
     }
 
-    // close
-    fileBinOut.close();
-    fileOut.close();
-    fileimg.close();
-    std::cout<<"done: "<<std::endl;
-    // remove temp dir
-
-    QDir delDir(dirApp+"/temp/img/");
-    QFileInfoList files = delDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
-    for(int file = 0; file < files.count(); file++)
-    {
-        delDir.remove(files.at(file).fileName());
-    }
-    delDir.rmdir(delDir.path());
-
-    QDir delDir2(dirApp+"/temp/outpack/");
-    QFileInfoList files2 = delDir2.entryInfoList(QDir::NoDotAndDotDot | QDir::Files);
-    for(int file = 0; file < files2.count(); file++)
-    {
-        delDir2.remove(files2.at(file).fileName());
-    }
-    delDir2.rmdir(delDir2.path());
-
-    QDir delDir3(dirApp+"/temp/");
-    delDir3.rmdir(delDir3.path());
+    delete expDlg;
+    expDlg=NULL;
 }
 
 void MainWindow::showToolDialog()

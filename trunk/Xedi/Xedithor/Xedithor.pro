@@ -23,7 +23,9 @@ SOURCES += src\main.cpp\
     src/uidmanager.cpp \
     src/animatedPixmapItem.cpp \
     src/mfatablemodel.cpp \
-    src/packtextureparser.cpp
+    src/packtextureparser.cpp \
+    src/exportdialog.cpp \
+    src/spriteexporter.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -39,18 +41,26 @@ HEADERS  += mainwindow.h \
     src/uidmanager.h \
     src/animatedPixmapItem.h \
     src/mfatablemodel.h \
-    src/packtextureparser.h
+    src/packtextureparser.h \
+    src/exportdialog.h \
+    src/spriteexporter.h
 
 
 FORMS    += mainwindow.ui \
     editwindow.ui \
-    toolDialog.ui
+    toolDialog.ui \
+    exportdialog.ui
 
 RESOURCES += \
     XedithorResources.qrc
 
 OTHER_FILES += \
     temp.txt
+
+
+
+
+
 
 
 

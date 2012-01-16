@@ -54,7 +54,7 @@ QList<QString> PackTextureParser::parseValue(int start,QString str){
     return result;
 }
 
-QList<QList<qint32>> PackTextureParser::doParsing()
+QList< QList<qint32> > PackTextureParser::doParsing()
 {
     QList<QList<qint32>> result;
     QList<qint32> addResult;
