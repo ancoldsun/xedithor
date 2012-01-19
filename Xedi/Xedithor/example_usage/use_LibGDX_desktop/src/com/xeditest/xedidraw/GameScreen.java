@@ -30,7 +30,7 @@ public class GameScreen extends BaseScreen {
 		// TODO Auto-generated constructor stub
 
 		//test read sprite pack
-		PackReader dataPack = new PackReader("assets/soldier.bin");
+		PackReader dataPack = new PackReader("assets/soldier.bin");//simple2.bin");//soldier.bin");
 		BufferedImage img;
 		byte[] bytesSprite=null;
 		try {
@@ -71,7 +71,7 @@ public class GameScreen extends BaseScreen {
        // m_spriteBatch.begin();
        // m_sprite.draw(m_spriteBatch);        //sprite has draw function inside
         //m_spriteBatch.end();
-        m_testXorSprite.setPos(100, 100);
+        m_testXorSprite.setPos(0, 480-100);
         m_testXorSprite.setAnim(1);
         m_testXorSprite.render();
     }

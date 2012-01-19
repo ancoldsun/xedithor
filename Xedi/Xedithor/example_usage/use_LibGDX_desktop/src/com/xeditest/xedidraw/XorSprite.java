@@ -106,22 +106,26 @@ public class XorSprite {
 		return null; 
 	}
 	
-	private void paintModule(int index){
+	private void paintModule(int index,int offx,int offy){
 		int[] module = getModule(index);
 		TextureRegion tr = getTextureModule(index);
-		m_batcher.draw(tr, m_animPosX,m_animPosY, module[3], module[4]);//module[1], module[2]
+		// (-) for offset y. diff. coordinate system
+		System.out.println(" -ox: "+(offx+m_animPosX)+" -oy: "+(offy+m_animPosY));
+		m_batcher.draw(tr, offx+m_animPosX,offy+m_animPosY-module[4], module[3], module[4]);//module[1], module[2]
 	}
 	
-	public void paintFrame(int index)
+	public void paintFrame(int index,int offAx,int offAy)
 	{
 		FrameDesc frame= m_frames[index];
 		for(int i=0;i<frame.m_moduleCount;i++){
 			int idMod= frame.m_modules[i][0];
-			paintModule(idMod);
+			int offx= frame.m_modules[i][1];
+			int offy= frame.m_modules[i][2];
+			paintModule(idMod,offAx+offx,offAy-offy);
 		}
 	}
 	
-	private void paintFrameID(int frmID){
+	private void paintFrameID(int frmID,int offx,int offy){
 		int index=0;
 		for(int j=0;j<m_frames.length;j++)
 		{
@@ -130,7 +134,8 @@ public class XorSprite {
 				break;
 			}
 		}
-		paintFrame(index);
+		
+		paintFrame(index,offx,offy);
 	}
 	
 	public void setAnim(int index)
@@ -147,7 +152,9 @@ public class XorSprite {
 	{		
 		m_batcher.begin();
 		AnimDesc anim= m_anims[m_animPlayed];
-		paintFrameID(anim.m_frames[m_currentFrame][0]);
+		int offx = (anim.m_frames[m_currentFrame][1]);
+		int offy = (anim.m_frames[m_currentFrame][2]);
+		paintFrameID(anim.m_frames[m_currentFrame][0],offx,-offy);
 		
        if(m_limiter%10 == 0){
 	        if(m_currentFrame<anim.m_frameCount-1)
