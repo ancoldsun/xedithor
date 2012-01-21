@@ -11,10 +11,10 @@
 
 #include "editwindow.h"
 #include "globalconstant.h"
-#include "mfatablemodel.h".h"
-#include "ui_toolDialog.h"
+#include "mfatablemodel.h"
 
-#include <iostream>
+
+
 
 QT_BEGIN_NAMESPACE
     class QAction;
