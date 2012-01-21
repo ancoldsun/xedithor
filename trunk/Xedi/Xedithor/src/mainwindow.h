@@ -131,6 +131,8 @@ private:
     void parseDataRowAnim(QList<QString>&header,QList<QString>&body);
 
 
+
+
 public slots:
     void tableRowSelected(const QModelIndex& index);
     void UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB);
@@ -141,6 +143,7 @@ public slots:
     //tab widget
     void PageTabChanged(int indexPage);
     void timerHit();
+    void reOffsetFrames();
 
 
 };
