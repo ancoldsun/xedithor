@@ -45,8 +45,7 @@ public:
     QPixmap* getImageGraphicsItem();
     void setModeView(const int mode);
     GraphWidget(QWidget *parent = 0);
-    QGraphicsRectItem* getRectSelectItem()
-    {
+    QGraphicsRectItem* getRectSelectItem() {
         return rectSelect;
     }
     void setupGraphViewModule();
@@ -59,6 +58,10 @@ public:
     void DeletePixmapItem(int idDeleted);
     QImage exportToImage();
     void createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos);
+    void addAxis();
+    void hideAxis();
+    void showAxis();
+
     inline void clearAnimation() {
         if(m_animatedItem!=NULL)
         {
@@ -111,6 +114,7 @@ private:
     QGraphicsPixmapItem* pixmapGraphicsItem;
     RectSelectionItem* rectSelect;
     QTimer *m_timer;
+    QGraphicsItemGroup* m_AxisGroup;
 
     HLineGraphicsItem* lineH;
     XScene *m_scene;

@@ -47,9 +47,6 @@ QList<QString> PackTextureParser::parseValue(int start,QString str){
         }
     }
     result.insert(it,buff2);
-    //foreach(QString s,result){
-    //    qDebug(s.toUtf8());
-    //}
 
     return result;
 }

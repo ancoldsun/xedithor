@@ -15,6 +15,10 @@
 
 #include "rowdata.h"
 
+/** class for modeling table (module, frame, animation)
+  * model may be have other model
+  * for example, row which has table
+  */
 class MFATableModel : public QAbstractTableModel
 {
     Q_OBJECT
@@ -33,6 +37,11 @@ public:
     bool cloneRow(int row);
     bool swapRow(int row1,int row2);
     RowData* getDatainRow(int iRow);
+    MFATableModel* getModel(int rowN);
+    void copyContent(MFATableModel* otherModel);
+    void clearData();
+    void refresh();
+
     inline void setHasModel(bool isHasModel){
         m_hasModel=isHasModel;
     }
@@ -41,11 +50,6 @@ public:
         m_subHandler = _row_handler;
     }
 
-    MFATableModel* getModel(int rowN);
-    void copyContent(MFATableModel* otherModel);
-
-    void clearData();
-    void refresh();
     inline void AddEditableColumn(int colEditable){
         m_editableColumn.push_back(colEditable);
     }

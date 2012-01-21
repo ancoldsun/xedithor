@@ -18,8 +18,6 @@ ExportDialog::ExportDialog(QWidget *parent) :
     connect(ui->comboBoxFormat,SIGNAL(currentIndexChanged(int)),this,SLOT(setExportFormat(int)));
     connect(ui->toolButtonTexturePath, SIGNAL(clicked()), this, SLOT(setPathTexturePacker()));
     connect(ui->toolButtonExportOut, SIGNAL(clicked()), this, SLOT(setPathOut()));
-
-
 }
 
 void ExportDialog::setPathTexturePacker()

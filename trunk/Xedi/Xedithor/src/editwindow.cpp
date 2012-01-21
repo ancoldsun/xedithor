@@ -219,7 +219,8 @@ void EditWindow::setupViewFrame()
 void EditWindow::setupViewAnim()
 {
     m_modeView= TabView::ANIM;
-    //this->imageLabel->setupGraphViewAnim();
+
+    //imageLabel->setupGraphViewAnim();
 }
 
 void EditWindow::createAnimation()

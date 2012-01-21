@@ -18,7 +18,6 @@ public:
     QList< QList<qint32> > doParsing();
 private:
     QTextStream m_textStream;
-
     bool isStrMatchAvailable(QString str1,QString str2);
     QList<QString> parseValue(int start,QString str);
 };

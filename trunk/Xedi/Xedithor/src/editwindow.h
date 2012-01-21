@@ -36,8 +36,7 @@ public:
 
     explicit EditWindow(QWidget *parent = 0);
     ~EditWindow();
-    ModulesList* getModuleList()
-    {
+    inline ModulesList* getModuleList() {
         return modulesList;
     }
 
@@ -55,18 +54,13 @@ private slots:
 
 private:
     Ui::EditWindow *ui;
-
     QScrollArea *scrollArea;
-
     QToolBar *windowEditToolBar;
     QAction* zoomInAct;
     QAction* zoomOutAct;
-
     int m_modeView;
-
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
-
 
 public:
      GraphWidget *imageLabel;
@@ -76,6 +70,7 @@ public:
      ModulesList* modulesList;
 public slots:
      void FrameDoubleClicked(const QModelIndex& index);
+
      inline void setTimerInterval(int value){
          this->imageLabel->setTimerInterval(value);
      }
