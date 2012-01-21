@@ -56,7 +56,7 @@ QList<QString> PackTextureParser::parseValue(int start,QString str){
 
 QList< QList<qint32> > PackTextureParser::doParsing()
 {
-    QList<QList<qint32>> result;
+    QList< QList<qint32> > result;
     QList<qint32> addResult;
     while(!m_textStream.atEnd()){
         QString str = m_textStream.readLine();

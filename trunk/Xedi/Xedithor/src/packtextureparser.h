@@ -8,14 +8,14 @@
 
 #include <qtextstream.h>
 #include <qfile.h>
-#include <qstring>
+#include <qstring.h>
 #include <QList>
 
 class PackTextureParser
 {
 public:
     PackTextureParser(QFile& file);
-    QList<QList<qint32>> doParsing();
+    QList< QList<qint32> > doParsing();
 private:
     QTextStream m_textStream;
 

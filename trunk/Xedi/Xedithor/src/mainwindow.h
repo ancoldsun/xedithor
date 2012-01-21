@@ -11,7 +11,7 @@
 
 #include "editwindow.h"
 #include "globalconstant.h"
-#include "MFATableModel.h"
+#include "mfatablemodel.h".h"
 #include "ui_toolDialog.h"
 
 #include <iostream>

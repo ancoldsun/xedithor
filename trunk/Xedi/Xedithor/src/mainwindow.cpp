@@ -6,7 +6,7 @@
 #include "uidmanager.h"
 #include "packtextureparser.h"
 #include "exportdialog.h"
-#include "ui_exportDialog.h"
+#include "ui_exportdialog.h"
 
 #include "spriteexporter.h"
 
