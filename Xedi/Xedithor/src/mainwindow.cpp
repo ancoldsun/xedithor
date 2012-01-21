@@ -36,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent) :
     m_SprfileName="none";
 
     m_lastRowSelectedFT = 0;
+
+    ui->tabWidget->setTabEnabled(Page::SEQANIM, false);
+    ui->tabWidget->setTabEnabled(Page::ANIM, false);
 }
 
 MainWindow::~MainWindow()
@@ -631,8 +634,15 @@ void MainWindow::tableAddRow(QTableView* table)
 
    MFATableModel* m = static_cast<MFATableModel*>(table->model());
    table->model()->insertRow(m->rowCount());
-   QModelIndex index = table->model()->index(newRow+1,0);
-   table->setCurrentIndex(index);
+
+   if(newRow==0){
+       QModelIndex index = table->model()->index(newRow,0);
+       table->setCurrentIndex(index);
+   }else {
+       QModelIndex index = table->model()->index(newRow+1,0);
+       table->setCurrentIndex(index);
+   }
+
    m->refresh();
 }
 
@@ -859,6 +869,8 @@ void MainWindow::TableEditCompleted(QString str)
         editWindow->imageLabel->m_table = ui->mt_tableView1;
         editWindow->imageLabel->m_table_bottom=NULL;
         editWindow->setupViewModule();//imageLabel->setupGraphViewModule();
+
+        ui->tabWidget->setTabEnabled(Page::ANIM, false);
      }
      else if(indexPage == Page::FRAME)
      {
@@ -888,6 +900,7 @@ void MainWindow::TableEditCompleted(QString str)
          editWindow->imageLabel->m_table_bottom = ui->ft_tableView2;
          editWindow->setupViewFrame();
          m_timer->start(200);
+         ui->tabWidget->setTabEnabled(Page::ANIM, true);
 
      }
      else if(indexPage == Page::ANIM)
@@ -900,6 +913,7 @@ void MainWindow::TableEditCompleted(QString str)
             QList<QPixmap> listPxmap;
             QList<QString> listStrFrameID;
             //
+            editWindow->imageLabel->hideAxis();
             for(int i=0;i<m->rowCount();i++)
             {
                 if(m->getDatainRow(i)->getData(2).toInt()>0)
@@ -941,6 +955,7 @@ void MainWindow::TableEditCompleted(QString str)
                     }
                 }
             }
+            editWindow->imageLabel->showAxis();
             editWindow->getModuleList()->clear();
             editWindow->imageLabel->clearGraphPixmapItem();
 
@@ -958,7 +973,8 @@ void MainWindow::TableEditCompleted(QString str)
  }
  void MainWindow::saveDataSprite()
  {
-    if(!m_SprfileName.compare("none") || !m_SprfileName.compare(""))
+    qDebug(m_SprfileName.toUtf8());
+     if(!m_SprfileName.compare("none") || !m_SprfileName.compare(""))
     {
         QString fileFilter="*.xml;;*.xdr";
         m_SprfileName = QFileDialog::getSaveFileName(this,tr("Open File"), QDir::currentPath(),fileFilter);
@@ -1073,6 +1089,7 @@ void MainWindow::TableEditCompleted(QString str)
 
  void MainWindow::openDataSprite()
  {
+     ui->tabWidget->setCurrentIndex(Page::MODULE);
      m_SprfileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
      if (!m_SprfileName.isEmpty())
      {
@@ -1083,10 +1100,12 @@ void MainWindow::TableEditCompleted(QString str)
 
         if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
         {
+
             QMessageBox::critical(this,
                                "Xedithor: parsing XML sprite",
                                "Couldn't open "+m_SprfileName,
                                QMessageBox::Ok);
+            m_SprfileName="";
             return;
         }
         QXmlStreamReader xml(file);
@@ -1228,6 +1247,7 @@ void MainWindow::TableEditCompleted(QString str)
                                   "Xedithor: parsing XML sprite",
                                   "Xedithor: wrong formated sprite file",
                                   QMessageBox::Ok);
+            m_SprfileName="";
         }
         xml.clear();
      }

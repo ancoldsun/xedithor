@@ -28,32 +28,8 @@ GraphWidget::GraphWidget(QWidget *parent)
 
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
-    // X-axis component
-    m_scene->addLine(0,HeightRectView / 2,WidthRectView, HeightRectView / 2);
-    for(int x = 0; x < WidthRectView; x = x + 25) {
-        if(x % 100 == 0 ) {
-            QString pointString;
-            QTextStream stream(&pointString);
-            stream << x - WidthRectView/2;
-            QGraphicsTextItem* item = m_scene->addText(pointString);
-            item->setPos(x, HeightRectView / 2);
-        }
-        m_scene->addRect(x, HeightRectView / 2, 1, 1);
-    }
-    // Y-axis component
-    m_scene->addLine(WidthRectView / 2,0,WidthRectView / 2, HeightRectView);
-    for(int y = 0; y < HeightRectView; y = y + 25) {
-        if(y % 100 == 0 ) {
-            QString pointString;
-            QTextStream stream(&pointString);
-            stream << y - HeightRectView/2;
-            QGraphicsTextItem* item = m_scene->addText(pointString);
-            item->setPos(WidthRectView / 2,y);
-        }
-        m_scene->addRect(WidthRectView / 2, y, 1, 1);
-    }
-
-
+    m_AxisGroup = new QGraphicsItemGroup();
+    addAxis();
     //Set-up the view
     setSceneRect(0, 0, WidthRectView, HeightRectView);
     SetCenter(QPointF(WidthRectView / 2, HeightRectView / 2)); //A modified version of centerOn(), handles special cases
@@ -61,7 +37,7 @@ GraphWidget::GraphWidget(QWidget *parent)
 
     //rect selection
     rectSelect = new RectSelectionItem;
-    rectSelect->setRect(WidthRectView / 2,HeightRectView / 2,400.0,400.0);
+    rectSelect->setRect(WidthRectView / 2,HeightRectView / 2,32.0,32.0);
 
     QPen pen;
     pen.setBrush(QBrush(Qt::NoBrush));
@@ -491,6 +467,53 @@ void GraphWidget::timerHit()
     }
 }
 
+void GraphWidget::addAxis()
+{
+    // X-axis component
+    //m_scene->addLine(0,HeightRectView / 2,WidthRectView, HeightRectView / 2);
+    QGraphicsLineItem* lineX = new QGraphicsLineItem(0,HeightRectView / 2,WidthRectView, HeightRectView / 2);
+    m_AxisGroup->addToGroup(lineX);
+    for(int x = 0; x < WidthRectView; x = x + 25) {
+        if(x % 100 == 0 ) {
+            QString pointString;
+            QTextStream stream(&pointString);
+            stream << x - WidthRectView/2;
+            QGraphicsTextItem* item = new QGraphicsTextItem(pointString);
+            item->setPos(x, HeightRectView / 2);
+            m_AxisGroup->addToGroup(item);
+        }
+        QGraphicsRectItem* _rect = new QGraphicsRectItem(x, HeightRectView / 2, 1, 1);
+        m_AxisGroup->addToGroup(_rect);
+       //m_scene->addRect(x, HeightRectView / 2, 1, 1);
+    }
+    // Y-axis component
+    //m_scene->addLine(WidthRectView / 2,0,WidthRectView / 2, HeightRectView);
+    QGraphicsLineItem* lineY = new QGraphicsLineItem(WidthRectView / 2,0,WidthRectView / 2, HeightRectView);
+    m_AxisGroup->addToGroup(lineY);
+    for(int y = 0; y < HeightRectView; y = y + 25) {
+        if(y % 100 == 0 ) {
+            QString pointString;
+            QTextStream stream(&pointString);
+            stream << y - HeightRectView/2;
+            QGraphicsTextItem* item = new QGraphicsTextItem(pointString);
+            item->setPos(WidthRectView / 2,y);
+            m_AxisGroup->addToGroup(item);
+        }
+        //m_scene->addRect(WidthRectView / 2, y, 1, 1);
+        QGraphicsRectItem* _rect = new QGraphicsRectItem(WidthRectView / 2, y, 1, 1);
+        m_AxisGroup->addToGroup(_rect);
+    }
+    m_scene->addItem(m_AxisGroup);
+}
+
+void GraphWidget::hideAxis()
+{
+    m_scene->removeItem(m_AxisGroup);
+}
+void GraphWidget::showAxis()
+{
+    m_scene->addItem(m_AxisGroup);
+}
 
 
 

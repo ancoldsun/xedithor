@@ -40,6 +40,7 @@ namespace Page
     const int MODULE  = 0;
     const int FRAME   = 1;
     const int ANIM    = 2;
+    const int SEQANIM    = 3;
 }
 const int WidthRectView  = 4000;
 const int HeightRectView = 4000;
@@ -70,4 +71,30 @@ namespace C_UID
     const int ANIM_START    = 5000;
 }
 
+namespace DMOD
+{
+    const int IDX    = 0;
+    const int UID    = 1;
+    const int PX     = 2;
+    const int PY     = 3;
+    const int WIDTH  = 4;
+    const int HEIGHT = 5;
+
+    const int MFIELD = 6;
+}
+
+namespace DFRM
+{
+    const int IDX    = 0;
+    const int PX     = 1;
+    const int PY     = 2;
+    const int WIDTH  = 3;
+    const int HEIGHT = 4;
+    const int MFIELD = 5;
+}
+
+namespace DANIM
+{
+const int MFIELD = 5;
+}
 #endif // GLOBALCONSTANT_H
