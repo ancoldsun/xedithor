@@ -12,6 +12,7 @@
 
 class SpriteExporter : public QObject
 {
+    Q_OBJECT
 public:
     SpriteExporter(QPixmap& imgSource,MFATableModel* moduleModel,
                    MFATableModel* frameModel,MFATableModel* animModel,int format);

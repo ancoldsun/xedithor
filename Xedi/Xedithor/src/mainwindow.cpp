@@ -7,8 +7,9 @@
 #include "packtextureparser.h"
 #include "exportdialog.h"
 #include "ui_exportdialog.h"
-
+#include "ui_toolDialog.h"
 #include "spriteexporter.h"
+#include <iostream>
 
 
 MainWindow::MainWindow(QWidget *parent) :

@@ -13,6 +13,7 @@
 
 class RowData: public QObject
 {
+       Q_OBJECT
   public:
     RowData(int numbData,RowDataHandler* handler);
     RowData(int numbData);
