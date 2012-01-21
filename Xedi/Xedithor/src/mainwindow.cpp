@@ -245,6 +245,7 @@ void MainWindow::SetupConnectWidgets()
      connect(ui->ft_navTable2_button5, SIGNAL(clicked()), this, SLOT(Down_Clicked()));
      connect(ui->ft_navTable2_button6, SIGNAL(clicked()), this, SLOT(Top_Clicked()));
      connect(ui->ft_navTable2_button7, SIGNAL(clicked()), this, SLOT(Bottom_Clicked()));
+     connect(ui->ft_navTable2_button8, SIGNAL(clicked()), this, SLOT(reOffsetFrames()));
    // Tab Anim
      // table 1
      connect(ui->at_navTable1_button1, SIGNAL(clicked()), this, SLOT(Add_Clicked()));
@@ -353,6 +354,7 @@ void MainWindow::exportSprite()
 
     if(retValue == QDialog::Accepted)
     {
+        reOffsetFrames();
         QString exportOutBin      = expDlg->getTexturePackerOut();
         QString texturePackerPath = expDlg->getTexturePacker();
         int formatExport = expDlg->getExportFormat();
@@ -1467,3 +1469,39 @@ void MainWindow::TableEditCompleted(QString str)
      _model_frame->refresh();
      // end if tab frame
 }
+
+// offseting to 0,0
+void MainWindow::reOffsetFrames()
+{
+     MFATableModel* _model_frame  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+     MFATableModel* _sub_model_frame;
+
+     for(int i=0;i<_model_frame->rowCount();i++)
+     {
+         RowData* _rowdataFrame = _model_frame->getDatainRow(i);
+         _sub_model_frame = _model_frame->getModel(i);
+
+         // calc x min, y min
+         int Xmin=65000,Ymin=65000;
+         for(int j=0;j<_sub_model_frame->rowCount();j++)
+         {
+            RowData* _rowdata = _sub_model_frame->getDatainRow(j);
+            int _offsetX      = _rowdata->getData(2).toInt();
+            int _offsetY      = _rowdata->getData(3).toInt();
+            if(Xmin > _offsetX)
+                Xmin = _offsetX;
+            if(Ymin > _offsetY)
+                Ymin = _offsetY;
+         }
+         // re-offset
+         for(int j=0;j<_sub_model_frame->rowCount();j++)
+         {
+            RowData* _rowdata = _sub_model_frame->getDatainRow(j);
+            int _offsetX      = _rowdata->getData(2).toInt();
+            int _offsetY      = _rowdata->getData(3).toInt();
+            _rowdata->setData(2,QString::number(_offsetX - Xmin) );
+            _rowdata->setData(3,QString::number(_offsetY - Ymin) );
+         }
+         _sub_model_frame->refresh();
+     }
+ }
