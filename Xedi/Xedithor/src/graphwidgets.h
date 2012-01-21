@@ -10,7 +10,7 @@
 #include <QTimerEvent>
 #include <QTimer>
 
-#include "MFATableModel.h"
+#include "mfatablemodel.h"
 
 #include "xscene.h"
 #include "rectselectionitem.h"

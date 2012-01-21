@@ -83,7 +83,7 @@ int SpriteExporter::exportFLIBGDX()
         return 2;
     }
     PackTextureParser parser(fileOut);
-    QList<QList<qint32>> result = parser.doParsing();
+    QList< QList<qint32> > result = parser.doParsing();
 
     // -------initialize write to stream
     QFile fileBinOut(m_exportOutDir);
