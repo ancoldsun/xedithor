@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'exportdialog.ui'
 **
-** Created: Sat Jan 14 19:42:03 2012
+** Created: Sun Jan 22 22:48:58 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -176,7 +176,7 @@ public:
 
     void retranslateUi(QDialog *ExportDialog)
     {
-        ExportDialog->setWindowTitle(QApplication::translate("ExportDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        ExportDialog->setWindowTitle(QApplication::translate("ExportDialog", "Exporting Sprite", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("ExportDialog", "Format", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("ExportDialog", "Texture Packer", 0, QApplication::UnicodeUTF8));
         toolButtonTexturePath->setText(QApplication::translate("ExportDialog", "...", 0, QApplication::UnicodeUTF8));
