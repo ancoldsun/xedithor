@@ -26,6 +26,9 @@ public:
     void setImgSrcPath(QString imgSourcePath)  {
         m_imgSourcePath =imgSourcePath;
     }
+    void setSprName(QString sprname)  {
+        m_sprName =sprname;
+    }
 
 private:
     MFATableModel* m_moduleModel;
@@ -36,12 +39,14 @@ private:
     QString m_texturePackerDir;
     QString m_exportOutDir;
     QString m_imgSourcePath;
+    QString m_sprName;
 
     int exportFLIBGDX();
     int exportFDefault();
     void writeModules(QDataStream& streamOut);
     void writeFrames(QDataStream& streamOut);
     void writeAnims(QDataStream& streamOut);
+    void createSpriteDataInfo();
 };
 
 #endif // SPRITEEXPORTER_H

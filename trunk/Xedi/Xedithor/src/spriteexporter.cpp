@@ -27,13 +27,18 @@ int  SpriteExporter::DoExporting()
     if(m_exportedFormat==0)
     {
         std::cout<<"exportFLIBGDX "<<std::endl;
+        // create text interface
+        createSpriteDataInfo();
         return exportFLIBGDX();
     }
     else if(m_exportedFormat==1)
     {
         std::cout<<"exportFDefault "<<std::endl;
+        // create text interface
+        createSpriteDataInfo();
         return exportFDefault();
     }
+
     return 0;
 }
 
@@ -265,6 +270,54 @@ void SpriteExporter::writeAnims(QDataStream& streamOut)
             streamOut << (qint32)16;//dummy
         }
     }
+}
+
+void SpriteExporter::createSpriteDataInfo()
+{
+    // create interface
+    QFileInfo infof(m_exportOutDir);
+    QDir infod= infof.dir();
+    QString strDir = infod.absolutePath();
+    QString s=strDir+"/"+m_sprName+".java";
+    QFile file(s);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        std::cout<<"nooppppppppppppppppppppppppppppp---------------------------------"<<s.toStdString().c_str()<<std::endl;
+        return;
+    }
+    QTextStream interfaceText(&file);
+    interfaceText<<"interface SPRITE_"<<m_sprName<<"\n";
+    // start brace
+    interfaceText<<"{"<<"\n";
+
+    //frame part
+    int numberRow = m_frameModel->rowCount();
+    for(int ix=0;ix<numberRow;ix++)
+    {
+        RowData* rd = m_frameModel->getDatainRow(ix);
+        QString nameFrame = rd->getData(3);
+        nameFrame +="_"+QString::number(ix);
+        interfaceText <<"	public final static int " << nameFrame <<" = "<<ix<< "\n";
+    }
+    interfaceText <<"	public final static int FRAME_COUNT" << " = "<<numberRow<< "\n";
+
+    interfaceText <<"\n";
+
+    //anim part
+    numberRow = m_animModel->rowCount();
+    for(int ix=0;ix<numberRow;ix++)
+    {
+        RowData* rd = m_animModel->getDatainRow(ix);
+        QString nameFrame = rd->getData(3);
+        nameFrame +="_"+QString::number(ix);
+        interfaceText <<"	public final static int " << nameFrame <<" = "<<ix<< "\n";
+    }
+    interfaceText <<"	public final static int ANIM_COUNT" << " = "<<numberRow<< "\n";
+
+    //end brace
+    interfaceText<<"}"<<"\n";
+
+    file.close();
 }
 
 

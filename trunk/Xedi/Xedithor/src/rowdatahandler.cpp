@@ -40,7 +40,7 @@ void FrameRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)//,
     else if(col==1)
         s=QString::number(FRAME_START_ID+(UID::Instance().getLastUID(UIDType::FRAME)));
     else if(col==3)
-        s="frame_";
+        s="frame";
     else if(col==4)
         s="N/A";
     else if(col==5)
@@ -92,7 +92,7 @@ void AnimRowDataHandler::createDefaultRow(std::vector<QString> &vec,int col)
     else if(col==1)
         s=QString::number(ANIM_START_ID+(UID::Instance().getLastUID(UIDType::ANIM)));
     else if(col==3)
-        s="anim_";
+        s="anim";
     else if(col==4)
         s="N/A";
     else if(col==5)
