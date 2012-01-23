@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Jan 14 12:47:56 2012
+** Created: Sun Jan 22 22:48:58 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -85,6 +85,7 @@ public:
     QToolButton *ft_navTable2_button5;
     QToolButton *ft_navTable2_button6;
     QToolButton *ft_navTable2_button7;
+    QToolButton *ft_navTable2_button8;
     QTableView *ft_tableView2;
     QWidget *AnimTab;
     QVBoxLayout *verticalLayout_8;
@@ -485,6 +486,17 @@ public:
 
         horizontalLayout_7->addWidget(ft_navTable2_button7);
 
+        ft_navTable2_button8 = new QToolButton(ft_groupBox2);
+        ft_navTable2_button8->setObjectName(QString::fromUtf8("ft_navTable2_button8"));
+        sizePolicy1.setHeightForWidth(ft_navTable2_button8->sizePolicy().hasHeightForWidth());
+        ft_navTable2_button8->setSizePolicy(sizePolicy1);
+        QIcon icon9;
+        icon9.addFile(QString::fromUtf8(":/images/Repair.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ft_navTable2_button8->setIcon(icon9);
+        ft_navTable2_button8->setIconSize(QSize(16, 17));
+
+        horizontalLayout_7->addWidget(ft_navTable2_button8);
+
 
         verticalLayout_6->addWidget(ft_groupBox2);
 
@@ -745,6 +757,7 @@ public:
         ft_navTable2_button5->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         ft_navTable2_button6->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         ft_navTable2_button7->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        ft_navTable2_button8->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(FrameTab), QApplication::translate("MainWindow", "Frames", 0, QApplication::UnicodeUTF8));
         at_groupBox1->setTitle(QApplication::translate("MainWindow", "Navigation Table", 0, QApplication::UnicodeUTF8));
         at_navTable1_button1->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));

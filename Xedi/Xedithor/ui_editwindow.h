@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'editwindow.ui'
 **
-** Created: Sat Jan 14 12:47:56 2012
+** Created: Sun Jan 22 22:48:58 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
+#include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
@@ -31,6 +32,7 @@ public:
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
+    QPushButton *pushButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
     QDockWidget *dockWidget;
@@ -50,6 +52,11 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        pushButton = new QPushButton(centralwidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
 
         horizontalLayout->addLayout(verticalLayout);
 
@@ -90,6 +97,7 @@ public:
     void retranslateUi(QMainWindow *EditWindow)
     {
         EditWindow->setWindowTitle(QApplication::translate("EditWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("EditWindow", "PushButton", 0, QApplication::UnicodeUTF8));
         dockWidget->setWindowTitle(QApplication::translate("EditWindow", "List Modules-Frames", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

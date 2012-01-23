@@ -49,13 +49,17 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     editwindow.ui \
     toolDialog.ui \
-    exportdialog.ui
+    exportdialog.ui \
+    spriteselector.ui
 
 RESOURCES += \
     XedithorResources.qrc
 
 OTHER_FILES += \
     temp.txt
+
+
+
 
 
 

@@ -852,6 +852,29 @@
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QToolButton" name="ft_navTable2_button8">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="XedithorResources.qrc">
+                    <normaloff>:/images/Repair.png</normaloff>:/images/Repair.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </widget>
              </item>

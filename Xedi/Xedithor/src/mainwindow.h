@@ -12,7 +12,7 @@
 #include "editwindow.h"
 #include "globalconstant.h"
 #include "mfatablemodel.h"
-
+#include "ui_spriteselector.h"
 
 
 
@@ -46,6 +46,7 @@ private slots:
     void newFile();
     void open();
     void openDataSprite();
+    void openDataSprite(QString path);
     bool save();
     bool saveAs();
     void about();
@@ -62,6 +63,8 @@ private slots:
     void Down_Clicked();
     void Top_Clicked();
     void Bottom_Clicked();
+
+    void silentExportSprite(int i);
 
 
 private:
@@ -107,7 +110,10 @@ private:
 
     QString m_ImgfileName;
     QString m_SprfileName;
+    QString m_workingDir;
+    QString m_workingExportOutDir;
     QTimer* m_timer;
+    Ui::Frame frameUI;
 
     void CreateActions();
     void CreateMainMenus();
@@ -130,6 +136,8 @@ private:
     void parseDataRowFrame(QList<QString>&header,QList<QString>&body);
     void parseDataRowAnim(QList<QString>&header,QList<QString>&body);
 
+    void setupSpriteManager();
+
 
 
 
@@ -144,6 +152,11 @@ public slots:
     void PageTabChanged(int indexPage);
     void timerHit();
     void reOffsetFrames();
+
+    void openSpriteFromIndex(int index);
+    void spriteListRefresh();
+    void exportAll();
+    void setWorkDir();
 
 
 };

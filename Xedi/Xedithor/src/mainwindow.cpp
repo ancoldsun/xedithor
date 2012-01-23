@@ -8,6 +8,7 @@
 #include "exportdialog.h"
 #include "ui_exportdialog.h"
 #include "ui_toolDialog.h"
+
 #include "spriteexporter.h"
 #include <iostream>
 
@@ -39,6 +40,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tabWidget->setTabEnabled(Page::SEQANIM, false);
     ui->tabWidget->setTabEnabled(Page::ANIM, false);
+    ui->tabWidget->setCurrentIndex(Page::MODULE);
+
+    m_workingDir="";
+    m_workingExportOutDir="";
+    setupSpriteManager();
 }
 
 MainWindow::~MainWindow()
@@ -1091,8 +1097,18 @@ void MainWindow::TableEditCompleted(QString str)
 
  void MainWindow::openDataSprite()
  {
+     openDataSprite("");
+ }
+
+ void MainWindow::openDataSprite(QString path)
+ {
      ui->tabWidget->setCurrentIndex(Page::MODULE);
-     m_SprfileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
+
+     if(!path.compare("")){
+        m_SprfileName = QFileDialog::getOpenFileName(this,tr("Open File"), QDir::currentPath());
+     } else {
+        m_SprfileName = path;
+     }
      if (!m_SprfileName.isEmpty())
      {
         /* clear all data */
@@ -1505,3 +1521,114 @@ void MainWindow::reOffsetFrames()
          _sub_model_frame->refresh();
      }
  }
+
+void MainWindow::silentExportSprite(int i)
+{
+    reOffsetFrames();
+    QString exportOutBin      = m_workingExportOutDir+"/"+QString::number(i)+".bin";
+    QString texturePackerPath = QApplication::applicationDirPath()+"/extbin/texturepacker.jar";
+    int formatExport          = 0;
+
+    MFATableModel* _moduleModel = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+    MFATableModel* _frameModel  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+    MFATableModel* _animModel   = static_cast<MFATableModel*>(ui->at_tableView1->model());
+
+    SpriteExporter exporter(this->pixmapOpened,
+                            _moduleModel,
+                            _frameModel,
+                            _animModel,
+                            formatExport);
+    exporter.setTexturePackerPath(texturePackerPath);
+    exporter.setExportOutPath(exportOutBin);
+
+    exporter.setImgSrcPath(this->m_ImgfileName);
+    int checkExport = exporter.DoExporting();
+
+    if(checkExport != 0) {
+        std::cout<<"Error when exporting "<<checkExport<<std::endl;
+    }
+}
+
+
+void MainWindow::setupSpriteManager()
+{
+    QFrame* frame = new QFrame(this);
+    frameUI.setupUi(frame);
+
+    QWidget *spacerWidget = new QWidget(this);
+    spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    spacerWidget->setVisible(true);
+    ui->mainToolBar->addWidget(spacerWidget);
+    ui->mainToolBar->addWidget(frame);
+
+    if(m_workingDir!="")
+        spriteListRefresh();
+
+    connect(frameUI.comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(openSpriteFromIndex(int)));
+    connect(frameUI.tbRefresh,SIGNAL(clicked()),this,SLOT(spriteListRefresh()));
+    connect(frameUI.tbExportAll,SIGNAL(clicked()),this,SLOT(exportAll()));
+    connect(frameUI.tbworkDir,SIGNAL(clicked()),this,SLOT(setWorkDir()));
+}
+
+void MainWindow::openSpriteFromIndex(int index)
+{
+    QString strOpenSprite = frameUI.comboBox->itemText( index);
+    if(!(strOpenSprite =="--List Sprites--" || strOpenSprite =="")){
+        QString strOpenSpritePath = m_workingDir+"/"+strOpenSprite;
+        openDataSprite(strOpenSpritePath);
+        frameUI.comboBox->setCurrentIndex(0);
+    }
+}
+
+void MainWindow::spriteListRefresh()
+{
+    if(m_workingDir!="") {
+        QStringList filterFileStr;
+        filterFileStr.append("*.xml");
+        QDir workingDir(m_workingDir);
+        QStringList listSpriteNames = workingDir.entryList(filterFileStr,QDir::Files,QDir::Name);
+        listSpriteNames.insert(0,"--List Sprites--");
+        frameUI.comboBox->clear();
+        for(int i=0;i<listSpriteNames.count();i++){
+            frameUI.comboBox->addItem(listSpriteNames.at(i));
+        }
+    }
+}
+
+void MainWindow::exportAll()
+{
+    if(m_workingDir!="" || m_workingExportOutDir!="") {
+        QProgressDialog progress("Exporting files...", "", 0, frameUI.comboBox->count(), this);
+        progress.setWindowModality(Qt::WindowModal);
+
+        progress.show();
+
+        for(int i=0;i<frameUI.comboBox->count();i++) {
+
+            progress.setValue(i);
+            openSpriteFromIndex(i);
+            silentExportSprite(i);
+        }
+    }
+    else {
+        QMessageBox msg;
+        msg.setText("for export all, please set working directory and export output directory");
+        msg.exec();
+        setWorkDir();
+    }
+}
+
+void MainWindow::setWorkDir()
+{
+    //---
+    m_workingDir          = QFileDialog::getExistingDirectory(this, tr("Set working directory"),
+                                                                    QDir::currentPath(),
+                                                                    QFileDialog::ShowDirsOnly
+                                                                    | QFileDialog::DontResolveSymlinks);
+    //---
+    m_workingExportOutDir = QFileDialog::getExistingDirectory(this, tr("Set export out directory"),
+                                                              QDir::currentPath(),
+                                                              QFileDialog::ShowDirsOnly
+                                                              | QFileDialog::DontResolveSymlinks);
+    spriteListRefresh();
+}
