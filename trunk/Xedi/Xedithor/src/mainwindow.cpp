@@ -1522,7 +1522,7 @@ void MainWindow::reOffsetFrames()
      }
  }
 
-void MainWindow::silentExportSprite(int i)
+int MainWindow::silentExportSprite(int i)
 {
     reOffsetFrames();
     QString exportOutBin      = m_workingExportOutDir+"/"+QString::number(i)+".bin";
@@ -1547,6 +1547,7 @@ void MainWindow::silentExportSprite(int i)
     if(checkExport != 0) {
         std::cout<<"Error when exporting "<<checkExport<<std::endl;
     }
+    return checkExport;
 }
 
 
@@ -1602,13 +1603,31 @@ void MainWindow::exportAll()
         progress.setWindowModality(Qt::WindowModal);
 
         progress.show();
-
-        for(int i=0;i<frameUI.comboBox->count();i++) {
+        const int totalSprite = frameUI.comboBox->count();
+        int errCode [256];// assume max sprite is 256
+        for(int i=0;i<totalSprite;i++) {
 
             progress.setValue(i);
             openSpriteFromIndex(i);
-            silentExportSprite(i);
+            errCode[i] = silentExportSprite(i);
         }
+        QMessageBox msg;
+        QString strReport = "Exporting finished";
+        strReport +="\nOutput Directory: "+this->m_workingExportOutDir+"\n";
+        strReport +="\nError when export:";
+
+        bool allsuccess=true;
+        for(int i=0;i<frameUI.comboBox->count();i++) {
+            if(errCode[i]){
+                strReport +="\n -"+frameUI.comboBox->itemText(i);
+                allsuccess=false;
+            }
+        }
+        if(allsuccess)
+            strReport +="\nNo Error, all success exported";
+        msg.setText(strReport);
+        msg.exec();
+
     }
     else {
         QMessageBox msg;
