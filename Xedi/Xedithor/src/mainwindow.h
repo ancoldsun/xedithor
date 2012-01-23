@@ -138,6 +138,8 @@ private:
 
     void setupSpriteManager();
 
+    QString removeFileExtension(QString fileName);
+
 
 
 

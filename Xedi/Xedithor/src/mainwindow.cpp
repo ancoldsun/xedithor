@@ -377,6 +377,7 @@ void MainWindow::exportSprite()
         exporter.setTexturePackerPath(texturePackerPath);
         exporter.setExportOutPath(exportOutBin);
         exporter.setImgSrcPath(this->m_ImgfileName);
+        exporter.setSprName(removeFileExtension(this->m_SprfileName));
         int checkExport = exporter.DoExporting();
 
         if(checkExport!=0){
@@ -1540,8 +1541,11 @@ int MainWindow::silentExportSprite(int i)
                             formatExport);
     exporter.setTexturePackerPath(texturePackerPath);
     exporter.setExportOutPath(exportOutBin);
-
     exporter.setImgSrcPath(this->m_ImgfileName);
+
+    QFileInfo fi(this->m_SprfileName);
+    QString name = fi.baseName();
+    exporter.setSprName(name);
     int checkExport = exporter.DoExporting();
 
     if(checkExport != 0) {
@@ -1596,6 +1600,22 @@ void MainWindow::spriteListRefresh()
     }
 }
 
+QString MainWindow::removeFileExtension(QString fileName)
+{
+    QChar ch;
+    QString _result="";
+    int i=0;
+    while( 1 )
+    {
+        ch = fileName.at(i++);
+        if(ch != QChar::fromAscii('.') )
+            _result+=ch;
+        else
+            break;
+    }
+    return _result;
+}
+
 void MainWindow::exportAll()
 {
     if(m_workingDir!="" || m_workingExportOutDir!="") {
@@ -1617,12 +1637,31 @@ void MainWindow::exportAll()
         strReport +="\nError when export:";
 
         bool allsuccess=true;
+        // create interface
+        QFile file(m_workingExportOutDir+"/DATA_SPRITE.java");
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            return;
+        QTextStream interfaceText(&file);
+
+        interfaceText<<"interface DATA_SPRITE"<<"\n";
+        // open brace interface
+        interfaceText<<"{"<<"\n";
+        int intercafeValue=0;
         for(int i=0;i<frameUI.comboBox->count();i++) {
             if(errCode[i]){
                 strReport +="\n -"+frameUI.comboBox->itemText(i);
                 allsuccess=false;
             }
+            else {
+                QString strSprName = removeFileExtension(frameUI.comboBox->itemText(i));
+                interfaceText <<"	public final static int SPR_" << strSprName <<" = "<<intercafeValue<< "\n";
+                intercafeValue++;
+            }
         }
+        interfaceText <<"	public final static int COUNT" << " = "<<intercafeValue<< "\n";
+        //close brace interface
+        interfaceText<<"}"<<"\n";
+        file.close();
         if(allsuccess)
             strReport +="\nNo Error, all success exported";
         msg.setText(strReport);
