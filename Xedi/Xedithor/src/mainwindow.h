@@ -64,7 +64,7 @@ private slots:
     void Top_Clicked();
     void Bottom_Clicked();
 
-    void silentExportSprite(int i);
+    int silentExportSprite(int i);
 
 
 private:
