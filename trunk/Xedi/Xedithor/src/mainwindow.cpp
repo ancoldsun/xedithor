@@ -1675,20 +1675,27 @@ void MainWindow::exportAll()
         // open brace interface
         interfaceText<<"{"<<"\n";
         int intercafeValue=0;
+        int totError =0;
         for(int i=0;i<frameUI.comboBox->count();i++) {
             if(errCode[i]){
                 strReport +="\n -"+frameUI.comboBox->itemText(i);
                 allsuccess=false;
+                intercafeValue++;
+                totError++;
+                interfaceText <<"// ----- error export: "<<frameUI.comboBox->itemText(i)<<"\n";
             }
             else {
                 QString strSprName = frameUI.comboBox->itemText(i);
-                QFileInfo fi(strSprName);
-                QString name = fi.baseName();
-                interfaceText <<"	public final static int SPR_" << name <<" = "<<intercafeValue<< "\n";
-                intercafeValue++;
+                if(strSprName != "--List Sprites--"){
+                    QFileInfo fi(strSprName);
+                    QString name = fi.baseName();
+                    name = name.toUpper();
+                    interfaceText <<"	public final static int SPR_" << name <<" = "<<intercafeValue<<";"<<"\n";
+                    intercafeValue++;
+                }
             }
         }
-        interfaceText <<"	public final static int COUNT" << " = "<<intercafeValue<< "\n";
+        interfaceText <<"	public final static int COUNT" << " = "<<(intercafeValue-totError)<<";"<< "\n";
         //close brace interface
         interfaceText<<"}"<<"\n";
         file.close();
