@@ -278,6 +278,7 @@ void SpriteExporter::createSpriteDataInfo()
     QFileInfo infof(m_exportOutDir);
     QDir infod= infof.dir();
     QString strDir = infod.absolutePath();
+    m_sprName = m_sprName.toUpper();
     QString s=strDir+"/"+m_sprName+".java";
     QFile file(s);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -296,9 +297,10 @@ void SpriteExporter::createSpriteDataInfo()
         RowData* rd = m_frameModel->getDatainRow(ix);
         QString nameFrame = rd->getData(3);
         nameFrame +="_"+QString::number(ix);
-        interfaceText <<"	public final static int " << nameFrame <<" = "<<ix<< "\n";
+        nameFrame = nameFrame.toUpper();
+        interfaceText <<"	public final static int " << nameFrame <<" = "<<ix<<";"<< "\n";
     }
-    interfaceText <<"	public final static int FRAME_COUNT" << " = "<<numberRow<< "\n";
+    interfaceText <<"	public final static int FRAME_COUNT" << " = "<<numberRow<<";"<<"\n";
 
     interfaceText <<"\n";
 
@@ -309,9 +311,10 @@ void SpriteExporter::createSpriteDataInfo()
         RowData* rd = m_animModel->getDatainRow(ix);
         QString nameAnim = rd->getData(3);
         nameAnim +="_"+QString::number(ix);
-        interfaceText <<"	public final static int " << nameAnim <<" = "<<ix<< "\n";
+        nameAnim = nameAnim.toUpper();
+        interfaceText <<"	public final static int " << nameAnim <<" = "<<ix<<";"<< "\n";
     }
-    interfaceText <<"	public final static int ANIM_COUNT" << " = "<<numberRow<< "\n";
+    interfaceText <<"	public final static int ANIM_COUNT" << " = "<<numberRow<<";"<<"\n";
 
     //end brace
     interfaceText<<"}"<<"\n";
