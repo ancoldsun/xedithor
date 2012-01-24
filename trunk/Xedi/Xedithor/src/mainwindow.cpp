@@ -45,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_workingDir="";
     m_workingExportOutDir="";
     setupSpriteManager();
+
+    shorcutSetup();
 }
 
 MainWindow::~MainWindow()
@@ -99,6 +101,7 @@ void MainWindow::CreateActions()
 
     // open image button
     connect(ui->openImageButton, SIGNAL(clicked()), this, SLOT(open()));
+
 }
 
 void MainWindow::CreateMainMenus()
@@ -377,7 +380,9 @@ void MainWindow::exportSprite()
         exporter.setTexturePackerPath(texturePackerPath);
         exporter.setExportOutPath(exportOutBin);
         exporter.setImgSrcPath(this->m_ImgfileName);
-        exporter.setSprName(removeFileExtension(this->m_SprfileName));
+        QFileInfo fi(this->m_SprfileName);
+        QString name = fi.baseName();
+        exporter.setSprName(name);
         int checkExport = exporter.DoExporting();
 
         if(checkExport!=0){
@@ -725,119 +730,142 @@ void MainWindow::tableRowSelected(const QModelIndex& index)
     if(sender == ui->mt_tableView1 ){   // table module
 
         int rowSelected_ = ui->mt_tableView1->currentIndex().row();
-
-        MFATableModel* m = static_cast<MFATableModel*>(ui->mt_tableView1->model());
-        RowData* rd = m->getDatainRow(rowSelected_);
-
-        qreal px_ =rd->getData(2).toDouble();
-        qreal py_ =rd->getData(3).toDouble();
-        qreal w_  =rd->getData(4).toDouble();
-        qreal h_  =rd->getData(5).toDouble();
-
-        /* slice image */
-        QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
-        int idx = editWindow->getModuleList()->count();
-        if(idx > 1)
-        {
-            QListWidgetItem *item = editWindow->getModuleList()->takeItem(0);
-            delete item;
-        }
-        editWindow->getModuleList()->clear();
-        editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0));
-        /* end slice image */
-
-        QRectF rect_ = editWindow->imageLabel->getRectSelectItem()->rect();
-        rect_.setHeight(h_);
-        rect_.setWidth(w_);
-        editWindow->imageLabel->getRectSelectItem()->setRect(rect_);
-
-        px_=px_-rect_.x()+(WidthRectView/2);
-        py_=py_-rect_.y()+(HeightRectView/2);
-        editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
+        moduleTableRowSelected(rowSelected_);
     }
     else if(sender == ui->ft_tableView1){   // table frame 1
         int rowSelected_ = ui->ft_tableView1->currentIndex().row();
+        frameTableRowSelected(rowSelected_);
 
-        if(m_lastRowSelectedFT != rowSelected_)
-        {
-            m_lastRowSelectedFT = rowSelected_;
-            MFATableModel* mf = static_cast<MFATableModel*>(ui->ft_tableView1->model());
-            MFATableModel* mf_bottom = mf->getModel(rowSelected_);
-            ui->ft_tableView2->setModel(mf_bottom);
-            // clear prev row images item
-            editWindow->imageLabel->clearGraphPixmapItem();
-            // create
-            for(int i=0;i<mf_bottom->rowCount();i++)
-            {
-                RowData* rd = mf_bottom->getDatainRow(i);
-
-                int id_           = rd->getData(0).toInt();
-                QString moduleID_ = rd->getData(1);
-                int px_           = rd->getData(2).toInt();
-                int py_           = rd->getData(3).toInt();
-                //qreal w_    =rd->getData(4).toDouble();
-                //qreal h_    =rd->getData(5).toDouble();
-
-                QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
-                if(_item!=NULL)
-                {
-                    QPixmap pixmap      = _item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
-                    QPixmap copyPixmap = pixmap.copy();
-                    editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
-                }
-                else
-                {
-                    QPixmap pixmap = QPixmap::fromImage(QImage(":/images/invalid.png"));
-                    editWindow->imageLabel->AddPixmapItem(&pixmap,false,id_,px_,py_);
-                }
-            }
-        }
     } else if(sender == ui->ft_tableView2){ // table module-frame
 
         int rowSelected_ = ui->ft_tableView2->currentIndex().row();
-
-        MFATableModel* mf = static_cast<MFATableModel*>(ui->ft_tableView2->model());
-        RowData* _row_data          = mf->getDatainRow(rowSelected_);
-        int id_                     = _row_data->getData(0).toInt();
-        editWindow->imageLabel->setSelectedPixmapItem(id_);
+        frameDescTableRowSelected(rowSelected_);
 
     }  else if(sender == ui->at_tableView1){ // table anim
 
         if(editWindow->modulesList->count()>0)
         {
             int _rowSelected = ui->at_tableView1->currentIndex().row();
-            MFATableModel* _anim_model       = static_cast<MFATableModel*>(ui->at_tableView1->model());
-            MFATableModel* _frame_anim_model = _anim_model->getModel(_rowSelected);
-            ui->at_tableView2->setModel(_frame_anim_model);
-
-            // clear prev row images item
-            editWindow->imageLabel->clearGraphPixmapItem();
-            editWindow->createAnimation();
+            animTableRowSelected(_rowSelected);
         }
     } else if(sender == ui->at_tableView2) {     // // table frame anim
-        editWindow->imageLabel->clearAnimation();
+        animDescTableRowSelected(-1);
+      }
+}
 
-        MFATableModel* frameAnimModel= static_cast<MFATableModel*>(ui->at_tableView2->model());
+void MainWindow::moduleTableRowSelected(int selected)
+{
+    MFATableModel* m = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+    RowData* rd = m->getDatainRow(selected);
 
+    qreal px_ =rd->getData(2).toDouble();
+    qreal py_ =rd->getData(3).toDouble();
+    qreal w_  =rd->getData(4).toDouble();
+    qreal h_  =rd->getData(5).toDouble();
+
+    /* slice image */
+    QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
+    int idx = editWindow->getModuleList()->count();
+    if(idx > 1)
+    {
+        QListWidgetItem *item = editWindow->getModuleList()->takeItem(0);
+        delete item;
+    }
+    editWindow->getModuleList()->clear();
+    editWindow->getModuleList()->addPiece(pieceImage,QPoint(0,0));
+    /* end slice image */
+
+    QRectF rect_ = editWindow->imageLabel->getRectSelectItem()->rect();
+    rect_.setHeight(h_);
+    rect_.setWidth(w_);
+    editWindow->imageLabel->getRectSelectItem()->setRect(rect_);
+
+    px_=px_-rect_.x()+(WidthRectView/2);
+    py_=py_-rect_.y()+(HeightRectView/2);
+    editWindow->imageLabel->getRectSelectItem()->setPos(px_,py_);
+}
+
+void MainWindow::frameTableRowSelected(int selected)
+{
+    if(m_lastRowSelectedFT != selected)
+    {
+        m_lastRowSelectedFT = selected;
+        MFATableModel* mf = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+        MFATableModel* mf_bottom = mf->getModel(selected);
+        ui->ft_tableView2->setModel(mf_bottom);
         // clear prev row images item
         editWindow->imageLabel->clearGraphPixmapItem();
-
-        int i = ui->at_tableView2->currentIndex().row();
-        RowData* rd = frameAnimModel->getDatainRow(i);
-
-        int id_           = rd->getData(0).toInt();
-        QString moduleID_ = rd->getData(1);
-        int px_           = rd->getData(2).toInt();
-        int py_           = rd->getData(3).toInt();
-
-        QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
-        if(_item!=NULL)
+        // create
+        for(int i=0;i<mf_bottom->rowCount();i++)
         {
-            QPixmap pixmap      = _item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
-            QPixmap copyPixmap = pixmap.copy();
-            editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+            RowData* rd = mf_bottom->getDatainRow(i);
+
+            int id_           = rd->getData(0).toInt();
+            QString moduleID_ = rd->getData(1);
+            int px_           = rd->getData(2).toInt();
+            int py_           = rd->getData(3).toInt();
+            //qreal w_    =rd->getData(4).toDouble();
+            //qreal h_    =rd->getData(5).toDouble();
+
+            QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
+            if(_item!=NULL)
+            {
+                QPixmap pixmap      = _item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
+                QPixmap copyPixmap = pixmap.copy();
+                editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+            }
+            else
+            {
+                QPixmap pixmap = QPixmap::fromImage(QImage(":/images/invalid.png"));
+                editWindow->imageLabel->AddPixmapItem(&pixmap,false,id_,px_,py_);
+            }
         }
-      }
+    }
+}
+
+void MainWindow::frameDescTableRowSelected(int selected)
+{
+    MFATableModel* mf = static_cast<MFATableModel*>(ui->ft_tableView2->model());
+    RowData* _row_data          = mf->getDatainRow(selected);
+    int id_                     = _row_data->getData(0).toInt();
+    editWindow->imageLabel->setSelectedPixmapItem(id_);
+}
+
+void MainWindow::animTableRowSelected(int selected)
+{
+    MFATableModel* _anim_model       = static_cast<MFATableModel*>(ui->at_tableView1->model());
+    MFATableModel* _frame_anim_model = _anim_model->getModel(selected);
+    ui->at_tableView2->setModel(_frame_anim_model);
+
+    // clear prev row images item
+    editWindow->imageLabel->clearGraphPixmapItem();
+    editWindow->createAnimation();
+}
+
+void MainWindow::animDescTableRowSelected(int selected)
+{
+    editWindow->imageLabel->clearAnimation();
+
+    MFATableModel* frameAnimModel= static_cast<MFATableModel*>(ui->at_tableView2->model());
+
+    // clear prev row images item
+    editWindow->imageLabel->clearGraphPixmapItem();
+
+    int i = ui->at_tableView2->currentIndex().row();
+    RowData* rd = frameAnimModel->getDatainRow(i);
+
+    int id_           = rd->getData(0).toInt();
+    QString moduleID_ = rd->getData(1);
+    int px_           = rd->getData(2).toInt();
+    int py_           = rd->getData(3).toInt();
+
+    QListWidgetItem* _item = editWindow->modulesList->getItemByText(moduleID_);
+    if(_item!=NULL)
+    {
+        QPixmap pixmap      = _item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
+        QPixmap copyPixmap = pixmap.copy();
+        editWindow->imageLabel->AddPixmapItem(&copyPixmap,false,id_,px_,py_);
+    }
 }
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)
@@ -1653,8 +1681,10 @@ void MainWindow::exportAll()
                 allsuccess=false;
             }
             else {
-                QString strSprName = removeFileExtension(frameUI.comboBox->itemText(i));
-                interfaceText <<"	public final static int SPR_" << strSprName <<" = "<<intercafeValue<< "\n";
+                QString strSprName = frameUI.comboBox->itemText(i);
+                QFileInfo fi(strSprName);
+                QString name = fi.baseName();
+                interfaceText <<"	public final static int SPR_" << name <<" = "<<intercafeValue<< "\n";
                 intercafeValue++;
             }
         }
@@ -1690,3 +1720,134 @@ void MainWindow::setWorkDir()
                                                               | QFileDialog::DontResolveSymlinks);
     spriteListRefresh();
 }
+// create some shorcut
+// yeah, best way is inherited table view to capture key, this is not elegant
+void MainWindow::shorcutSetup()
+{
+    //----- module
+    // clone module
+    QShortcut* shortcutCloneModule = new QShortcut(tr("Ctrl+C"), ui->mt_tableView1);
+    connect(shortcutCloneModule, SIGNAL(activated()), this, SLOT(cloneModuleShorcut()));
+    // up module
+    QShortcut* shortcutUp = new QShortcut(Qt::Key_Up, ui->mt_tableView1);
+    connect(shortcutUp, SIGNAL(activated()), this, SLOT(arrowUpModuleShorcut()));
+    // down module
+    QShortcut* shortcutDown = new QShortcut(Qt::Key_Down, ui->mt_tableView1);
+    connect(shortcutDown, SIGNAL(activated()), this, SLOT(arrowDownModuleShorcut()));
+
+    //----- frame
+    // up frame
+    QShortcut* shortcutUp_f = new QShortcut(Qt::Key_Up, ui->ft_tableView1);
+    connect(shortcutUp_f, SIGNAL(activated()), this, SLOT(arrowUpFrameShorcut()));
+    // down frame
+    QShortcut* shortcutDown_f = new QShortcut(Qt::Key_Down, ui->ft_tableView1);
+    connect(shortcutDown_f, SIGNAL(activated()), this, SLOT(arrowDownFrameShorcut()));
+    /*
+    //----- frame desc
+    // up frame desc
+    QShortcut* shortcutUp_fd = new QShortcut(Qt::Key_Up, ui->ft_tableView2);
+    connect(shortcutUp_fd, SIGNAL(activated()), this, SLOT(arrowUpFrameDescShorcut()));
+    // down frame desc
+    QShortcut* shortcutDown_fd = new QShortcut(Qt::Key_Down, ui->ft_tableView2);
+    connect(shortcutDown_fd, SIGNAL(activated()), this, SLOT(arrowDownFrameDescShorcut()));
+    */
+    //----- anim
+    // up anim
+    QShortcut* shortcutUp_a = new QShortcut(Qt::Key_Up, ui->at_tableView1);
+    connect(shortcutUp_a, SIGNAL(activated()), this, SLOT(arrowUpAnimShorcut()));
+    // down anim
+    QShortcut* shortcutDown_a = new QShortcut(Qt::Key_Down, ui->at_tableView1);
+    connect(shortcutDown_a, SIGNAL(activated()), this, SLOT(arrowDownAnimShorcut()));
+    /*
+    //----- anim desc
+    // up anim desc
+    QShortcut* shortcutUp_ad = new QShortcut(Qt::Key_Up, ui->at_tableView2);
+    connect(shortcutUp_ad, SIGNAL(activated()), this, SLOT(arrowUpAnimDescShorcut()));
+    // down anim desc
+    QShortcut* shortcutDown_ad = new QShortcut(Qt::Key_Down, ui->at_tableView2);
+    connect(shortcutDown_ad, SIGNAL(activated()), this, SLOT(arrowDownAnimDescShorcut()));
+    */
+
+}
+
+void MainWindow::cloneModuleShorcut()
+{
+    tableCloneRow(ui->mt_tableView1);
+}
+
+void MainWindow::arrowUpModuleShorcut()
+{
+    this->tableUpSel(ui->mt_tableView1);
+    int currRow= ui->mt_tableView1->currentIndex().row();
+    moduleTableRowSelected(currRow);
+}
+
+void MainWindow::arrowDownModuleShorcut()
+{
+    this->tableDownSel(ui->mt_tableView1);
+    int currRow= ui->mt_tableView1->currentIndex().row();
+    moduleTableRowSelected(currRow);
+}
+// frame
+void MainWindow::arrowUpFrameShorcut()
+{
+    this->tableUpSel(ui->ft_tableView1);
+    int currRow= ui->ft_tableView1->currentIndex().row();
+    frameTableRowSelected(currRow);
+}
+
+void MainWindow::arrowDownFrameShorcut()
+{
+    this->tableDownSel(ui->ft_tableView1);
+    int currRow= ui->ft_tableView1->currentIndex().row();
+    frameTableRowSelected(currRow);
+}
+
+// frame desc
+void MainWindow::arrowDownFrameDescShorcut()
+{
+    this->tableDownSel(ui->ft_tableView2);
+    int currRow= ui->ft_tableView2->currentIndex().row();
+    frameDescTableRowSelected(currRow);
+}
+
+void MainWindow::arrowUpFrameDescShorcut()
+{
+    this->tableUpSel(ui->ft_tableView2);
+    int currRow= ui->ft_tableView2->currentIndex().row();
+    frameDescTableRowSelected(currRow);
+}
+
+// anim
+void MainWindow::arrowDownAnimShorcut()
+{
+    this->tableDownSel(ui->at_tableView1);
+    int currRow= ui->at_tableView1->currentIndex().row();
+    animTableRowSelected(currRow);
+}
+
+void MainWindow::arrowUpAnimShorcut()
+{
+    this->tableUpSel(ui->at_tableView1);
+    int currRow= ui->at_tableView1->currentIndex().row();
+    animTableRowSelected(currRow);
+}
+
+// anim desc
+void MainWindow::arrowDownAnimDescShorcut()
+{
+    this->tableDownSel(ui->at_tableView2);
+    int currRow= ui->at_tableView2->currentIndex().row();
+    animDescTableRowSelected(currRow);
+}
+
+void MainWindow::arrowUpAnimDescShorcut()
+{
+    this->tableUpSel(ui->at_tableView2);
+    int currRow= ui->at_tableView2->currentIndex().row();
+    animDescTableRowSelected(currRow);
+}
+
+
+
+

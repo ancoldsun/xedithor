@@ -160,6 +160,32 @@ public slots:
     void exportAll();
     void setWorkDir();
 
+    //table shorcut handle
+    void shorcutSetup();
+    void cloneModuleShorcut();
+    // module
+    void arrowDownModuleShorcut();
+    void arrowUpModuleShorcut();
+    // frame
+    void arrowDownFrameShorcut();
+    void arrowUpFrameShorcut();
+    // frame desc
+    void arrowDownFrameDescShorcut();
+    void arrowUpFrameDescShorcut();
+    // anim
+    void arrowDownAnimShorcut();
+    void arrowUpAnimShorcut();
+    // anim desc
+    void arrowDownAnimDescShorcut();
+    void arrowUpAnimDescShorcut();
+
+    void moduleTableRowSelected(int selected);
+    void frameTableRowSelected(int selected);
+    void frameDescTableRowSelected(int selected);
+    void animTableRowSelected(int selected);
+    void animDescTableRowSelected(int selected);
+
+
 
 };
 

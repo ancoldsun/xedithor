@@ -282,8 +282,7 @@ void SpriteExporter::createSpriteDataInfo()
     QFile file(s);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        std::cout<<"nooppppppppppppppppppppppppppppp---------------------------------"<<s.toStdString().c_str()<<std::endl;
-        return;
+       return;
     }
     QTextStream interfaceText(&file);
     interfaceText<<"interface SPRITE_"<<m_sprName<<"\n";
@@ -308,9 +307,9 @@ void SpriteExporter::createSpriteDataInfo()
     for(int ix=0;ix<numberRow;ix++)
     {
         RowData* rd = m_animModel->getDatainRow(ix);
-        QString nameFrame = rd->getData(3);
-        nameFrame +="_"+QString::number(ix);
-        interfaceText <<"	public final static int " << nameFrame <<" = "<<ix<< "\n";
+        QString nameAnim = rd->getData(3);
+        nameAnim +="_"+QString::number(ix);
+        interfaceText <<"	public final static int " << nameAnim <<" = "<<ix<< "\n";
     }
     interfaceText <<"	public final static int ANIM_COUNT" << " = "<<numberRow<< "\n";
 
