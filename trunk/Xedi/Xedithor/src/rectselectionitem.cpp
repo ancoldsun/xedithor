@@ -11,7 +11,6 @@
 RectSelectionItem::RectSelectionItem(QGraphicsItem* parent, QGraphicsScene* scene)
     :QGraphicsRectItem(parent,scene)
 {
-
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
     setAcceptHoverEvents ( true);
@@ -19,7 +18,7 @@ RectSelectionItem::RectSelectionItem(QGraphicsItem* parent, QGraphicsScene* scen
 
 void RectSelectionItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    //painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     //painter->drawLine(line);
 
     QGraphicsRectItem::paint(painter,option,widget);
@@ -123,6 +122,7 @@ void RectSelectionItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
         default:
             break;
     }
+
     QGraphicsItem::mouseMoveEvent(event);
 }
 
@@ -194,6 +194,10 @@ void RectSelectionItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
 void RectSelectionItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    qreal adjust = 100;
+    QRectF rectUpdated( this->rect().x()-adjust,this->rect().y()-adjust,
+                        this->rect().width()+2*adjust,this->rect().height()+2*adjust);
+    this->scene()->update(rectUpdated);
     QGraphicsItem::mouseReleaseEvent(event);
 
 }
