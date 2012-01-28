@@ -8,6 +8,7 @@
 #include "exportdialog.h"
 #include "ui_exportdialog.h"
 #include "ui_toolDialog.h"
+#include "appconfig.h"
 
 #include "spriteexporter.h"
 #include <iostream>
@@ -44,6 +45,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_workingDir="";
     m_workingExportOutDir="";
+    //open app setting files
+    m_workingDir          = AppConfig::getInstance()->Config.workingDir;
+    m_workingExportOutDir = AppConfig::getInstance()->Config.exportDir;
     setupSpriteManager();
 
     shorcutSetup();
@@ -1726,6 +1730,9 @@ void MainWindow::setWorkDir()
                                                               QFileDialog::ShowDirsOnly
                                                               | QFileDialog::DontResolveSymlinks);
     spriteListRefresh();
+
+    AppConfig::getInstance()->saveWorkingDir(m_workingDir,m_workingExportOutDir);
+
 }
 // create some shorcut
 // yeah, best way is inherited table view to capture key, this is not elegant
