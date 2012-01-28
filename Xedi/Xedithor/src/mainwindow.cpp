@@ -1202,9 +1202,23 @@ void MainWindow::TableEditCompleted(QString str)
                            /* open image */
                            m_ImgfileName = xml.text().toString();
                            QImage image(m_ImgfileName);
-                           if (image.isNull()) {
-                               QMessageBox::information(this, tr("Xedithor"),
-                                                        tr("Cannot load %1.").arg(m_ImgfileName));
+                           if (image.isNull())
+                           {
+                               // if null, give another try to open
+                               // supposed in same dir w/ .xml file
+                               QFileInfo sprInfo(m_SprfileName);
+                               QFileInfo _imgFI(m_ImgfileName);
+                               QString imgFileName = _imgFI.fileName();
+
+                               QString sprDir = sprInfo.dir().absolutePath();
+                               QString supposedDirImg =sprDir +"/"+imgFileName;
+                               m_ImgfileName = supposedDirImg;
+
+                               image.load(m_ImgfileName);
+                               if (image.isNull()) {
+                                QMessageBox::information(this, tr("Xedithor"),
+                                                         tr("Cannot load %1.").arg(m_ImgfileName));
+                               }
                            }
 
                            pixmapOpened =QPixmap::fromImage(image);
