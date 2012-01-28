@@ -87,7 +87,7 @@ void MainWindow::CreateActions()
     connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
     // tool
-    toolFrameAct = new QAction(QIcon(":/images/Calculator.png"),tr("&Frame"), this);
+    toolFrameAct = new QAction(QIcon(":/images/Calculator.png"),tr("&Create"), this);
     //toolFrameAct->setShortcuts(QKeySequence::Save);
     //toolFrameAct->setStatusTip(tr("Save the document to disk"));
     connect(toolFrameAct, SIGNAL(triggered()), this, SLOT(showToolDialog()));
@@ -445,9 +445,25 @@ void MainWindow::showToolDialog()
        else if(toolDialogFrm.tabWidget->currentIndex()==1){
             ui->tabWidget->setCurrentIndex(Page::FRAME);
             // todo : implemented this
-            QMessageBox msg;
-            msg.setText("not implemented yet");
-            msg.exec();
+            //QMessageBox msg;
+            //msg.setText("not implemented yet");
+            //msg.exec();
+            MFATableModel* _modelModule = static_cast<MFATableModel*>(ui->mt_tableView1->model());
+            MFATableModel* _modelFrame = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+            int moduleCount = _modelModule->rowCount();
+            for(int i=0;i<moduleCount;i++){
+                tableAddRow(ui->ft_tableView1);
+
+                MFATableModel* _sub_model = _modelFrame->getModel(i);
+                _sub_model->insertRow(0);
+                /* set data */
+                RowData* _row_data        = _sub_model->getDatainRow(0);
+                RowData* _row_data_module = _modelModule->getDatainRow(i);
+
+                QString moduleIDStr = _row_data_module->getData(1);
+                _row_data->setData(0,QString::number(i));
+                _row_data->setData(1,moduleIDStr);
+            }
        }
    }
    delete dialogTool;

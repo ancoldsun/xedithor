@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'toolDialog.ui'
 **
-** Created: Sun Jan 22 22:48:58 2012
+** Created: Sun Jan 29 01:22:20 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -70,7 +70,7 @@ public:
         Dialog->setModal(true);
         tabWidget = new QTabWidget(Dialog);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 20, 551, 281));
+        tabWidget->setGeometry(QRect(10, 10, 551, 281));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         groupBox = new QGroupBox(tab);
@@ -148,14 +148,15 @@ public:
         radioButton_createFrame1->setGeometry(QRect(40, 40, 181, 18));
         radioButton_createFrame2 = new QRadioButton(tab_2);
         radioButton_createFrame2->setObjectName(QString::fromUtf8("radioButton_createFrame2"));
+        radioButton_createFrame2->setEnabled(false);
         radioButton_createFrame2->setGeometry(QRect(40, 70, 221, 18));
         tabWidget->addTab(tab_2, QString());
         pushButton = new QPushButton(Dialog);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(340, 300, 75, 31));
+        pushButton->setGeometry(QRect(390, 300, 75, 31));
         pushButton_2 = new QPushButton(Dialog);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setGeometry(QRect(430, 300, 75, 31));
+        pushButton_2->setGeometry(QRect(480, 300, 75, 31));
 
         retranslateUi(Dialog);
         QObject::connect(pushButton, SIGNAL(clicked()), Dialog, SLOT(accept()));
@@ -169,7 +170,7 @@ public:
 
     void retranslateUi(QDialog *Dialog)
     {
-        Dialog->setWindowTitle(QApplication::translate("Dialog", "Xedithor : create modules", 0, QApplication::UnicodeUTF8));
+        Dialog->setWindowTitle(QApplication::translate("Dialog", "Xedithor : tool create", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("Dialog", "Generate module Sheet", 0, QApplication::UnicodeUTF8));
         label_15->setText(QApplication::translate("Dialog", "Col", 0, QApplication::UnicodeUTF8));
         lineEditF_nRow->setText(QApplication::translate("Dialog", "2", 0, QApplication::UnicodeUTF8));
