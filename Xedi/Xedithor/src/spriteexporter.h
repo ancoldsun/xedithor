@@ -30,6 +30,9 @@ public:
         m_sprName =sprname;
     }
 
+    // QString m_pstdout;
+    // QString m_pstderr;
+
 private:
     MFATableModel* m_moduleModel;
     MFATableModel* m_frameModel;
@@ -40,6 +43,7 @@ private:
     QString m_exportOutDir;
     QString m_imgSourcePath;
     QString m_sprName;
+
 
     int exportFLIBGDX();
     int exportFDefault();

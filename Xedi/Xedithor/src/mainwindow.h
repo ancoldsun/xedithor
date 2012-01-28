@@ -28,6 +28,7 @@ QT_BEGIN_NAMESPACE
     class QTableWidget;
     class QAbstractItemView;
     class QTableView;
+    class QSettings;
 QT_END_NAMESPACE
 
 namespace Ui {

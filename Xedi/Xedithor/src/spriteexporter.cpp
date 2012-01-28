@@ -79,6 +79,10 @@ int SpriteExporter::exportFLIBGDX()
     arg.append(m_texturePackerDir);
     arg.append(fileTempImgDir);
     arg.append(fileTempPackOutDir);
+
+    //packerProc.waitForFinished(-1);
+    //m_pstdout = packerProc.readAllStandardOutput();
+    //m_pstderr = packerProc.readAllStandardError();
     packerProc.execute("java",arg);
 
     // ------read out pack for parse

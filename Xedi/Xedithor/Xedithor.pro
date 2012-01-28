@@ -25,7 +25,8 @@ SOURCES += src\main.cpp\
     src/mfatablemodel.cpp \
     src/packtextureparser.cpp \
     src/exportdialog.cpp \
-    src/spriteexporter.cpp
+    src/spriteexporter.cpp \
+    src/appconfig.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -43,7 +44,8 @@ HEADERS  += mainwindow.h \
     src/mfatablemodel.h \
     src/packtextureparser.h \
     src/exportdialog.h \
-    src/spriteexporter.h
+    src/spriteexporter.h \
+    src/appconfig.h
 
 
 FORMS    += mainwindow.ui \
@@ -57,6 +59,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     temp.txt
+
+
 
 
 
