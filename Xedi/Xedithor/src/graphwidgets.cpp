@@ -42,7 +42,7 @@ GraphWidget::GraphWidget(QWidget *parent)
     QPen pen;
     pen.setBrush(QBrush(Qt::NoBrush));
     pen.setColor(QColor(Qt::red));
-    pen.setWidth(1);
+    pen.setWidthF(0.7f);
     pen.setStyle(Qt::DashLine);
     rectSelect->setPen(pen);
     rectSelect->setZValue(0.9);

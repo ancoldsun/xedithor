@@ -758,10 +758,10 @@ void MainWindow::moduleTableRowSelected(int selected)
     MFATableModel* m = static_cast<MFATableModel*>(ui->mt_tableView1->model());
     RowData* rd = m->getDatainRow(selected);
 
-    qreal px_ =rd->getData(2).toDouble();
-    qreal py_ =rd->getData(3).toDouble();
-    qreal w_  =rd->getData(4).toDouble();
-    qreal h_  =rd->getData(5).toDouble();
+    qreal px_ =rd->getData(2).toInt();//.toDouble();
+    qreal py_ =rd->getData(3).toInt();//.toDouble();
+    qreal w_  =rd->getData(4).toInt();//.toDouble();
+    qreal h_  =rd->getData(5).toInt();//.toDouble();
 
     /* slice image */
     QPixmap pieceImage =pixmapOpened.copy(px_, py_, w_, h_);
