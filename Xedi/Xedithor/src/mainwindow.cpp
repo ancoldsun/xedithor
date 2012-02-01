@@ -310,6 +310,7 @@ void MainWindow::newFile()
     editWindow->imageLabel->clearGraphPixmapItem();
 
     UID::Instance().resetUID();
+    m_SprfileName="";
     m_ImgfileName="Image : None";
     ui->imagePathInfo->setText(m_ImgfileName);
 }
@@ -449,7 +450,7 @@ void MainWindow::showToolDialog()
             //msg.setText("not implemented yet");
             //msg.exec();
             MFATableModel* _modelModule = static_cast<MFATableModel*>(ui->mt_tableView1->model());
-            MFATableModel* _modelFrame = static_cast<MFATableModel*>(ui->ft_tableView1->model());
+            MFATableModel* _modelFrame  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
             int moduleCount = _modelModule->rowCount();
             for(int i=0;i<moduleCount;i++){
                 tableAddRow(ui->ft_tableView1);
@@ -463,6 +464,8 @@ void MainWindow::showToolDialog()
                 QString moduleIDStr = _row_data_module->getData(1);
                 _row_data->setData(0,QString::number(i));
                 _row_data->setData(1,moduleIDStr);
+
+                _modelFrame->getDatainRow(i)->setData(2,"1");
             }
        }
    }
@@ -965,11 +968,12 @@ void MainWindow::TableEditCompleted(QString str)
         MFATableModel* m  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
         MFATableModel* m2;
 
+        std::cout<<" indexPage == Page::ANIM :"<<(editWindow->modulesList->count())<<std::endl;
         if(editWindow->modulesList->count()>0) {
 
             QList<QPixmap> listPxmap;
             QList<QString> listStrFrameID;
-            //
+            std::cout<<" m->rowCount():"<<(m->rowCount())<<std::endl;
             editWindow->imageLabel->hideAxis();
             for(int i=0;i<m->rowCount();i++)
             {
@@ -1028,7 +1032,7 @@ void MainWindow::TableEditCompleted(QString str)
 
     }
  }
- void MainWindow::saveDataSprite()
+ void MainWindow::saveDataSprite() // // todo : separate this to other class
  {
     qDebug(m_SprfileName.toUtf8());
      if(!m_SprfileName.compare("none") || !m_SprfileName.compare(""))
@@ -1149,7 +1153,7 @@ void MainWindow::TableEditCompleted(QString str)
      openDataSprite("");
  }
 
- void MainWindow::openDataSprite(QString path)
+ void MainWindow::openDataSprite(QString path) // todo : separate this to other class
  {
      ui->tabWidget->setCurrentIndex(Page::MODULE);
 
@@ -1687,11 +1691,13 @@ void MainWindow::exportAll()
         progress.show();
         const int totalSprite = frameUI.comboBox->count();
         int errCode [256];// assume max sprite is 256
-        for(int i=0;i<totalSprite;i++) {
-
-            progress.setValue(i);
-            openSpriteFromIndex(i);
-            errCode[i] = silentExportSprite(i);
+        for(int i=0;i<totalSprite;i++)
+        {
+            if(frameUI.comboBox->itemText(i) !="--List Sprites--") {
+                progress.setValue(i);
+                openSpriteFromIndex(i);
+                errCode[i] = silentExportSprite(i);
+            }
         }
         QMessageBox msg;
         QString strReport = "Exporting finished";
@@ -1758,6 +1764,7 @@ void MainWindow::setWorkDir()
     m_workingExportOutDir = QFileDialog::getExistingDirectory(this, tr("Set export out directory"),
                                                               QDir::currentPath(),
                                                               QFileDialog::ShowDirsOnly
+
                                                               | QFileDialog::DontResolveSymlinks);
     spriteListRefresh();
 
