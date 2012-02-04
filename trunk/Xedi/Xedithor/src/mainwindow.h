@@ -115,6 +115,7 @@ private:
     QString m_workingExportOutDir;
     QTimer* m_timer;
     Ui::Frame frameUI;
+    bool m_silenExport;
 
     void CreateActions();
     void CreateMainMenus();
@@ -159,6 +160,7 @@ public slots:
     void openSpriteFromIndex(int index);
     void spriteListRefresh();
     void exportAll();
+    int exportAllSilent();
     void setWorkDir();
 
     //table shorcut handle
