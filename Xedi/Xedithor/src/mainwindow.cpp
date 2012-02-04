@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setupSpriteManager();
 
     shorcutSetup();
+
+    m_silenExport=false;
+
 }
 
 MainWindow::~MainWindow()
@@ -1682,19 +1685,38 @@ QString MainWindow::removeFileExtension(QString fileName)
     return _result;
 }
 
+int MainWindow::exportAllSilent()
+{
+    m_silenExport=true;
+    exportAll();
+    m_silenExport=false;
+
+    QApplication::exit();
+    return 0;
+}
+
 void MainWindow::exportAll()
 {
     if(m_workingDir!="" || m_workingExportOutDir!="") {
+
         QProgressDialog progress("Exporting files...", "", 0, frameUI.comboBox->count(), this);
         progress.setWindowModality(Qt::WindowModal);
-
-        progress.show();
+        if(!m_silenExport) {
+            progress.show();
+        } else {
+            std::cout<<" ..Xedithor: exporting sprites.."<<std::endl;
+        }
         const int totalSprite = frameUI.comboBox->count();
         int errCode [256];// assume max sprite is 256
         for(int i=0;i<totalSprite;i++)
         {
             if(frameUI.comboBox->itemText(i) !="--List Sprites--") {
-                progress.setValue(i);
+                if(!m_silenExport) {
+                    progress.setValue(i);
+                } else {
+                    double processPercent = (((i*100.0f)/totalSprite));
+                    std::cout<<"..export "<<processPercent<<" % "<<std::endl;
+                }
                 openSpriteFromIndex(i);
                 errCode[i] = silentExportSprite(i);
             }
@@ -1741,8 +1763,13 @@ void MainWindow::exportAll()
         file.close();
         if(allsuccess)
             strReport +="\nNo Error, all success exported";
-        msg.setText(strReport);
-        msg.exec();
+        if(!m_silenExport) {
+            msg.setText(strReport);
+            msg.exec();
+        } else {
+            std::cout<<"..export is done.."<<std::endl;
+            std::cout<<strReport.toStdString().c_str()<<std::endl;
+        }
 
     }
     else {
