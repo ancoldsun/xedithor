@@ -60,6 +60,8 @@ RESOURCES += \
 OTHER_FILES += \
     temp.txt
 
+CONFIG += console
+
 
 
 
