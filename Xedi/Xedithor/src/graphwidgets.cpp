@@ -319,7 +319,8 @@ void GraphWidget::setupGraphViewModule()
     clearGraphPixmapItem();
 
     m_scene->addItem(rectSelect);
-    m_scene->addItem(pixmapGraphicsItem);
+    if(pixmapGraphicsItem != NULL)
+        m_scene->addItem(pixmapGraphicsItem);
     m_tabView = TabView::MODULE;
 }
 
@@ -332,8 +333,15 @@ void GraphWidget::setupGraphViewFrame()
     }
 
     clearGraphPixmapItem();
-    m_scene->removeItem(rectSelect);
-    m_scene->removeItem(pixmapGraphicsItem);
+    // check whether rectSelect is available or not
+    foreach (QGraphicsItem *item, m_scene->items()) {
+        if(item == rectSelect){
+            m_scene->removeItem(item);
+        }
+    }
+
+    if(pixmapGraphicsItem != NULL)
+       m_scene->removeItem(pixmapGraphicsItem);
     m_tabView = TabView::FRAME;
 }
 
