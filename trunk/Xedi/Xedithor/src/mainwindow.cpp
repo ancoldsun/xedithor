@@ -559,13 +559,13 @@ void MainWindow::Del_Clicked()
             MFATableModel* m = static_cast<MFATableModel*>(ui->ft_tableView2->model());
             RowData* rd = m->getDatainRow(row_);
             int id_ =rd->getData(0).toInt();
-            //std::cout<<"id deleted..: "<<id_<<std::endl;
+
             editWindow->imageLabel->DeletePixmapItem(id_);
             /* end del */
 
             /* update module frame count */
             row_ = ui->ft_tableView1->currentIndex().row();
-            //std::cout<<"row_ deleted..: "<<row_<<std::endl;
+
             if(row_ == -1){
                 row_ = 0;
             }
@@ -581,7 +581,22 @@ void MainWindow::Del_Clicked()
         tableDelRow(ui->at_tableView1);
     }
     else if(sender == ui->at_navTable2_button3){
-        tableDelRow(ui->at_tableView2);
+        int anim_subtablecurrentrow = ui->at_tableView2->currentIndex().row();
+        if(anim_subtablecurrentrow != -1){
+
+            MFATableModel* _model = static_cast<MFATableModel*>(ui->at_tableView2->model());
+            anim_subtablecurrentrow = ui->at_tableView1->currentIndex().row();
+
+            if(anim_subtablecurrentrow == -1){
+                anim_subtablecurrentrow = 0;
+            }
+            _model = static_cast<MFATableModel*>(ui->at_tableView1->model());
+            int mf_count = _model->getDatainRow(anim_subtablecurrentrow)->getData(2).toInt();
+            _model->getDatainRow(anim_subtablecurrentrow)->setData(2,QString::number(mf_count-1));
+            _model->refresh();
+
+            tableDelRow(ui->at_tableView2);
+        }
     }
 }
 
@@ -896,8 +911,8 @@ void MainWindow::animDescTableRowSelected(int selected)
 
 void MainWindow::UpdateDataCell(const QModelIndex & indexA, const QModelIndex & indexB)
 {
-    //todo:
-    //std::cout<<"UpdateDataCell..........: "<<std::endl;
+    // todo:
+
 }
 
 void MainWindow::TableEditCompleted(QString str)
@@ -971,7 +986,7 @@ void MainWindow::TableEditCompleted(QString str)
         MFATableModel* m  = static_cast<MFATableModel*>(ui->ft_tableView1->model());
         MFATableModel* m2;
 
-        std::cout<<" indexPage == Page::ANIM :"<<(editWindow->modulesList->count())<<std::endl;
+        //std::cout<<" indexPage == Page::ANIM :"<<(editWindow->modulesList->count())<<std::endl;
         if(editWindow->modulesList->count()>0) {
 
             QList<QPixmap> listPxmap;
