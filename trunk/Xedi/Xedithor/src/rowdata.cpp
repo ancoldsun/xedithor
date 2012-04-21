@@ -15,9 +15,15 @@ RowData::~RowData()
 }
 QString RowData::getData(const int nCol)
 {
+    if( m_ColData.empty() ||
+       (nCol >= m_ColData.size()) ||
+        m_ColData.size() > 65000)
+        return "0";
     return m_ColData.at(nCol);
 }
 void RowData::setData(const int nCol, const QString data)
 {
+    qDebug("setData 1");
     m_ColData[nCol] = data;
+    qDebug("setData 2");
 }
