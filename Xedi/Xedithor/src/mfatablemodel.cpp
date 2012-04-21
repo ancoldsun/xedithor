@@ -161,10 +161,7 @@ bool MFATableModel::cloneRow(int row)
     insertRows(row+1,1);
     // take row data from new inserted row
     RowData* newRowData =m_gridData.at(row+1);
-    // delete it
-    delete newRowData;
-    // replace it with new one, data filled from cloned row
-    newRowData = new RowData(numberCol);
+
     for(int i=0;i<numberCol;i++)
     {
         if(i>1) //don't clone idx & ID // todo :don't hardcoded
