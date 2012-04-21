@@ -11,9 +11,27 @@ bool compareStr(char *str1,char *str2)
     return true;
 }
 
+
+class XedithorApp : public QApplication {
+public:
+  XedithorApp(int& argc, char ** argv) :
+    QApplication(argc, argv) { }
+  virtual ~XedithorApp() { }
+
+  // reimplemented from QApplication so we can throw exceptions in slots
+  virtual bool notify(QObject * receiver, QEvent * event) {
+    try {
+      return QApplication::notify(receiver, event);
+    } catch(std::exception& e) {
+      std::cout << "XedithorApp Exception thrown:" << e.what()<<std::endl;
+    }
+    return false;
+  }
+};
+
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    XedithorApp a(argc, argv);
 
     MainWindow w;
 
