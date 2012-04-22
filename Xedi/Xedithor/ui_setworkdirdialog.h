@@ -1,14 +1,14 @@
 /********************************************************************************
-** Form generated from reading UI file 'exportdialog.ui'
+** Form generated from reading UI file 'setworkdirdialog.ui'
 **
-** Created: Sun Apr 22 19:33:30 2012
+** Created: Sun Apr 22 20:15:06 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_EXPORTDIALOG_H
-#define UI_EXPORTDIALOG_H
+#ifndef UI_SETWORKDIRDIALOG_H
+#define UI_SETWORKDIRDIALOG_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -27,7 +27,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_ExportDialog
+class Ui_SetWorkDirDialog
 {
 public:
     QDialogButtonBox *buttonBox;
@@ -46,20 +46,20 @@ public:
     QLineEdit *lineEditExportOut;
     QToolButton *toolButtonExportOut;
 
-    void setupUi(QDialog *ExportDialog)
+    void setupUi(QDialog *SetWorkDirDialog)
     {
-        if (ExportDialog->objectName().isEmpty())
-            ExportDialog->setObjectName(QString::fromUtf8("ExportDialog"));
-        ExportDialog->resize(440, 170);
-        buttonBox = new QDialogButtonBox(ExportDialog);
+        if (SetWorkDirDialog->objectName().isEmpty())
+            SetWorkDirDialog->setObjectName(QString::fromUtf8("SetWorkDirDialog"));
+        SetWorkDirDialog->resize(516, 175);
+        buttonBox = new QDialogButtonBox(SetWorkDirDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setEnabled(true);
-        buttonBox->setGeometry(QRect(100, 120, 331, 61));
+        buttonBox->setGeometry(QRect(170, 120, 331, 61));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        horizontalLayoutWidget = new QWidget(ExportDialog);
+        horizontalLayoutWidget = new QWidget(SetWorkDirDialog);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(10, 3, 421, 121));
+        horizontalLayoutWidget->setGeometry(QRect(10, 3, 491, 121));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(3);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -84,7 +84,7 @@ public:
         comboBoxFormat = new QComboBox(horizontalLayoutWidget);
         comboBoxFormat->setObjectName(QString::fromUtf8("comboBoxFormat"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Maximum);
-        sizePolicy1.setHorizontalStretch(200);
+        sizePolicy1.setHorizontalStretch(180);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(comboBoxFormat->sizePolicy().hasHeightForWidth());
         comboBoxFormat->setSizePolicy(sizePolicy1);
@@ -167,29 +167,29 @@ public:
         horizontalLayout->addLayout(verticalLayout_3);
 
 
-        retranslateUi(ExportDialog);
-        QObject::connect(buttonBox, SIGNAL(accepted()), ExportDialog, SLOT(accept()));
-        QObject::connect(buttonBox, SIGNAL(rejected()), ExportDialog, SLOT(reject()));
+        retranslateUi(SetWorkDirDialog);
+        QObject::connect(buttonBox, SIGNAL(accepted()), SetWorkDirDialog, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), SetWorkDirDialog, SLOT(reject()));
 
-        QMetaObject::connectSlotsByName(ExportDialog);
+        QMetaObject::connectSlotsByName(SetWorkDirDialog);
     } // setupUi
 
-    void retranslateUi(QDialog *ExportDialog)
+    void retranslateUi(QDialog *SetWorkDirDialog)
     {
-        ExportDialog->setWindowTitle(QApplication::translate("ExportDialog", "Exporting Sprite", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("ExportDialog", "Format", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("ExportDialog", "Texture Packer", 0, QApplication::UnicodeUTF8));
-        toolButtonTexturePath->setText(QApplication::translate("ExportDialog", "...", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("ExportDialog", "Export Out", 0, QApplication::UnicodeUTF8));
-        toolButtonExportOut->setText(QApplication::translate("ExportDialog", "...", 0, QApplication::UnicodeUTF8));
+        SetWorkDirDialog->setWindowTitle(QApplication::translate("SetWorkDirDialog", "Work directory setting", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("SetWorkDirDialog", "Export Format", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("SetWorkDirDialog", "Working Directory", 0, QApplication::UnicodeUTF8));
+        toolButtonTexturePath->setText(QApplication::translate("SetWorkDirDialog", "...", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("SetWorkDirDialog", "Export Directory  ", 0, QApplication::UnicodeUTF8));
+        toolButtonExportOut->setText(QApplication::translate("SetWorkDirDialog", "...", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class ExportDialog: public Ui_ExportDialog {};
+    class SetWorkDirDialog: public Ui_SetWorkDirDialog {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_EXPORTDIALOG_H
+#endif // UI_SETWORKDIRDIALOG_H
