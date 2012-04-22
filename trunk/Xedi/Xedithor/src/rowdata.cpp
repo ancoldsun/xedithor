@@ -23,7 +23,5 @@ QString RowData::getData(const int nCol)
 }
 void RowData::setData(const int nCol, const QString data)
 {
-    qDebug("setData 1");
     m_ColData[nCol] = data;
-    qDebug("setData 2");
 }

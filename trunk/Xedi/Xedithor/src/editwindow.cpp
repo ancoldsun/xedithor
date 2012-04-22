@@ -37,11 +37,17 @@ EditWindow::EditWindow(QWidget *parent) :
     windowEditToolBar = new QToolBar(this);
     windowEditToolBar->addAction(zoomInAct);
     windowEditToolBar->addAction(zoomOutAct);
+    // fps slider
     QSlider* slider =new QSlider((Qt::Horizontal));
     slider->setFixedWidth(100);
-    slider->setTickInterval(100);
-    slider->setValue(100);
+    slider->setTickInterval(99);
+    slider->setRange(1,100);
+    slider->setValue(default_fps);
     windowEditToolBar->addWidget(slider);
+    // fps label
+    m_FpsLabel =new QLabel(string_fps+QString::number(default_fps),this);
+    windowEditToolBar->addWidget(m_FpsLabel);
+
     this->addToolBar(windowEditToolBar);
     scaleFactor=1.0f;
 
@@ -67,6 +73,12 @@ EditWindow::EditWindow(QWidget *parent) :
     connect(slider,SIGNAL(valueChanged(int)),this,SLOT(setTimerInterval(int)));
 }
 
+void EditWindow::setTimerInterval(int value)
+{
+    this->imageLabel->setTimerInterval(value);
+    QString sFps=string_fps+QString::number(value);
+    m_FpsLabel->setText(sFps);
+}
 EditWindow::~EditWindow()
 {
     delete ui;

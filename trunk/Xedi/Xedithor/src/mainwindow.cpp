@@ -7,6 +7,7 @@
 #include "packtextureparser.h"
 #include "exportdialog.h"
 #include "ui_exportdialog.h"
+#include "setworkdirdialog.h"
 #include "ui_toolDialog.h"
 #include "appconfig.h"
 
@@ -352,16 +353,6 @@ bool MainWindow::saveAs()
 void MainWindow::about()
 {
 
-}
-
-void spin(int &iteration)
-{
-    const int work = 1000 * 1000 * 40;
-    volatile int v = 0;
-    for (int j = 0; j < work; ++j)
-        ++v;
-
-    qDebug() << "iteration" << iteration << "in thread" << QThread::currentThreadId();
 }
 
 void MainWindow::exportSprite()
@@ -1802,21 +1793,19 @@ void MainWindow::exportAll()
 
 void MainWindow::setWorkDir()
 {
-    //---
-    m_workingDir          = QFileDialog::getExistingDirectory(this, tr("Set working directory"),
-                                                                    QDir::currentPath(),
-                                                                    QFileDialog::ShowDirsOnly
-                                                                    | QFileDialog::DontResolveSymlinks);
-    //---
-    m_workingExportOutDir = QFileDialog::getExistingDirectory(this, tr("Set export out directory"),
-                                                              QDir::currentPath(),
-                                                              QFileDialog::ShowDirsOnly
+    SetWorkDirDialog* setDirDlg = new SetWorkDirDialog(this);
+    setDirDlg->setPrevWorkDirPath(m_workingDir,m_workingExportOutDir);
+    int retValue = setDirDlg->exec();
 
-                                                              | QFileDialog::DontResolveSymlinks);
-    spriteListRefresh();
-
-    AppConfig::getInstance()->saveWorkingDir(m_workingDir,m_workingExportOutDir);
-
+    if(retValue == QDialog::Accepted)
+    {
+        m_workingDir          = setDirDlg->getWorkDir();
+        m_workingExportOutDir = setDirDlg->getExportDir();
+        spriteListRefresh();
+        AppConfig::getInstance()->saveWorkingDir(m_workingDir,m_workingExportOutDir);
+    }
+    delete setDirDlg;
+    setDirDlg=NULL;
 }
 // create some shorcut
 // yeah, best way is inherited table view to capture key, this is not elegant

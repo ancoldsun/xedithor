@@ -17,6 +17,7 @@
 #include "hlinegraphicsitem.h"
 #include "rowdata.h"
 #include "animatedPixmapItem.h"
+#include "globalconstant.h"
 
 QT_BEGIN_NAMESPACE
     class QLabel;
@@ -71,7 +72,8 @@ public:
     }
 
     inline void setTimerInterval(int value){
-        this->m_timer->setInterval(value*10);
+        std::cout<<" fps: "<<value<<std::endl;
+        this->m_timer->setInterval((millisecond/value));
     }
 
 

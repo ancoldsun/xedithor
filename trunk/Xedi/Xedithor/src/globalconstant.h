@@ -95,6 +95,11 @@ namespace DFRM
 
 namespace DANIM
 {
-const int MFIELD = 5;
+    const int MFIELD = 5;
 }
+
+const int default_fps = 10;
+const int millisecond = 1000;
+const QString string_fps ="   FPS: ";
+
 #endif // GLOBALCONSTANT_H

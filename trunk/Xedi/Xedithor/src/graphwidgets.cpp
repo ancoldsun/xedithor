@@ -57,9 +57,9 @@ GraphWidget::GraphWidget(QWidget *parent)
     m_animatedItem = NULL;
 
     m_timer =new QTimer(this);
-    m_timer->setInterval(200);
+    m_timer->setInterval(millisecond/default_fps);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerHit()));
-    m_timer->start(200);
+    m_timer->start(millisecond/default_fps);
 }
 
 void GraphWidget::setImageGraphicsItem(QPixmap* pxmap)
@@ -297,7 +297,7 @@ void GraphWidget::setModeView(const int mode) {
 
     switch(modeView)
     {
-    case ModeView::DRAG_MODE :  setCursor(Qt::SizeFDiagCursor);
+    case ModeView::DRAG_MODE :  //setCursor(Qt::SizeFDiagCursor);
                                 break;
     case ModeView::EDIT_MODE :  setCursor(Qt::CrossCursor);
                                 break;
