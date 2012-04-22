@@ -58,6 +58,7 @@ private:
     QToolBar *windowEditToolBar;
     QAction* zoomInAct;
     QAction* zoomOutAct;
+    QLabel* m_FpsLabel;
     int m_modeView;
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
@@ -70,10 +71,8 @@ public:
      ModulesList* modulesList;
 public slots:
      void FrameDoubleClicked(const QModelIndex& index);
+     void setTimerInterval(int value);
 
-     inline void setTimerInterval(int value){
-         this->imageLabel->setTimerInterval(value);
-     }
 };
 
 #endif // EDITWINDOW_H
