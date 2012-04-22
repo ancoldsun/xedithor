@@ -26,7 +26,8 @@ SOURCES += src\main.cpp\
     src/packtextureparser.cpp \
     src/exportdialog.cpp \
     src/spriteexporter.cpp \
-    src/appconfig.cpp
+    src/appconfig.cpp \
+    src/setworkdirdialog.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -45,14 +46,16 @@ HEADERS  += mainwindow.h \
     src/packtextureparser.h \
     src/exportdialog.h \
     src/spriteexporter.h \
-    src/appconfig.h
+    src/appconfig.h \
+    src/setworkdirdialog.h
 
 
 FORMS    += mainwindow.ui \
     editwindow.ui \
     toolDialog.ui \
     exportdialog.ui \
-    spriteselector.ui
+    spriteselector.ui \
+    setworkdirdialog.ui
 
 RESOURCES += \
     XedithorResources.qrc
@@ -61,6 +64,9 @@ OTHER_FILES += \
     temp.txt
 
 CONFIG += console
+
+
+
 
 
 
