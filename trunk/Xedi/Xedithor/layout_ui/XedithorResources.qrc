@@ -1,0 +1,177 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/new.png</file>
+        <file>images/open.png</file>
+        <file>images/paste.png</file>
+        <file>images/save.png</file>
+        <file>images/zoomIn.png</file>
+        <file>images/zoomOut.png</file>
+        <file>images/cheese.jpg</file>
+        <file>images/Selection.png</file>
+        <file>images/Arrow.png</file>
+        <file>images/editRect.png</file>
+        <file>images/pan.png</file>
+        <file>images/Add.png</file>
+        <file>images/bobombred.png</file>
+        <file>images/Color.png</file>
+        <file>images/Create.png</file>
+        <file>images/Del.png</file>
+        <file>images/Flip.png</file>
+        <file>images/Flip horizontally.png</file>
+        <file>images/Forward.png</file>
+        <file>images/Leftright.png</file>
+        <file>images/Refresh.png</file>
+        <file>images/RoundRect.png</file>
+        <file>images/SaveAs.png</file>
+        <file>images/SelectColors.png</file>
+        <file>images/StepForwardNormalBlue.png</file>
+        <file>images/Stop.png</file>
+        <file>images/Stop1NormalBlue.png</file>
+        <file>images/Updown.png</file>
+        <file>images/3d bar chart.png</file>
+        <file>images/Abort.png</file>
+        <file>images/About.png</file>
+        <file>images/Anchor.png</file>
+        <file>images/Application.png</file>
+        <file>images/Apply.png</file>
+        <file>images/Back.png</file>
+        <file>images/Bad mark.png</file>
+        <file>images/Blue key.png</file>
+        <file>images/Blue tag.png</file>
+        <file>images/Boss.png</file>
+        <file>images/Bottom.png</file>
+        <file>images/Calculator.png</file>
+        <file>images/Calendar.png</file>
+        <file>images/Car key.png</file>
+        <file>images/CD.png</file>
+        <file>images/Clipboard.png</file>
+        <file>images/Clock.png</file>
+        <file>images/Close.png</file>
+        <file>images/Compass.png</file>
+        <file>images/Component.png</file>
+        <file>images/Danger.png</file>
+        <file>images/Database.png</file>
+        <file>images/Delete.png</file>
+        <file>images/Delivery.png</file>
+        <file>images/Dial.png</file>
+        <file>images/Disaster.png</file>
+        <file>images/Dollar.png</file>
+        <file>images/Down.png</file>
+        <file>images/Download.png</file>
+        <file>images/Eject.png</file>
+        <file>images/E-mail.png</file>
+        <file>images/Erase.png</file>
+        <file>images/Error.png</file>
+        <file>images/Euro.png</file>
+        <file>images/Exit.png</file>
+        <file>images/Fall.png</file>
+        <file>images/Fast-forward.png</file>
+        <file>images/Favourites.png</file>
+        <file>images/Female.png</file>
+        <file>images/Filter.png</file>
+        <file>images/Find.png</file>
+        <file>images/First.png</file>
+        <file>images/First record.png</file>
+        <file>images/Flag.png</file>
+        <file>images/Folder.png</file>
+        <file>images/Forbidden.png</file>
+        <file>images/Free bsd.png</file>
+        <file>images/Go.png</file>
+        <file>images/Go back.png</file>
+        <file>images/Go forward.png</file>
+        <file>images/Good-mark.png</file>
+        <file>images/Green tag.png</file>
+        <file>images/Heart.png</file>
+        <file>images/Help.png</file>
+        <file>images/Help book.png</file>
+        <file>images/Help book 3d.png</file>
+        <file>images/Hint.png</file>
+        <file>images/Home.png</file>
+        <file>images/How-to.png</file>
+        <file>images/Hungup.png</file>
+        <file>images/Info.png</file>
+        <file>images/Key.png</file>
+        <file>images/Last.png</file>
+        <file>images/Last recor.png</file>
+        <file>images/Left-right.png</file>
+        <file>images/Lightning.png</file>
+        <file>images/Linux.png</file>
+        <file>images/List.png</file>
+        <file>images/Load.png</file>
+        <file>images/Lock.png</file>
+        <file>images/Low rating.png</file>
+        <file>images/Mail.png</file>
+        <file>images/Male.png</file>
+        <file>images/Medium rating.png</file>
+        <file>images/Message.png</file>
+        <file>images/Mobile-phone.png</file>
+        <file>images/Modify.png</file>
+        <file>images/Movie.png</file>
+        <file>images/Music.png</file>
+        <file>images/New document.png</file>
+        <file>images/Next.png</file>
+        <file>images/Next track.png</file>
+        <file>images/No.png</file>
+        <file>images/No-entry.png</file>
+        <file>images/Notes.png</file>
+        <file>images/OK.png</file>
+        <file>images/Pause.png</file>
+        <file>images/People.png</file>
+        <file>images/Person.png</file>
+        <file>images/Phone number.png</file>
+        <file>images/Pie chart.png</file>
+        <file>images/Pinion.png</file>
+        <file>images/Play.png</file>
+        <file>images/Playback.png</file>
+        <file>images/Play-music.png</file>
+        <file>images/Previous.png</file>
+        <file>images/Previous record.png</file>
+        <file>images/Problem.png</file>
+        <file>images/Question.png</file>
+        <file>images/Raise.png</file>
+        <file>images/Record.png</file>
+        <file>images/Red mark.png</file>
+        <file>images/Red star.png</file>
+        <file>images/Red tag.png</file>
+        <file>images/Redo.png</file>
+        <file>images/Remove.png</file>
+        <file>images/Repair.png</file>
+        <file>images/Report.png</file>
+        <file>images/Retort.png</file>
+        <file>images/Rewind.png</file>
+        <file>images/Sad.png</file>
+        <file>images/Search.png</file>
+        <file>images/Shopping cart.png</file>
+        <file>images/Smile.png</file>
+        <file>images/Sound.png</file>
+        <file>images/Stop sign.png</file>
+        <file>images/Sync.png</file>
+        <file>images/Table.png</file>
+        <file>images/Target.png</file>
+        <file>images/Taxi.png</file>
+        <file>images/Terminate.png</file>
+        <file>images/Text.png</file>
+        <file>images/Text preview.png</file>
+        <file>images/Thumbs down.png</file>
+        <file>images/Thumbs up.png</file>
+        <file>images/Top.png</file>
+        <file>images/Turn off.png</file>
+        <file>images/Undo.png</file>
+        <file>images/Unlock.png</file>
+        <file>images/Up.png</file>
+        <file>images/Update.png</file>
+        <file>images/Up-down.png</file>
+        <file>images/Upload.png</file>
+        <file>images/User group.png</file>
+        <file>images/View.png</file>
+        <file>images/Warning.png</file>
+        <file>images/Wrench.png</file>
+        <file>images/Yes.png</file>
+        <file>images/Zoom.png</file>
+        <file>images/invalid.png</file>
+        <file>images/invalidF.png</file>
+        <file>images/createModuleInfo.PNG</file>
+    </qresource>
+</RCC>
