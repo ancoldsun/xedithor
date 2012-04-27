@@ -58,7 +58,7 @@ FORMS    += layout_ui/mainwindow.ui \
     layout_ui/setworkdirdialog.ui
 
 RESOURCES += \
-    XedithorResources.qrc
+   layout_ui/XedithorResources.qrc
 
 OTHER_FILES += \
     temp.txt
