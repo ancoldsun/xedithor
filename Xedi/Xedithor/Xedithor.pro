@@ -50,12 +50,12 @@ HEADERS  += mainwindow.h \
     src/setworkdirdialog.h
 
 
-FORMS    += mainwindow.ui \
-    editwindow.ui \
-    toolDialog.ui \
-    exportdialog.ui \
-    spriteselector.ui \
-    setworkdirdialog.ui
+FORMS    += layout_ui/mainwindow.ui \
+    layout_ui/editwindow.ui \
+    layout_ui/toolDialog.ui \
+    layout_ui/exportdialog.ui \
+    layout_ui/spriteselector.ui \
+    layout_ui/setworkdirdialog.ui
 
 RESOURCES += \
     XedithorResources.qrc
