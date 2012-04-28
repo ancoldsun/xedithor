@@ -128,6 +128,10 @@ private:
     Ui::Frame frameUI;
     bool m_silenExport;
 
+    //list frame
+    QList<QPixmap> m_ListPxmap;
+    QList<QString> m_ListStrFrameID;
+
     void CreateActions();
     void CreateMainMenus();
     void CreateToolBar();
@@ -168,7 +172,7 @@ public slots:
     void timerHit();
     void reOffsetFrames();
 
-    void openSpriteFromIndex(int index);
+    void openSpriteFromIndex(int index,bool generate=false);
     void spriteListRefresh();
     void exportAll();
     int exportAllSilent();
