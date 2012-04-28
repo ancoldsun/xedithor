@@ -980,8 +980,8 @@ void MainWindow::TableEditCompleted(QString str)
         //std::cout<<" indexPage == Page::ANIM :"<<(editWindow->modulesList->count())<<std::endl;
         if(editWindow->modulesList->count()>0) {
 
-            QList<QPixmap> listPxmap;
-            QList<QString> listStrFrameID;
+            m_ListPxmap.clear();
+            m_ListStrFrameID.clear();
             std::cout<<" m->rowCount():"<<(m->rowCount())<<std::endl;
             editWindow->imageLabel->hideAxis();
             for(int i=0;i<m->rowCount();i++)
@@ -1020,8 +1020,8 @@ void MainWindow::TableEditCompleted(QString str)
                     if(nModuleInFrame>0)
                     {
                         QPixmap pieceImage =QPixmap::fromImage((editWindow->imageLabel->exportToImage()));
-                        listStrFrameID.push_back(m->getDatainRow(i)->getData(1));
-                        listPxmap.push_back(pieceImage);
+                        m_ListStrFrameID.push_back(m->getDatainRow(i)->getData(1));
+                        m_ListPxmap.push_back(pieceImage);
                     }
                 }
             }
@@ -1029,10 +1029,10 @@ void MainWindow::TableEditCompleted(QString str)
             editWindow->getModuleList()->clear();
             editWindow->imageLabel->clearGraphPixmapItem();
 
-            for(int i=0;i<listPxmap.count();i++)
+            for(int i=0;i<m_ListPxmap.count();i++)
             {
-                QPixmap _pixmap = listPxmap.at(i);
-                editWindow->getModuleList()->addPiece(_pixmap,QPoint(0,0),listStrFrameID.at(i));
+                QPixmap _pixmap = m_ListPxmap.at(i);
+                editWindow->getModuleList()->addPiece(_pixmap,QPoint(0,0),m_ListStrFrameID.at(i));
             }
         }
         editWindow->setupViewAnim();
@@ -1650,14 +1650,64 @@ void MainWindow::setupSpriteManager()
     connect(frameUI.tbworkDir,SIGNAL(clicked()),this,SLOT(setWorkDir()));
 }
 
-void MainWindow::openSpriteFromIndex(int index)
+void MainWindow::openSpriteFromIndex(int index,bool generate)
 {
     QString strOpenSprite = frameUI.comboBox->itemText( index);
-    if(!(strOpenSprite =="--List Sprites--" || strOpenSprite =="")){
+    if(!(strOpenSprite =="--List Sprites--" || strOpenSprite ==""))
+    {
         QString strOpenSpritePath = m_workingDir+"/"+strOpenSprite;
         openDataSprite(strOpenSpritePath);
         frameUI.comboBox->setCurrentIndex(0);
-    }
+
+        if(generate)
+        {
+            PageTabChanged(Page::FRAME);
+            PageTabChanged(Page::ANIM);
+
+            QDir dirTempImg(m_workingExportOutDir);
+            dirTempImg.mkpath("frames");
+            dirTempImg.mkpath("anims");
+
+            // save img from frames
+            for(int i=0;i<m_ListPxmap.count();i++)
+            {
+                QString nameImgSave = QString::number(index)+"_F_"+m_ListStrFrameID.at(i)+".png";
+                QPixmap imgSave     = m_ListPxmap.at(i);
+                imgSave.save(m_workingExportOutDir+"\\frames\\"+nameImgSave,0,-1);
+
+                // std::cout<<"save: "<<nameImgSave.toStdString().c_str()<<std::endl;
+            }
+            // save img from anims
+            MFATableModel* _animModel   = static_cast<MFATableModel*>(ui->at_tableView1->model());
+            int numberRow = _animModel->rowCount();
+
+            for(int ix=0;ix<numberRow;ix++)
+            {
+               RowData* rd  = _animModel->getDatainRow(ix);
+               int IdAnim      = rd->getData(1).toInt();
+               QString animName =QString::number(IdAnim)+"_"+rd->getData(3);
+
+               MFATableModel* m  = _animModel->getModel(ix);
+               int nFrameAnim = m->rowCount();
+
+               if(nFrameAnim>0)
+               {
+                   RowData* rd2 = m->getDatainRow(0);
+                   int FrmID        =rd2->getData(1).toInt();
+
+                   for(int i=0;i<m_ListPxmap.count();i++)
+                   {
+                       if(FrmID == m_ListStrFrameID.at(i).toInt())
+                       {
+                           QString nameImgSave = QString::number(index)+"_A_"+animName+".png";
+                           QPixmap imgSave     = m_ListPxmap.at(i);
+                           imgSave.save(m_workingExportOutDir+"\\anims\\"+nameImgSave,0,-1);
+                       }
+                   }
+               }
+            }
+        }
+   }
 }
 
 void MainWindow::spriteListRefresh()
@@ -1723,7 +1773,7 @@ void MainWindow::exportAll()
                     double processPercent = (((i*100.0f)/totalSprite));
                     std::cout<<"..export "<<processPercent<<" % "<<std::endl;
                 }
-                openSpriteFromIndex(i);
+                openSpriteFromIndex(i,true);
                 errCode[i] = silentExportSprite(i);
             }
         }
