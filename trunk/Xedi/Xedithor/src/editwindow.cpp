@@ -249,13 +249,23 @@ void EditWindow::createAnimation()
         int _posx         = rd->getData(2).toInt();
         int _posy         = rd->getData(3).toInt();
 
-        QPixmap pixmap = modulesList->getItemByText(moduleID_)->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
+        QListWidgetItem* item = modulesList->getItemByText(moduleID_);
+        QPixmap pixmap;
+        if(item!=NULL)
+        {
+            pixmap = item->icon().pixmap(ITEM_PIXMAP::Max_W,ITEM_PIXMAP::Max_H);
+        }
+        else
+        {
+            pixmap = QPixmap::fromImage(QImage(":/images/invalidF.png"));
+        }
         QPixmap copyPixmap = pixmap.copy();
 
         listPixmap.push_back(copyPixmap);
 
         QPoint _pos(_posx,_posy);
         listPos.push_back(_pos);
+
     }
     imageLabel->createAnimation(listPixmap,listPos);
 }
