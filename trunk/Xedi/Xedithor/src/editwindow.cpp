@@ -241,6 +241,7 @@ void EditWindow::createAnimation()
 
     QList<QPixmap> listPixmap;
     QList<QPoint> listPos;
+    QList<int> listTimeShown;
     for(int i=0;i<_model->rowCount();i++)
     {
         RowData* rd = _model->getDatainRow(i);
@@ -248,6 +249,7 @@ void EditWindow::createAnimation()
         QString moduleID_ = rd->getData(1);
         int _posx         = rd->getData(2).toInt();
         int _posy         = rd->getData(3).toInt();
+        int timeShown     = rd->getData(4).toInt();
 
         QListWidgetItem* item = modulesList->getItemByText(moduleID_);
         QPixmap pixmap;
@@ -265,7 +267,8 @@ void EditWindow::createAnimation()
 
         QPoint _pos(_posx,_posy);
         listPos.push_back(_pos);
+        listTimeShown.push_back(timeShown);
 
     }
-    imageLabel->createAnimation(listPixmap,listPos);
+    imageLabel->createAnimation(listPixmap,listPos,listTimeShown);
 }

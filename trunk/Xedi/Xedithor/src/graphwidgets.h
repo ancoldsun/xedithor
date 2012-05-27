@@ -69,7 +69,7 @@ public:
     void setSelectedPixmapItem(int idSelected);
     void DeletePixmapItem(int idDeleted);
     QImage exportToImage();
-    void createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos);
+    void createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos,QList<int>&listTimeShown);
     void addAxis();
     void hideAxis();
     void showAxis();

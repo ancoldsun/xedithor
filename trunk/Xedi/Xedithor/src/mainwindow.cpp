@@ -199,7 +199,7 @@ void MainWindow::SetupTables()
     m_animTableModel->setSubModelRowHandler(new AnimDescRowDataHandler());
     ui->at_tableView1->setModel(m_animTableModel);
     ui->at_tableView1->setSelectionBehavior(QTableView::SelectRows);
-    m_animTableModel->AddEditableColumn(3);
+    m_animTableModel->AddEditableColumn(3); // anim name column
 
     width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
     for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
@@ -213,6 +213,7 @@ void MainWindow::SetupTables()
     m_animDescTableModel = new MFATableModel(this,SETUPTABLE::RowCount,SETUPTABLE::ColCount,new AnimDescRowDataHandler());
     ui->at_tableView2->setModel(m_animDescTableModel);
     ui->at_tableView2->setSelectionBehavior(QTableView::SelectRows);
+    m_animDescTableModel->AddEditableColumn(4); // timeline column
 
     width_col = CMainWindow::MIN_WIDTH_LEFT_DOCK / CMainWindow::COUNT_COLUMN_TABLE - 4;
     for(int m=0;m<CMainWindow::COUNT_COLUMN_TABLE;m++)
@@ -1146,6 +1147,7 @@ void MainWindow::TableEditCompleted(QString str)
             dataRow=dataRow+rd2->getData(1)+" ";
             dataRow=dataRow+rd2->getData(2)+" ";
             dataRow=dataRow+rd2->getData(3)+" ";
+            dataRow=dataRow+rd2->getData(4)+" ";
 
             stream.writeTextElement("RowFrmAnim", dataRow);
         }
@@ -1313,6 +1315,7 @@ void MainWindow::TableEditCompleted(QString str)
                                 header.push_back(xml.attributes().at(0).value().toString());
                                 header.push_back(xml.attributes().at(1).value().toString());
                                 header.push_back(xml.attributes().at(2).value().toString());
+                                //header.push_back(xml.attributes().at(3).value().toString());
 
                                 while(!(xml.tokenType() == QXmlStreamReader::EndElement &&
                                                         xml.name() == "itemAnim"))
@@ -1472,6 +1475,7 @@ void MainWindow::TableEditCompleted(QString str)
     rd->setData(2,header.at(1));
     rd->setData(3,header.at(2));
 
+
     /* set sub Model */
     MFATableModel* _model_frame = m_animTableModel->getModel(rowNow);
 
@@ -1505,6 +1509,10 @@ void MainWindow::TableEditCompleted(QString str)
         rd2->setData(1,datRow.at(0));
         rd2->setData(2,datRow.at(1));
         rd2->setData(3,datRow.at(2));
+        if(datRow.count()<4)      // this is previous format saving file
+            rd2->setData(4,"1");  // ensure format doesn't break
+        else
+            rd2->setData(4,datRow.at(3));
 
         datRow.clear();
 

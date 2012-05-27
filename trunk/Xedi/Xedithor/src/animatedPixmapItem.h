@@ -18,11 +18,12 @@
 
 
 #include <QGraphicsItem>
+#include <QElapsedTimer>
 
 class AnimatedPixmapItem : public QGraphicsItem
 {
 public:
-    AnimatedPixmapItem(const QList<QPixmap>& animation,const QList<QPoint>& listPos, QGraphicsScene *scene = 0);
+    AnimatedPixmapItem(const QList<QPixmap>& animation,const QList<QPoint>& listPos,const QList<int>&listTimeShown, QGraphicsScene *scene = 0);
 
     void setFrame(int frame);
     inline int frame() const  {
@@ -57,11 +58,13 @@ private:
         QPainterPath shape;
         QRectF boundingRect;
         QPoint position;
+        int timeShow;
     };
 
     int currentFrame;
     QList<Frame> frames;
     qreal vx, vy;
+    QElapsedTimer m_frameTimeElapsed;
 };
 
 #endif // ANIMATEDPIXMAPITEM_H

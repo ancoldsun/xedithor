@@ -112,8 +112,9 @@ bool MFATableModel::insertRows ( int row, int count, const QModelIndex & parent 
             }
             MFATableModel* childModel = new MFATableModel(this,0,6,m_subHandler);
             RowData::m_Handler = m_handler;
-            childModel->AddEditableColumn(2);
-            childModel->AddEditableColumn(3);
+            childModel->AddEditableColumn(2); // offset x
+            childModel->AddEditableColumn(3); // offset y
+            childModel->AddEditableColumn(4); // in anim is time line
             m_listModel.insert(row,childModel);
         }
     }
