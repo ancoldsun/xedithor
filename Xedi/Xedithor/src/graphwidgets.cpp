@@ -442,7 +442,7 @@ QImage GraphWidget::exportToImage()
     return image;
 }
 
-void GraphWidget::createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos)
+void GraphWidget::createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos,QList<int>&listTimeShown)
 {
 
     if(m_animatedItem!=NULL)
@@ -452,7 +452,7 @@ void GraphWidget::createAnimation(QList<QPixmap>&list,QList<QPoint>&listPos)
     }
     if(list.count()>0)
     {
-        m_animatedItem = new AnimatedPixmapItem(list,listPos,this->m_scene);
+        m_animatedItem = new AnimatedPixmapItem(list,listPos,listTimeShown,this->m_scene);
         m_animatedItem->setPos(WidthRectView / 2 ,HeightRectView / 2 );
         m_animatedItem->setFrame( 0 );
     }

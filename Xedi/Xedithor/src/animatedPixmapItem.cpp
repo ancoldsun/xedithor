@@ -7,6 +7,7 @@
 
 AnimatedPixmapItem::AnimatedPixmapItem(const QList<QPixmap> &animation,
                                        const QList<QPoint> &listPos,
+                                       const QList<int>&listTimeShown,
                                        QGraphicsScene *scene)
     : QGraphicsItem(0), currentFrame(0), vx(0), vy(0)
 {
@@ -17,9 +18,10 @@ AnimatedPixmapItem::AnimatedPixmapItem(const QList<QPixmap> &animation,
         frame.shape = QPainterPath();
         frame.boundingRect = pixmap.rect();
         frame.position = listPos.at(i);
+        frame.timeShow = listTimeShown.at(i);
         frames << frame;
     }
-
+    m_frameTimeElapsed.start();
     scene->addItem(this);
 }
 
@@ -35,7 +37,11 @@ void AnimatedPixmapItem::nextFrame()
 {
     if(currentFrame<frames.count()-1)
     {
-             currentFrame++;
+        if(m_frameTimeElapsed.elapsed() >=  frames.at(currentFrame).timeShow)
+        {
+            m_frameTimeElapsed.restart();
+            currentFrame++;
+        }
     }
     else
     {
