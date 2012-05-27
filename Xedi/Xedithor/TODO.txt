@@ -4,7 +4,7 @@ Jan 31, 2012
 -command line exporting [DONE]
 -separate class for (reader and writer xml sprite)
 -flip and rotate frame.
--write documentation
+-write documentation [DONE]
 -undo/redo
 -sample usage [1] libgdx, [2] SDLlib
 
@@ -13,4 +13,4 @@ Jan 31, 2012
 
 
 -add and export frame width and height
--smoothing animation 
+-smoothing animation :add showtime {DONE]
