@@ -124,6 +124,8 @@ private:
     QString m_SprfileName;
     QString m_workingDir;
     QString m_workingExportOutDir;
+    QString m_exportSrcDir;
+    QString m_packageName;
     QTimer* m_timer;
     Ui::Frame frameUI;
     bool m_silenExport;

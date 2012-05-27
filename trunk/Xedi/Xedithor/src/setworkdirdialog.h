@@ -47,20 +47,30 @@ public:
     QString getExportDir() const {
         return m_pathOut;
     }
+    QString getExportSrcDir() const {
+        return m_pathOutSrc;
+    }
+
+    QString getPackageName();
+
     int getExportFormat() const {
         return m_expFormat;
     }
-    void setPrevWorkDirPath(QString workDir,QString exportDir);
+    void setPrevWorkDirPath(QString workDir,QString exportDir,
+                            QString exportDirSrc,QString packageName);
 
 private:
     Ui::SetWorkDirDialog *ui;
     QString m_pathTexturePacker;
     QString m_pathOut;
+    QString m_pathOutSrc;
+    QString m_packageName;
     int m_expFormat;
 
 private slots:
     void setPathTexturePacker();
     void setPathOut();
+    void setPathOutSrc();
     void setExportFormat(int index);
 };
 #endif // SETWORKDIRDIALOG_H

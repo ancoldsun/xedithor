@@ -30,6 +30,8 @@ struct configurationValue
 {
     QString workingDir;
     QString exportDir;
+    QString exportDirSrc;
+    QString package;
 };
 
 class AppConfig : public QObject
@@ -41,7 +43,7 @@ public:
 
     QSettings *appSettings() const { return m_setting; }
     configurationValue Config;
-    void saveWorkingDir(QString wDir,QString eDir);
+    void saveWorkingDir(QString wDir,QString eDir,QString eDirSrc,QString package);
 
 private:
     QSettings* m_setting;

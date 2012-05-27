@@ -27,7 +27,8 @@ SOURCES += src\main.cpp\
     src/exportdialog.cpp \
     src/spriteexporter.cpp \
     src/appconfig.cpp \
-    src/setworkdirdialog.cpp
+    src/setworkdirdialog.cpp \
+    src/imgslicerthread.cpp
 
 HEADERS  += mainwindow.h \
     src/xscene.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     src/exportdialog.h \
     src/spriteexporter.h \
     src/appconfig.h \
-    src/setworkdirdialog.h
+    src/setworkdirdialog.h \
+    src/imgslicerthread.h
 
 
 FORMS    += layout_ui/mainwindow.ui \
@@ -64,6 +66,8 @@ OTHER_FILES += \
     temp.txt
 
 CONFIG += console
+
+
 
 
 

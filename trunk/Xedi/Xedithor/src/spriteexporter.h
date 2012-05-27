@@ -40,6 +40,12 @@ public:
     void setSprName(QString sprname)  {
         m_sprName =sprname;
     }
+    void setExportOutSrcPath(QString exportOutSrc)  {
+        m_exportOutSrcDir = exportOutSrc;
+    }
+    void setPackageName(QString packageName)  {
+        m_packageName = packageName;
+    }
 
     // QString m_pstdout;
     // QString m_pstderr;
@@ -52,6 +58,9 @@ private:
     QPixmap m_imgSource;
     QString m_texturePackerDir;
     QString m_exportOutDir;
+    QString m_exportOutSrcDir;
+    QString m_packageName;
+
     QString m_imgSourcePath;
     QString m_sprName;
 

@@ -15,19 +15,26 @@ SetWorkDirDialog::SetWorkDirDialog(QWidget *parent) :
     ui->comboBoxFormat->addItem("F_LGDX",binLibGDX);
     ui->comboBoxFormat->addItem("F_DEFAULT",binCommon);
     ui->lineEditTexturePath->setText(m_pathTexturePacker);
+    ui->lineEditPackageHeader->setText("");
 
     connect(ui->comboBoxFormat,SIGNAL(currentIndexChanged(int)),this,SLOT(setExportFormat(int)));
     connect(ui->toolButtonTexturePath, SIGNAL(clicked()), this, SLOT(setPathTexturePacker()));
     connect(ui->toolButtonExportOut, SIGNAL(clicked()), this, SLOT(setPathOut()));
+    connect(ui->toolButtonExportOutSrc, SIGNAL(clicked()), this, SLOT(setPathOutSrc()));
 }
 
-void SetWorkDirDialog::setPrevWorkDirPath(QString workDir,QString exportDir)
+void SetWorkDirDialog::setPrevWorkDirPath(QString workDir,QString exportDir,
+                                          QString exportDirSrc,QString packageName)
 {
     m_pathTexturePacker = workDir;
-    m_pathOut=exportDir;
+    m_pathOut     = exportDir;
+    m_pathOutSrc  = exportDirSrc;
+    m_packageName = packageName;
 
     ui->lineEditTexturePath->setText(m_pathTexturePacker);
     ui->lineEditExportOut->setText(m_pathOut);
+    ui->lineEditExportOutSrc->setText(m_pathOutSrc);
+    ui->lineEditPackageHeader->setText(m_packageName);
 }
 
 void SetWorkDirDialog::setPathTexturePacker()
@@ -43,7 +50,7 @@ void SetWorkDirDialog::setPathTexturePacker()
 
 void SetWorkDirDialog::setPathOut()
 {
-    QString exportDir =QFileDialog::getExistingDirectory(this, tr("Set export directory"),
+    QString exportDir =QFileDialog::getExistingDirectory(this, tr("Set export data directory"),
                                                  QDir::currentPath(),
                                                  QFileDialog::ShowDirsOnly
 
@@ -51,6 +58,18 @@ void SetWorkDirDialog::setPathOut()
     if(exportDir.compare(""))
         m_pathOut=exportDir;
     ui->lineEditExportOut->setText(m_pathOut);
+}
+
+void SetWorkDirDialog::setPathOutSrc()
+{
+    QString exportDirSrc =QFileDialog::getExistingDirectory(this, tr("Set export src directory"),
+                                                 QDir::currentPath(),
+                                                 QFileDialog::ShowDirsOnly
+
+                                                 | QFileDialog::DontResolveSymlinks);
+    if(exportDirSrc.compare(""))
+        m_pathOutSrc=exportDirSrc;
+    ui->lineEditExportOutSrc->setText(m_pathOutSrc);
 }
 
 void SetWorkDirDialog::setExportFormat(int index)
@@ -71,3 +90,7 @@ SetWorkDirDialog::~SetWorkDirDialog()
     delete ui;
 }
 
+QString SetWorkDirDialog::getPackageName()
+{
+    return ui->lineEditPackageHeader->text();
+}
