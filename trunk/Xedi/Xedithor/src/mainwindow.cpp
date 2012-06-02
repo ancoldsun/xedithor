@@ -83,10 +83,10 @@ void MainWindow::CreateActions()
     saveAct->setStatusTip(tr("Save the document to disk"));
     connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
 
-    printAct = new QAction(QIcon(":/images/paste.png"),tr("&Export..."), this);
-    printAct->setShortcuts(QKeySequence::Print);
-    printAct->setStatusTip(tr("Export Sprite"));
-    connect(printAct, SIGNAL(triggered()), this, SLOT(exportSprite()));
+    //printAct = new QAction(QIcon(":/images/paste.png"),tr("&Export..."), this);
+    //printAct->setShortcuts(QKeySequence::Print);
+    //printAct->setStatusTip(tr("Export Sprite"));
+    //connect(printAct, SIGNAL(triggered()), this, SLOT(exportSprite()));
 
     exitAct = new QAction(QIcon(":/images/new.png"),tr("E&xit"), this);
     exitAct->setShortcuts(QKeySequence::Quit);
@@ -121,7 +121,7 @@ void MainWindow::CreateMainMenus()
     fileMenu->addAction(newAct);
     fileMenu->addAction(openAct);
     fileMenu->addAction(saveAct);
-    fileMenu->addAction(printAct);
+    //fileMenu->addAction(printAct);
     fileMenu->addSeparator();
     fileMenu->addAction(exitAct);
     //edit
@@ -140,7 +140,7 @@ void MainWindow::CreateToolBar()
     ui->mainToolBar->addAction(newAct);
     ui->mainToolBar->addAction(openAct);
     ui->mainToolBar->addAction(saveAct);
-    ui->mainToolBar->addAction(printAct);
+    //ui->mainToolBar->addAction(printAct);
 }
 
 void MainWindow::SetupTables()
@@ -337,7 +337,7 @@ void MainWindow::open()
         pixmapOpened =QPixmap::fromImage(image);
         editWindow->imageLabel->setImageGraphicsItem(&pixmapOpened);
         editWindow->scaleFactor = 1.0;
-        printAct->setEnabled(true);
+        //printAct->setEnabled(true);
         //update info path image
         ui->imagePathInfo->setText(m_ImgfileName);
     }
@@ -1245,7 +1245,7 @@ void MainWindow::TableEditCompleted(QString str)
                            pixmapOpened =QPixmap::fromImage(image);
                            editWindow->imageLabel->setImageGraphicsItem(&pixmapOpened);
                            editWindow->scaleFactor = 1.0;
-                           printAct->setEnabled(true);
+                           //printAct->setEnabled(true);
                            //update info path image
                            ui->imagePathInfo->setText(m_ImgfileName);
                            /*end open image */
