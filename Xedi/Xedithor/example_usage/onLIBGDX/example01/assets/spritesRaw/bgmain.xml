@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xedithor's sprite file-->
+<!--last saved: 18/12/2011 17:34-->
+<sprites>
+    <image>
+        <path>H:/Projects/Qt_Creator/True/Xedithor/example_usage/example01/assets/spritesRaw/bgmain.png</path>
+    </image>
+    <modules nModules="1">
+        <nRow>0 1000 0 0 800 480 </nRow>
+    </modules>
+    <frames nFrames="1">
+        <itemFrame ID="3000" nModFrame="1" name="FRM_BG">
+            <RowModFrm>1000 0 0 </RowModFrm>
+        </itemFrame>
+    </frames>
+    <anims nAnims="1">
+        <itemAnim ID="5004" nAnimFrame="1" name="anim">
+            <RowFrmAnim>3000 0 0 1 </RowFrmAnim>
+        </itemAnim>
+    </anims>
+</sprites>
