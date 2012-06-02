@@ -266,12 +266,14 @@ void SpriteExporter::writeAnims(QDataStream& streamOut)
             int FrmID=rd2->getData(1).toInt();
             int offX =rd2->getData(2).toInt();
             int offY =rd2->getData(3).toInt();
+            int showTime = rd2->getData(4).toInt();
 
             streamOut << (qint32)FrmID;
             streamOut << (qint32)offX;
             streamOut << (qint32)offY;
+            streamOut << (qint32)showTime;
             streamOut << (qint32)16;//dummy
-            streamOut << (qint32)16;//dummy
+
         }
     }
 }
